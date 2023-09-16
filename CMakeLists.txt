@@ -3,3 +3,4 @@ project(oop_labs)
 
 add_subdirectory(examples/lection00)
 add_subdirectory(examples/lection01)
+add_subdirectory(examples/lection02_03)
