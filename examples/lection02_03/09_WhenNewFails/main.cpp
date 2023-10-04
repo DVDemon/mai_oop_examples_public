@@ -1,7 +1,16 @@
 #include <iostream>
 
+
+int a;
+
+namespace dd_example {
+    int a;
+}
+
 int main(){
 
+    a = 0;
+    dd_example::a = 0;
     /*
     //int * data = new int[10000000000000000]; // 
 
@@ -14,7 +23,7 @@ int main(){
    //*
     for(size_t i{0} ; i < 10 ; ++i){
         try{
-            int * data = new int[10000000000];
+            int * data = new int[1000000000000000];
         }catch(std::exception& ex){
             std::cout << "  Something went wrong : " << ex.what() << std::endl;
         }

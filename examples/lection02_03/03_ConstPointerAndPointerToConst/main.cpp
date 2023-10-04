@@ -146,7 +146,7 @@ int main(){
     std::cout << "p_number7 :" << p_number7 << std::endl;
     std::cout << "*p_number7 : " << *p_number7 << std::endl;
     std::cout << "Changing value pointed to through p_number7 pointer : " << std::endl;
-    
+    //p_number7++;
     *p_number7 = 456;
     std::cout << "The value pointed to by p_number7 now is : " << *p_number7 << std::endl;
     

@@ -29,14 +29,14 @@ int main(){
 	//Writing into uninitialized pointer through dereference
     /*
 	int *p_number2; // Contains junk address : could be anything
-    std::cout << "Writting in the 55" << std::endl;
+    std::cout << "Writing in the 55" << std::endl;
 	*p_number2 = 55; // Writing into junk address : BAD!
 	std::cout << std::endl;
 	std::cout << "Writing into uninitialized pointer through dereference" << std::endl;
 	std::cout << "p_number2 : " << p_number2 << std::endl; // Reading from junk address.
     std::cout << "Dereferencing bad memory" << std::endl;
 	std::cout << "*p_number2 : " << *p_number2 << std::endl;
-    */
+    //*/
 	
 	
 	//Initializing pointer to null
@@ -119,7 +119,8 @@ int main(){
       std::cout << "*p_number5 : " << *p_number5 << std::endl;
 
 
-      delete p_number5;
+      delete p_number5; 
+	  //p_number5=nullptr;
       //delete p_number5;
 
 

@@ -7,7 +7,7 @@ void proc2(void) {
     try {
 
         std::cout << "Proc2 called" << std::endl;
-        std::string().at(1); // this generates an std::out_of_range
+        //std::string().at(1); // this generates an std::out_of_range
         throw 42; //custom class
 
     } catch (int ex1) {
@@ -15,6 +15,7 @@ void proc2(void) {
 
     } catch (const std::exception& e) {
         std::cout << "Unknown exception:" << e.what() << std::endl;
+        throw;
     }
 }
 

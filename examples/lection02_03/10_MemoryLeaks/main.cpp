@@ -12,7 +12,7 @@ int main(){
     p_number = &number; // Now p_number points to address2 , but address1 is still in use by 
                         // our program. But our program has lost access to that memory location.
 						//Memory has been leaked.
-    */
+    //*/
 
 	//Double allocation 
     /*
@@ -26,7 +26,7 @@ int main(){
 
     delete p_number1;
     p_number1 = nullptr;
-    */
+    //*/
 
 	//Nested scopes with dynamically allocated memory
 	{

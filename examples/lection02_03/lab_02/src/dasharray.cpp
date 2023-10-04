@@ -19,7 +19,7 @@ DashArray::DashArray(const std::initializer_list<unsigned char> &t)
     std::cout << "Initializer list constructor" << std::endl;
     _array = new unsigned char[t.size()];
     size_t i{0};
-    for (auto c : t)
+    for (auto &c : t)
         _array[i++] = c;
     _size = t.size();
 }
@@ -80,6 +80,7 @@ std::ostream &DashArray::print(std::ostream &os)
 
 DashArray::~DashArray() noexcept
 {
+    std::cout << "destructor" << std::endl;
     if (_size > 0)
     {
         _size = 0;

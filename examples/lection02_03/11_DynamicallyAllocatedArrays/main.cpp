@@ -9,9 +9,9 @@ int main(){
 	
     double *p_salaries { new double[size]}; // salaries array will
 															//contain garbage  values
-    int *p_students { new(std::nothrow) int[size]{} }; // All values initialized to 0 
+    int *p_students { new int[size]{} }; // All values initialized to 0 
     
-    double *p_scores { new(std::nothrow) double[size]{1,2,3,4,5}}; // Allocating memory space
+    double *p_scores { new double[size]{1,2,3,4,5}}; // Allocating memory space
 																	// for an array  of size double
 																	//vars. First 5 will be initialized
 																	//with 1,2,3,4,5, and the 

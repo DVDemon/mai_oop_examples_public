@@ -19,6 +19,11 @@ class Cylinder {
         double get_base_radius(){
             return base_radius;
         }
+
+        double& radius(){
+            return base_radius;
+        }
+
         double get_height(){
             return height;
         }
@@ -42,8 +47,10 @@ int main(){
     Cylinder cylinder1(10,10);
     std::cout << "volume : " << cylinder1.volume() << std::endl;
 
+    //cylinder1.base_radius = 7;
     //Modify our object
-    cylinder1.set_base_radius(100);
+    //cylinder1.set_base_radius(100);
+    cylinder1.radius() = 100;
     cylinder1.set_height(10);
 
     std::cout << "volume : " << cylinder1.volume() << std::endl;

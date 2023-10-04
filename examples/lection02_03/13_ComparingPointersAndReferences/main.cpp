@@ -15,7 +15,7 @@ int main(){
 	std::cout << "p_double_value : " << p_double_value << std::endl;
 	std::cout << "*p_double_value : " << *p_double_value << std::endl;
 	
-	//Writting through pointer
+	//Writing through pointer
 	*p_double_value = 15.44;
 	
     std::cout << std::endl;
