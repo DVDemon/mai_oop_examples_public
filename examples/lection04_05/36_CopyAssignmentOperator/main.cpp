@@ -2,7 +2,7 @@
 #include "point.h"
 
 int main(){
-
+    std::cout << "Copy operator demo" << std::endl;
     
     Point p1(10,10,10);
     Point p2(20,20,20);
@@ -27,7 +27,14 @@ int main(){
     std::cout << "-----------" << std::endl;
     std::cout << "p1 : " << p1 << std::endl;
     std::cout << "p2 : " << p2 << std::endl;
-   
+
+    //Move
+    std::cout << "-----------" << std::endl;
+    Point p3;
+
+    p3 = Point(1,1,1);
+    std::cout << "p3 : " << p3 << std::endl;
+
 
    //
    /*

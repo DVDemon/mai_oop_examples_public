@@ -24,6 +24,17 @@ public:
 		return *this;
 	}
 
+	Point& operator= (Point&& right_operand){ // not const
+		std::cout << "Move assignment operator called" << std::endl;
+		if(this != & right_operand){
+			p_data = right_operand.p_data;
+			m_x =  right_operand.m_x;
+			m_y = right_operand.m_y;
+			right_operand.p_data = nullptr;
+		}
+		return *this;
+	}
+
 	void set_data (int data) {
 		*p_data = data;
 	}
