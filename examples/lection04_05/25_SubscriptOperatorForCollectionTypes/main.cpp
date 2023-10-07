@@ -23,8 +23,7 @@ int main(){
 
     //Const objecst
     const Scores geo("Geography");
-    std::cout << "geo [5] : " << geo[5] << std::endl;
-
+    std::cout << "geo [5] : " << geo[3] << std::endl;
 
 
     return 0;

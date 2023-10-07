@@ -47,6 +47,8 @@ int main(){
 	std::cout << "Type of *b_ptr_s : " << typeid(*b_ptr_s).name() << std::endl;
 	std::cout << "Type of static_base_ref : " << typeid(static_base_ref).name() << std::endl;
   
+	std::cout << "Type of static_base_ref : " << typeid(staticderived).name() << std::endl;
+  
 
     delete b_ptr;
     delete b_ptr_s;

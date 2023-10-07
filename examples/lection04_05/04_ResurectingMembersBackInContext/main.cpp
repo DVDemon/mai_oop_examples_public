@@ -6,7 +6,9 @@
 int main(){
 
     
+    const Person p;
 
+    std::cout << p.get_address() << std::endl; //const
   
    
     return 0;

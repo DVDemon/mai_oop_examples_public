@@ -25,7 +25,8 @@ public:
     }
 
 
-    int add(int a, int b) const{
+    int add(int a, int b){
+        m_address = "Not none";
         return a + b ;
     }
 
@@ -38,7 +39,7 @@ public:
     std::string m_full_name{"None"};
 protected: 
     int m_age{0};
-private : 
+//private : 
     std::string m_address{"None"};
 };
 

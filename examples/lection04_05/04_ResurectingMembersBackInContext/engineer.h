@@ -24,7 +24,8 @@ public:
         using Person::get_full_name;
         using Person::get_age;
         using Person::get_address;
-        //using Person::m_address; // Compiler error
+        using Person::m_address; 
+        using Person::m_age;
 
     int get_contract_count() const{
         return contract_count;

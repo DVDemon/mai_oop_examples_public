@@ -7,7 +7,8 @@ int main(){
     Point p2(3,4);
     //p1.print_info();
 
-    std::cout << p1 << p2 << std::endl;
+   // p1 << std::cout << p2;
+    ((std::cout << p1) << p2) << std::endl;
    
     return 0;
 }

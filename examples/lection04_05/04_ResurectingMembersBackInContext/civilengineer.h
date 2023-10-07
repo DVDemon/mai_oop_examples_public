@@ -10,9 +10,10 @@ public:
     ~CivilEngineer() ;
     
     void build_road(){
-        //get_full_name(); // Compiler error
-        ///m_full_name = "Daniel Gray"; //Compiler error
-        //m_age = 45; // Compiler error
+        get_full_name(); // Compiler error
+        //m_full_name = "Daniel Gray"; //Compiler error
+        m_age = 45; // Compiler error
+        m_address = "";
 
         add(10,2);
         add(10,2,4);

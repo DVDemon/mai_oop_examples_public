@@ -21,23 +21,26 @@ int main(){
     //oval1.draw();
 
     Circle circle1(3.3,"Circle1");
-    //circle1.draw();
+   // circle1.draw();
+
+    // Shape s = static_cast<Shape>(circle1);
+    // s.draw();
 
 
 
     //Base pointers
-    Shape * shape_ptr = &shape1;
-    //shape_ptr->draw(); // Shape::draw
+    // Shape * shape_ptr = &shape1;
+    // shape_ptr->draw(); // Shape::draw
 
-    shape_ptr = &oval1;
-    //shape_ptr->draw(); // Oval::draw()
+    // shape_ptr = &oval1;
+    // shape_ptr->draw(); // Oval::draw()
 
-    shape_ptr = &circle1;
-    //shape_ptr->draw(); // Circle::draw()
+    // shape_ptr = &circle1;
+    // shape_ptr->draw(); // Circle::draw()
 
 
     //Base references
-    Shape& shape_ref = circle1;
+    //Shape& shape_ref = circle1;
     //shape_ref.draw(); // Cicle::draw()
 
 
@@ -48,7 +51,7 @@ int main(){
 
 
     //Raw pointers
-    shape_ptr  = &oval1;
+    //shape_ptr  = &oval1;
     //shape_ptr->get_x_rad();
 
 

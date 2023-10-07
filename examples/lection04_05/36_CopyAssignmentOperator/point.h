@@ -27,6 +27,7 @@ public:
 	Point& operator= (Point&& right_operand){ // not const
 		std::cout << "Move assignment operator called" << std::endl;
 		if(this != & right_operand){
+			delete p_data;
 			p_data = right_operand.p_data;
 			m_x =  right_operand.m_x;
 			m_y = right_operand.m_y;
