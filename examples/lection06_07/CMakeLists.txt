@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(lection_06_07)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(01_SimpleTemplate 01_SimpleTemplate/main.cpp)
+add_executable(02_TwoArguments 02_TwoArguments/main.cpp)
+add_executable(03_ComplexParameters 03_ComplexParameters/main.cpp)
+add_executable(04_Specialization 04_Specialization/main.cpp)
+add_executable(05_PartialSpecialization 05_PartialSpecialization/main.cpp)
+add_executable(06_Metafunction 06_Metafunction/main.cpp)
+add_executable(07_Factorial 07_Factorial/main.cpp)
+add_executable(08_Types 08_Types/main.cpp)
+add_executable(09_TypeTraits 09_TypeTraits/main.cpp)
+add_executable(10_BuiltInConcepts 10_BuiltInConcepts/main.cpp)
+add_executable(11_ConceptsExample1 11_ConceptsExample1/main.cpp)
+add_executable(12_ConceptsExample2 12_ConceptsExample2/main.cpp)
+add_executable(13_DeductionGuide 13_DeductionGuide/main.cpp)
