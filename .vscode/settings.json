@@ -74,5 +74,6 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "filesystem": "cpp"
-    }
+    },
+    "cSpell.language": "en,ru"
 }
