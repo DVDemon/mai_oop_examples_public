@@ -29,3 +29,6 @@ add_executable(20_Enable_shared_from_this 20_Enable_shared_from_this/main.cpp)
 add_executable(21_Dead_lock 21_Dead_lock/main.cpp)
 add_executable(22_Weak_ptr 22_Weak_ptr/main.cpp)
 add_executable(23_Weak_ptr_deadlock 23_Weak_ptr_deadlock/main.cpp)
+
+
+add_subdirectory(lab_04)
