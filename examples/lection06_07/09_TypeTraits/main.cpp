@@ -31,9 +31,10 @@ typename std::enable_if<std::is_integral<T>::value,void>::type print(T& value){
 }
 
 int main(){
-    char c=0;
+    int c=10;
     print(c);
 
+    
     int a[5] = {1,2,3,4,5};
     print(a);
 

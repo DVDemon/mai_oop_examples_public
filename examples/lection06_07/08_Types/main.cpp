@@ -29,14 +29,11 @@ int main(){
     std::cout << "Is int int?  " << is_int<int>::value << std::endl;
 
     int *value = nullptr;
-
-
-
-
-
-    value = new typename remove_pointer<decltype(value)>::type;
-    *value = 10;
-    delete value;
+    remove_pointer<decltype(value)>::type a{10};
+    std::cout << a << std::endl;
+    // value = new typename remove_pointer<decltype(value)>::type;
+    // *value = 10;
+    // delete value;
 
     return 1;
 }

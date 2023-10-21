@@ -13,7 +13,7 @@ struct smart_ptr {
         std::cout << *m_counter << std::endl;
     }
     ~smart_ptr() {
-        std::cout << *m_counter << std::endl;
+        std::cout << "dtor:" << *m_counter << std::endl;
         if (--(*m_counter) == 0) {
             delete(m_ptr);
             delete(m_counter);

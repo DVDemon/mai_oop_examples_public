@@ -16,8 +16,8 @@ auto add ( T a, U b){
 int main(){
 
     static_assert(Number<int>);
-    //auto result = add(20.1, 20);
-    //std::cout << "result :  " << result << std::endl;
+    auto result = add(20.1, 20);
+    std::cout << "result :  " << result << std::endl;
    
     return 0;
 }

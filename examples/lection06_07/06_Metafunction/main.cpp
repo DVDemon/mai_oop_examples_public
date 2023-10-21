@@ -19,5 +19,5 @@ int main(void){
     std::cout << example::abs<10>::value << std::endl;
     std::cout << example::abs<-20>::value << std::endl;
     std::cout << example::abs<get_value()>::value << std::endl;
-    return 1;
+    return 0;
 }

@@ -37,9 +37,9 @@ struct  Cat
 int main(){
 
 	//Numbers
-	//std::floating_point<T>
-	//static_assert(std::floating_point<int>);//Fails
-	//static_assert(std::floating_point<double>);
+	// std::floating_point<T>
+	// static_assert(std::floating_point<int>);//Fails
+	// static_assert(std::floating_point<double>);
 
 	//equality and order
 	//https://en.cppreference.com/w/cpp/concepts/equality_comparable
@@ -53,13 +53,13 @@ int main(){
 
 	//Others
 	//std::same_as
-	//static_assert(std::same_as<int,int>); // Success
-	//static_assert(std::same_as<int,double>);// Fail
-	//static_assert(std::same_as<Dog,Cat>); //Fail
-	//static_assert(std::same_as<BoxContainer<int>, BoxContainer<int>>); // Success
-	//static_assert(std::same_as<BoxContainer<int>, BoxContainer<double>>); // Fail
-	//static_assert(std::same_as<Point<int>,Point<int>>); // Success
-	//static_assert(std::same_as<Point<int>,Point<float>>); // Fail
+	// static_assert(std::same_as<int,int>); // Success
+	// static_assert(std::same_as<int,double>);// Fail
+	// static_assert(std::same_as<Dog,Cat>); //Fail
+	// static_assert(std::same_as<BoxContainer<int>, BoxContainer<int>>); // Success
+	// static_assert(std::same_as<BoxContainer<int>, BoxContainer<double>>); // Fail
+	// static_assert(std::same_as<Point<int>,Point<int>>); // Success
+	// static_assert(std::same_as<Point<int>,Point<float>>); // Fail
 	
 
 	//std::destructible

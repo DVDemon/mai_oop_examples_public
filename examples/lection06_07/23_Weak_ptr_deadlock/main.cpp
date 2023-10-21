@@ -41,7 +41,8 @@ public:
     void Print() {
         std::cout << "Print: B" << std::endl;
         std::shared_ptr<A> a_ptr = a.lock();
-        if(a_ptr) a_ptr->Print();       
+        if(a_ptr) a_ptr->Print();  
+            else std::cout << "object deleted" << std::endl;     
     }
 
     ~B() {
@@ -52,11 +53,9 @@ public:
 int main(int argc, char** argv) {
 
     std::shared_ptr<B> b(new B());
-    std::shared_ptr<A> a(new A());
+    
     {
-
-        
-
+        std::shared_ptr<A> a(new A());
         a->LetsLock(b);
         b->LetsLock(a);
     }

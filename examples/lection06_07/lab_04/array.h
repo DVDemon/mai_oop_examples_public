@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <concepts>
+#include <memory>
 
 template <class T>
 concept Arrayable = std::is_default_constructible<T>::value;

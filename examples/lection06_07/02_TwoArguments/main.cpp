@@ -29,6 +29,7 @@ namespace MyTemplates
         return os;
     };
 } // namespace MyTemplates
+
 int main(int argc, char **argv)
 {
 

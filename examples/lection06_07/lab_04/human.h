@@ -7,7 +7,7 @@ concept Number = std::is_default_constructible<T>::value || std::integral<T> || 
 
 template <Number T>
 class Human {
-        friend std::ostream &operator<<(std::ostream &os, const Human<T> &rhv)
+    friend std::ostream &operator<<(std::ostream &os, const Human<T> &rhv)
     {
         os << "Human [ age:" << rhv.age <<  "]";
         return os;
