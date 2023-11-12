@@ -15,6 +15,21 @@ void testPlacing() {
     for(auto& v : values)
         std::cout << v << ' ';
     std::cout << std::endl;
+
+    for(auto it = values.begin();it!=values.end();++it)
+        std::cout << *it << ' ';
+    std::cout << std::endl;
+
+
+    for(auto it = std::begin(values);it!=std::end(values);++it)
+        std::cout << *it << ' ';
+    std::cout << std::endl;
+
+    int a[5] = {1,2,3,4,5};
+
+    for(auto& v : a)
+        std::cout << v << ' ';
+    std::cout << std::endl;
 }
 
 // проверим по какой стратегии увеличивается количество элементов в Vector
@@ -94,7 +109,7 @@ void testIterator() {
 
     std::cout << "&values[0]       = " << &values[0] << std::endl;
     std::cout << "&values[iterPos] = " << &values[iterPos] << std::endl;
-    //values.shrink_to_fit();
+    values.shrink_to_fit();
     // Ooops. Iterator is invalid.
      std::cout << "&*iter           = " << &*iter << std::endl;
 
@@ -104,7 +119,9 @@ void testIterator() {
     values.insert(values.cbegin(), 42);
 
     // Ooops. Iterator is invalid.
-    // std::cout << "*iter2 = " << *iter2 << std::endl;
+    std::cout << "*iter2 = " << *iter2 << std::endl;
+    iter2+=6;
+    std::cout << "*iter2 = " << *iter2 << std::endl;
 }
 
 
@@ -158,10 +175,10 @@ void testCustomReallocate() {
 
 int main() {
 
-    testPlacing();
-    testReallocate();
-    testReserve();
-    testIterator();
+    // testPlacing();
+    // testReallocate();
+    // testReserve();
+    // testIterator();
     testCustomReallocate();
 
     return 0;

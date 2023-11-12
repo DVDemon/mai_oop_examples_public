@@ -12,8 +12,9 @@ void testPlacing() {
     std::cout << "&values[0]     = " << &values[0] << std::endl;
 
     auto ptr1 = &values[0];
-    for (int i = 1; i < 1000; ++i) {
+    for (int i = 1; i < 100000; ++i) {
         values.push_back(i);
+
         auto ptr2 = &values.back();
 
         if(i>0)
@@ -79,7 +80,7 @@ void testIterator() {
 
 int main() {
     testPlacing();
-    testIterator();    
+    //testIterator();    
 
     return 0;
 }

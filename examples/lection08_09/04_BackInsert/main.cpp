@@ -16,15 +16,17 @@ OutputIterator my_copy(InputIterator first, InputIterator last, OutputIterator r
 //*/
 
 int main() {
-    std::vector<int> foo;
+    std::vector<int> foo ;
     std::vector<int> bar;
     for (int i = 1; i <= 5; i++) {
         bar.push_back(i * 10);
     }
 
+
     std::back_insert_iterator< std::vector<int> >  back_it(foo);
-    my_copy(bar.begin(), bar.end(), back_it);
-    //std::copy(bar.begin(), bar.end(), back_it);
+    //my_copy(bar.begin(), bar.end(), back_it);
+    foo.resize(10);
+    std::copy(bar.begin(), bar.end(), foo.begin()); // bad
 
     std::cout << "foo:";
     for (auto i : foo) std::cout << ' ' << i;

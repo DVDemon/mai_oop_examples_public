@@ -5,15 +5,22 @@ void testPlacing() {
     std::cout << "\ntestPlacing\n";
 
     int stackVariable = 0;
-    std::forward_list<int> values = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    std::forward_list<int> values;
+    
+    for(int i=0;i<1000000;++i)
+     values.push_front(i);
+
 
     std::cout << "&stackVariable = " << &stackVariable << std::endl;
     std::cout << "&values        = " << &values << std::endl;
     int *ptr = nullptr;
+    size_t index{0};
     for (auto& v : values) {
-        std::cout << "&value         = " << &v << std::endl;
+        //std::cout << "&value         = " << &v << std::endl;
+        ++index;
         if (ptr) {
-            std::cout << "diff = " << &v - ptr << std::endl;
+            if((&v - ptr)>4)
+                std::cout << "diff = " << &v - ptr << ":" << index << std::endl;
         }
         ptr = &v;        
     }
@@ -70,7 +77,7 @@ void testIterator() {
 int main() {
     testPlacing();
 
-    testIterator();
+    // testIterator();
 
     return 0;
 }

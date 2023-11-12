@@ -18,7 +18,7 @@ namespace mai
         uint64_t _free_count;
 
     public:
-        static constexpr size_t max_count = 100000;
+        static constexpr size_t max_count = 500000;
         using value_type = T;
         using pointer = T *;
         using const_pointer = const T *;
@@ -118,9 +118,9 @@ void test1()
 {
     auto begin = std::chrono::high_resolution_clock::now();
     std::list<SomeStruct> my_list;
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 500000; i++)
         my_list.push_back(SomeStruct());
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 500000; i++)
         my_list.erase(my_list.begin());
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "test1: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
@@ -130,9 +130,9 @@ void test2()
 {
     auto begin = std::chrono::high_resolution_clock::now();
     std::list<SomeStruct, mai::Allocator<SomeStruct>> my_list;
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 500000; i++)
         my_list.push_back(SomeStruct());
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 500000; i++)
         my_list.erase(my_list.begin());
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "test2: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
@@ -140,8 +140,8 @@ void test2()
 
 int main(int argc, char **argv)
 {
-    test1();
-    test2();
+    // test1();
+    // test2();
 
     std::map<int, int, std::less<int>,mai::Allocator<std::pair<const int,int>>> my_map;
 

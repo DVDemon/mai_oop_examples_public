@@ -27,6 +27,11 @@ int main() {
     std::copy(iit,eos,insert_it);
     */
     ++iit;
+    // 
+    // while(iit!=eos){
+    // vec.push_back(*iit);
+    // ++iit;
+    //}
     std::vector<double> vec(iit,eos);
 
     // ostream iterator
