@@ -1,80 +1,90 @@
-// Посетитель (Visitor)
-
-#include <iostream>
 #include <vector>
+#include <memory>
+#include <iostream>
 
-class DrawPrimitive {
+// Forward declaration of Visitor
+class Visitor;
+
+// Abstract Element class
+class Element {
 public:
-    virtual void save_to_file(class Export *) = 0;
+    virtual void accept(Visitor& visitor) = 0; // делает вызов visit не с родительским классом, а с дочерним
 };
 
-class Circle : public DrawPrimitive {
+// Concrete Element classes
+class ConcreteElementA : public Element {
 public:
-    int radius;
-
-    Circle(int radius_) : radius(radius_) {};
-
-    void save_to_file(class Export *) override;
-};
-
-class Box : public DrawPrimitive {
-public:
-    int w;
-    int h;
-
-    Box(int w_, int h_) : w(w_), h(h_) {};
-
-    void save_to_file(class Export *) override;
-};
-
-class Export {
-public:
-    virtual void save_to(Circle *) = 0;
-
-    virtual void save_to(Box *) = 0;
-};
-
-class JsonExport : public Export {
-public:
-    void save_to(Circle *c) override {
-        std::cout << "{type:circle,radius:" << c->radius << "}" << std::endl;
-    }
-
-    void save_to(Box *b) override {
-        std::cout << "{type:box,width:" << b->w << ",height:" << b->h << "}" << std::endl;
+    void accept(Visitor& visitor) override; 
+    void operationA() {
+        std::cout << "ConcreteElementA operationA" << std::endl;
     }
 };
 
-class XmlExport : public Export {
+class ConcreteElementB : public Element {
 public:
-    void save_to(Circle *c) override {
-        std::cout << "<circle radius=>" << c->radius << "</circle>" << std::endl;
-    }
-
-    void save_to(Box *b) override {
-        std::cout << "<box w=" << b->w << " height=" << b->h << "></box>" << std::endl;
+    void accept(Visitor& visitor) override;
+    void operationB() {
+        std::cout << "ConcreteElementB operationB" << std::endl;
     }
 };
 
-void Circle::save_to_file(Export *v) {
-    v->save_to(this);
+// Abstract Visitor class
+class Visitor {
+public:
+    virtual void visit(ConcreteElementA& element) = 0;
+    virtual void visit(ConcreteElementB& element) = 0;
+};
+
+// Concrete Visitor classes
+class ConcreteVisitor1 : public Visitor {
+public:
+    void visit(ConcreteElementA& element) override {
+        std::cout << "ConcreteVisitor1 visits ";
+        element.operationA();
+    }
+
+    void visit(ConcreteElementB& element) override {
+        std::cout << "ConcreteVisitor1 visits ";
+        element.operationB();
+    }
+};
+
+class ConcreteVisitor2 : public Visitor {
+public:
+    void visit(ConcreteElementA& element) override {
+        std::cout << "ConcreteVisitor2 visits ";
+        element.operationA();
+    }
+
+    void visit(ConcreteElementB& element) override {
+        std::cout << "ConcreteVisitor2 visits ";
+        element.operationB();
+    }
+};
+
+// Implement accept methods
+void ConcreteElementA::accept(Visitor& visitor) {
+    visitor.visit(*this);
 }
 
-void Box::save_to_file(Export *v) {
-    v->save_to(this);
+void ConcreteElementB::accept(Visitor& visitor) {
+    visitor.visit(*this);
 }
 
-int main(int, char *[]) {
-    std::vector<DrawPrimitive *> doc = {new Circle{100}, new Box{4, 3}, new Box{16, 9}, new Circle{13}, new Circle{2}};
+int main() {
+    std::vector<std::shared_ptr<Element>> elements;
+    elements.emplace_back(std::make_unique<ConcreteElementA>());
+    elements.emplace_back(std::make_unique<ConcreteElementB>());
 
-    Export *exporter = new JsonExport{};
-    for (auto obj : doc) {
-        obj->save_to_file(exporter);
+    ConcreteVisitor1 visitor1;
+    ConcreteVisitor2 visitor2;
+
+    for (auto& element : elements) {
+        element->accept(visitor1);
     }
 
-    exporter = new XmlExport{};
-    for (auto obj : doc) {
-        obj->save_to_file(exporter);
+    for (auto& element : elements) {
+        element->accept(visitor2);
     }
 
     return 0;

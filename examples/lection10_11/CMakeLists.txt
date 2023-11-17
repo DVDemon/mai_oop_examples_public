@@ -30,3 +30,5 @@ add_executable(22_Builder 22_Builder/main.cpp)
 add_executable(23_Visitor 23_Visitor/main.cpp)
 add_executable(24_Memento 24_Memento/main.cpp)
 add_executable(25_Observer 25_Observer/main.cpp)
+
+add_subdirectory(lab_06)
