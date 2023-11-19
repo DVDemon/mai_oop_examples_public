@@ -24,7 +24,7 @@ public:
         } else std::cout << "Not empty" << std::endl;
     }
 
-    const std::string  Read(size_t index) {
+    const std::string  Read(size_t index)  const{
         if (index < messages.size())
             return messages[index];
         

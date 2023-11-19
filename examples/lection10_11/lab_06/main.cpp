@@ -116,6 +116,15 @@ std::ostream &operator<<(std::ostream &os, const set_t &array)
     return os;
 }
 
+
+// ВНИМАНИЕ: метод осуществляющий сражение написан неправильно!
+// Переделайте его на использование паттерна Visitor
+// То есть внутри цикла вместо кучи условий должно быть:
+//
+// success = defender->accept(attacker);
+//
+// В NPC методы типа is_dragon - станут не нужны
+
 set_t fight(const set_t &array, size_t distance)
 {
     set_t dead_list;
@@ -158,7 +167,7 @@ int main()
     std::cout << "Fighting ..." << std::endl
               << array;
 
-    for (size_t distance = 20; (distance <= 100) && !array.empty(); distance += 20)
+    for (size_t distance = 20; (distance <= 100) && !array.empty(); distance += 10)
     {
         auto dead_list = fight(array, distance);
         for (auto &d : dead_list)
@@ -169,6 +178,8 @@ int main()
                   << std::endl << std::endl;
 
     }
+
+    std::cout << "Survivors:" << array;
 
     return 0;
 }

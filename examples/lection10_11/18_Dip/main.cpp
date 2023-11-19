@@ -25,6 +25,14 @@ public:
     }
 };
 
+class ItemButerbord : public IItem {
+public:
+
+    void print() override {
+        std::cout << "Item Buterbord" << std::endl;
+    }
+};
+
 // тут есть зависимость от реализации!
 class ItemCoffe : public IItem {
 public:
@@ -67,8 +75,9 @@ auto main() -> int{
 
     Menu m;
     
-    m.add(std::make_shared<ItemBulka>());
-    m.add(std::make_shared<ItemBulka>());
+    // m.add(std::make_shared<ItemBulka>());
+    // m.add(std::make_shared<ItemBulka>());
+    m.add(std::make_shared<ItemButerbord>());
     m.add(std::make_shared<ItemCoffe>());
     m.add(std::make_shared<ItemCoffe>());
 

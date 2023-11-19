@@ -48,7 +48,7 @@ struct Menu<A, Tail...> :  Menu<Tail ...> {
 
 auto main() -> int {
 
-    Menu<IWine, ICoffe,IWine> menu("vodka", "americano","rassol");
+    Menu<IWine, ICoffe,IWine,ICoffe> menu("vodka", "americano","rassol","Voda");
 
     menu.print();
     return 0;

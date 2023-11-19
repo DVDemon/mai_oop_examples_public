@@ -46,22 +46,26 @@ class PostgresStorage : public IStorage {
     }
 };
 
-IStorage* factory_method(const Storage& storage ){
 
-    switch (storage) {
-    case Storage::mysql: return new MysqlStorage();
-        break;
+struct Factory{
+    IStorage* factory_method(const Storage& storage ){
 
-    case Storage::postgres: return new PostgresStorage();
-        break;
+        switch (storage) {
+        case Storage::mysql: return new MysqlStorage();
+            break;
+
+        case Storage::postgres: return new PostgresStorage();
+            break;
+        }
     }
-}
+};
 
 int main(int argc, char* [])
 {
+    Factory f;
     auto environment = (argc==1) ? Storage::postgres : Storage::mysql;
 
-    IStorage* storage = factory_method(environment);
+    IStorage* storage = f.factory_method(environment);
 
     storage->open();
     storage->execute_query();

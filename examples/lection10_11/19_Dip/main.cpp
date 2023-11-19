@@ -37,7 +37,7 @@ public:
         return true;
     }
 };
-/*
+//*
 class ItemBublik : public IItem {
 public:
 
@@ -48,7 +48,8 @@ public:
     bool isCookie() override {
         return true;
     }
-};*/
+};
+//*/
 
 class ItemCoffe : public IItem {
 public:
@@ -89,8 +90,8 @@ public:
 auto main() -> int {
 
     Menu m;
-    m.add(std::make_shared<ItemBulka>());
-    //m.add(std::make_shared<ItemBublik>());
+    //m.add(std::make_shared<ItemBulka>());
+    m.add(std::make_shared<ItemBublik>());
     m.add(std::make_shared<ItemCoffe>());
 
     m.menu();
