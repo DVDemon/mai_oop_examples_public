@@ -198,12 +198,21 @@ public:
 
                 if (event)
                 {
-                    auto lck1 = event->attacker->write_lock();
-                    auto lck2 = event->defender->write_lock();
-                    if (event->defender->accept(event->attacker))
-                        event->defender->must_die();
-                    
-                } else   std::this_thread::sleep_for(1s);
+                    try
+                    {
+                        if (event->attacker->is_alive())     // no zombie fighting!
+                            if (event->defender->is_alive()) // already dead!
+                                if (event->defender->accept(event->attacker))
+                                    event->defender->must_die();
+                    }
+                    catch (...)
+                    {
+                        std::lock_guard<std::shared_mutex> lock(mtx);
+                        events.push(*event);
+                    }
+                }
+                else
+                    std::this_thread::sleep_for(100ms);
             }
         }
     }
@@ -215,7 +224,7 @@ int main()
 
     const int MAX_X{100};
     const int MAX_Y{100};
-    const int DISTANCE{20};
+    const int DISTANCE{40};
 
     // Гененрируем начальное распределение монстров
     std::cout << "Generating ..." << std::endl;
@@ -230,13 +239,12 @@ int main()
     std::thread fight_thread(std::ref(FightManager::get()));
 
     std::thread move_thread([&array, MAX_X, MAX_Y, DISTANCE]()
-        {
+                            {
             while (true)
             {
                 // move phase
                 for (std::shared_ptr<NPC> npc : array)
                 {
-                        auto write_lck = npc->write_lock();
                         if(npc->is_alive()){
                             int shift_x = std::rand() % 20 - 10;
                             int shift_y = std::rand() % 20 - 10;
@@ -245,27 +253,14 @@ int main()
                 }
                 // lets fight
                 for (std::shared_ptr<NPC> npc : array)
-                {
-                    bool alive{false};
-                        {
-                            auto read_lck = npc->read_lock();
-                            alive = npc->is_alive();
-                        }
-                        if(alive)
-                        for (std::shared_ptr<NPC> other : array)
-                        {
-                            if (other != npc)
-                            {
-                                auto rl1 = npc->read_lock();
-                                auto rl2 = other->read_lock();
-                                if (other->is_alive())
-                                    if (npc->is_close(other, DISTANCE))
-                                        FightManager::get().add_event({npc, other});
-                            }
-                        }
-                    
-                }
-            std::this_thread::sleep_for(1s);
+                    for (std::shared_ptr<NPC> other : array)
+                        if (other != npc)
+                            if (npc->is_alive())
+                            if (other->is_alive())
+                            if (npc->is_close(other, DISTANCE))
+                                FightManager::get().add_event({npc, other});
+
+                std::this_thread::sleep_for(1s);
             } });
 
     while (true)
@@ -275,12 +270,13 @@ int main()
             std::array<char, grid * grid> fields{0};
             for (std::shared_ptr<NPC> npc : array)
             {
-                auto rl = npc->read_lock();
+                auto [x, y] = npc->position();
+                int i = x / step_x;
+                int j = y / step_y;
+
                 if (npc->is_alive())
                 {
-                    int i = npc->x / step_x;
-                    int j = npc->y / step_y;
-                    switch (npc->type)
+                    switch (npc->get_type())
                     {
                     case DragonType:
                         fields[i + grid * j] = 'D';
@@ -296,6 +292,8 @@ int main()
                         break;
                     }
                 }
+                else
+                    fields[i + grid * j] = '.';
             }
 
             std::lock_guard<std::mutex> lck(print_mutex);
