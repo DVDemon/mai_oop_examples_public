@@ -2,6 +2,7 @@
 #include <iostream>
 #include <concepts>
 #include <memory>
+#include <assert.h>
 
 template <class T>
 concept Arrayable = std::is_default_constructible<T>::value;
