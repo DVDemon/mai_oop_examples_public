@@ -39,17 +39,17 @@ int main() {
     MyClass cls;
 
     // copy operation
-    std::cout << std::endl << "Copy ----------" << std::endl;
+    // std::cout << std::endl << "Copy ----------" << std::endl;
 
-    std::thread my_thread1(cls,"Hello world!");
-    my_thread1.join();
+    // std::thread my_thread1(cls,"Hello world!");
+    // my_thread1.join();
     
     // move operation 
-    std::cout << std::endl << "Move ----------" << std::endl;
-    std::thread my_thread2(std::move(cls),"Hello world!");
-    my_thread2.join();
+    // std::cout << std::endl << "Move ----------" << std::endl;
+    // std::thread my_thread2(std::move(cls),"Hello world!");
+    // my_thread2.join();
     
-    // no move or copy
+    // // no move or copy
 
     std::cout << std::endl << "Ref -----------" << std::endl;
     std::thread my_thread3(std::ref(cls),"Hello world!");

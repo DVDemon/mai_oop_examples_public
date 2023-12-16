@@ -23,7 +23,7 @@ void print_id(int id)
 {
     std::unique_lock<std::mutex> lck(mtx); // lock
     print() << "Ready:" << id << std::endl;
-    //while (!ready)
+    while (!ready)
         cv.wait(lck); // unlock?
     print() << "thread " << id << std::endl;
 }
@@ -31,9 +31,9 @@ void print_id(int id)
 void go()
 {
     std::unique_lock<std::mutex> lck(mtx); // lock
-    //ready = true;
-    //cv.notify_one();
-    cv.notify_all(); // unlock all?
+    ready = true;
+    cv.notify_one();
+    //cv.notify_all(); // unlock all?
 }
 
 int main()

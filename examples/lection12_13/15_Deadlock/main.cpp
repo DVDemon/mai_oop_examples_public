@@ -37,16 +37,25 @@ int main ()
     a.lock();
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     b.lock();
+
+    b.unlock();
+    a.unlock();
   });
 
     std::thread th2([&]()
-    {b.lock();
-    a.lock();}
+    {
+      b.lock();
+      a.lock();
+      
+      b.unlock();
+      a.unlock();
+    }
     );
+
   th1.join();
   th2.join();
   /*/
-  std::thread th1 (task_a);
+  std::thread th1 (task_b);
   std::thread th2 (task_b);
 
   th1.join();

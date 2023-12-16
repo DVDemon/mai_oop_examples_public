@@ -43,5 +43,7 @@ int main()
 	data_wrapper x;
         
 	x.process_data<void (const some_data& protected_data)>(malicious_function);
+	
+	
 	unprotected->do_something();
 }

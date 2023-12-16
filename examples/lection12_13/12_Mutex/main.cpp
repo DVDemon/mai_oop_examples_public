@@ -40,7 +40,7 @@ public:
 
 void add_function(long *number, std::mutex *lock)
 {
-    for (long i = 0; i < 1000L; i++)
+    for (long i = 0; i < 1000000L; i++)
     {
         lock->lock();
         (*number)++;
@@ -50,7 +50,7 @@ void add_function(long *number, std::mutex *lock)
 
 void subst_function(long *number, std::mutex *lock)
 {
-    for (long i = 0; i < 1000L; i++)
+    for (long i = 0; i < 1000000L; i++)
     {
         lock->lock();
         (*number)--;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 
     long number = 0;
     std::mutex lock;
-    //*
+    /*
     {
         Scoped_Thread th1(std::move(std::thread(add_function,&number,&lock)));
         Scoped_Thread th2(std::move(std::thread(subst_function,&number,&lock)));

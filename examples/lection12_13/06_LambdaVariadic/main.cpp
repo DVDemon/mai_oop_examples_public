@@ -5,7 +5,7 @@ template <class T, class ...Ts>
 auto concat(T t, Ts ...ts)
 {
     if constexpr (sizeof...(ts) > 0) {
-        return [=](auto ...parameters) {
+        return [t,ts...](auto ...parameters) {
           return t(concat(ts...)(parameters...)); };
     } else  {
         return t; // возвращает самую правую функцию

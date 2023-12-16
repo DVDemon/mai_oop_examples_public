@@ -33,9 +33,12 @@ struct CoroType {
 
 CoroType do_work() {
     std::cout << "Starting the coroutine..." << std::endl;
-    co_yield 1;
-    co_yield 2;
-    co_yield 3;
+
+    for(int i=1;i<=3;++i)
+     co_yield i;
+    // co_yield 1;
+    // co_yield 2;
+    // co_yield 3;
     co_return;
 }
 

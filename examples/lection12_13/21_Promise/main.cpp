@@ -23,7 +23,7 @@ int main ()
   std::cin.get();
   
   //prom.set_exception( std::make_exception_ptr(10));
-  prom.set_value (5+5);                         // fulfill promise
+  prom.set_value (10);                         // fulfill promise
                                                // (synchronizes with getting the future)
   th1.join();
   return 0;

@@ -3,6 +3,7 @@
 #include <thread>
 #include <mutex>
 
+
 void threadFunction(std::mutex *lock)
 {
     try
@@ -11,7 +12,7 @@ void threadFunction(std::mutex *lock)
         std::cout << "entered thread " << std::this_thread::get_id() << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(rand() % 5));
 
-       // throw 0;
+        throw 0;
         std::cout << "leaving thread " << std::this_thread::get_id() << std::endl;
     }
     catch (...)

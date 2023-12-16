@@ -50,5 +50,5 @@ auto main() -> int
     applay(females, [](const Person &person) {
         std::cout << "[" << person.name << "]" << std::endl;
     });
-    return 1;
+    return 0;
 }

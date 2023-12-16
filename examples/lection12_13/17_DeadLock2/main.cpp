@@ -72,7 +72,7 @@ int main(int argc, const char* argv[])
 {
 	print() << "Let's start:" << std::endl;
 
-//*
+/*
 	std::thread t1(DeadLockA);
 	std::thread t2(DeadLockB);
 	t1.join();

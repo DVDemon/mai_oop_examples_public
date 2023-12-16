@@ -198,18 +198,10 @@ public:
 
                 if (event)
                 {
-                    try
-                    {
                         if (event->attacker->is_alive())     // no zombie fighting!
                             if (event->defender->is_alive()) // already dead!
                                 if (event->defender->accept(event->attacker))
                                     event->defender->must_die();
-                    }
-                    catch (...)
-                    {
-                        std::lock_guard<std::shared_mutex> lock(mtx);
-                        events.push(*event);
-                    }
                 }
                 else
                     std::this_thread::sleep_for(100ms);
@@ -260,7 +252,7 @@ int main()
                             if (npc->is_close(other, DISTANCE))
                                 FightManager::get().add_event({npc, other});
 
-                std::this_thread::sleep_for(1s);
+                std::this_thread::sleep_for(50ms);
             } });
 
     while (true)

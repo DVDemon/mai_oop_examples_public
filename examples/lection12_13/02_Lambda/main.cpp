@@ -23,9 +23,8 @@ int main()
         return 10;
     };
 
-
     std::cout << "sizeof lambda:" << sizeof(lambda) << std::endl;
-    int a = lambda(7);
+   // int a = lambda(7);
     for (int i : elements)
         [](int a) { std::cout << a << " "; }(i); // сделали и вызвали лямбду
     std::cout << std::endl;
