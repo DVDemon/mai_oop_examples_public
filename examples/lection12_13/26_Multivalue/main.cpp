@@ -1,4 +1,4 @@
-#include <experimental/coroutine>
+#include <coroutine>
 #include <iostream>
 #include <exception>
 
@@ -8,13 +8,13 @@ struct Generator {
         int other_value;
 
         Generator get_return_object() {
-            return Generator{std::experimental::coroutine_handle<promise_type>::from_promise(*this)};
+            return Generator{std::coroutine_handle<promise_type>::from_promise(*this)};
         }
-        std::experimental::suspend_always initial_suspend() { return {}; }
-        std::experimental::suspend_always final_suspend() noexcept { return {}; }
+        std::suspend_always initial_suspend() { return {}; }
+        std::suspend_always final_suspend() noexcept { return {}; }
         void unhandled_exception() {}
 
-        std::experimental::suspend_always yield_value(std::pair<int, int> value) {
+        std::suspend_always yield_value(std::pair<int, int> value) {
             current_value = value.first;
             other_value = value.second;
             return {};
@@ -22,9 +22,9 @@ struct Generator {
         void return_void(){};
     };
 
-    std::experimental::coroutine_handle<promise_type> h;
+    std::coroutine_handle<promise_type> h;
 
-    Generator(std::experimental::coroutine_handle<promise_type> h) : h(h) {}
+    Generator(std::coroutine_handle<promise_type> h) : h(h) {}
 
     ~Generator() {
         if (h) {

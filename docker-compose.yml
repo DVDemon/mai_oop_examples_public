@@ -1,0 +1,48 @@
+version: '3.2'
+services:
+  arch_cpp:
+    tty: true
+    container_name: arch_cpp
+    volumes:
+      - .:/opt/cpp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - arch-network
+      
+  mai-db-node-ex01:
+    build:
+      context: mariadb
+      dockerfile: Dockerfile
+    container_name: mai-db-node-ex01
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: archdb
+      MYSQL_USER: stud
+      MYSQL_PASSWORD: stud
+      MYSQL_ROOT_PASSWORD: '1'
+    command: >
+      --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+      --general-log=ON
+      --log-queries-not-using-indexes=ON
+    networks:
+      - arch-network
+    ports:
+      - 3360:3306
+    healthcheck:
+      test: "/usr/bin/mariadb --user=stud --password=stud --execute \"SHOW DATABASES;\""
+      interval: 15s
+      timeout: 1s
+      retries: 5
+    volumes:
+      - db-node-ex01-data:/var/lib/mysql
+
+volumes:
+  db-node-ex01-data:
+
+
+networks:
+  arch-network:
+    driver: "bridge"
+    external: false

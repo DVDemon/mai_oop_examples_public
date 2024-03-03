@@ -1,13 +1,13 @@
 #include <iostream>
-#include <experimental/coroutine>
-//#include <coroutine>
+//#include <experimental/coroutine>
+#include <coroutine>
 
 
 struct CoroType {
     struct promise_type {  // должна называться promise_type
         CoroType get_return_object() { return CoroType(this); }    
-        std::experimental::suspend_always initial_suspend() { return {}; }        
-        std::experimental::suspend_always final_suspend() noexcept{ return {}; }
+        std::suspend_always initial_suspend() { return {}; }        
+        std::suspend_always final_suspend() noexcept{ return {}; }
       
         void unhandled_exception() noexcept
         {
@@ -17,21 +17,21 @@ struct CoroType {
        
     };
     CoroType(promise_type* p)
-         : m_handle(std::experimental::coroutine_handle<promise_type>::from_promise(*p)) {}
+         : m_handle(std::coroutine_handle<promise_type>::from_promise(*p)) {}
     ~CoroType()
      {
          std::cout << "Handle destroyed..." << std::endl;
           m_handle.destroy();
      }
-    std::experimental::coroutine_handle<promise_type>   m_handle;
+    std::coroutine_handle<promise_type>   m_handle;
 };
 
 
 CoroType do_work() {
     std::cout << "Doing first thing... " << std::endl;
-    co_await std::experimental::suspend_always{};
+    co_await std::suspend_always{};
     std::cout << "Doing second thing..." << std::endl;
-    co_await std::experimental::suspend_always{};
+    co_await std::suspend_always{};
     std::cout << "Doing Third thing..." << std::endl;
 }
 
