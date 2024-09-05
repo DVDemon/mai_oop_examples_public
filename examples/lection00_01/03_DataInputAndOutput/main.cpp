@@ -11,7 +11,6 @@ int main(){
 
    //Data input
 
-
    int age1;
    std::string name;
 

@@ -26,8 +26,7 @@ int main(){
              std::cout << "Active tool is Marker" << std::endl;
         }
         break;
-
-
+        
         case Eraser :
         case Rectangle : 
         case Circle : {

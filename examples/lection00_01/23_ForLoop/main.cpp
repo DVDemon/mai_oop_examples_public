@@ -5,16 +5,16 @@ int main()
 
     // Print I love C++ 10 times : The bad way
 
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
-    std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
+    // std::cout << "I love C++" << std::endl;
 
     // for loop : the good way
     for (unsigned int i{0}; i < 10000; ++i)

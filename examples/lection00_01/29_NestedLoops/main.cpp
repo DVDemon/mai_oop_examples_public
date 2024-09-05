@@ -12,7 +12,6 @@ int main()
 
     for (size_t row{0}; row < ROWS; ++row)
     {
-
         for (size_t col{0}; col < COLS; ++col)
         {
 
@@ -32,7 +31,6 @@ int main()
 
     while (row < ROWS)
     {
-
         while (col < COLS)
         {
             std::cout << "( row " << std::setw(2) << row << ",col " << std::setw(2) << col << ") ";
@@ -52,7 +50,6 @@ int main()
 
     do
     { // row
-
         do
         {
             std::cout << "( row " << std::setw(2) << row << ",col " << std::setw(2) << col << ")   ";

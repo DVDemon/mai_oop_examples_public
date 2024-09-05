@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "../include/calculator.h"
 
 int calculator(int lhv,int rhv){
     int result;

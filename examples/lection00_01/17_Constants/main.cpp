@@ -13,9 +13,12 @@ int main(){
 
     int years { 3 * age};
 
+    const int born_date = years;
+
     std::cout << "age : " << age << std::endl;
     std::cout << "height : " << height << std::endl;
     std::cout << "years : " << years << std::endl;
+    std::cout << "born : " << born_date << std::endl;
    
     return 0;
 }

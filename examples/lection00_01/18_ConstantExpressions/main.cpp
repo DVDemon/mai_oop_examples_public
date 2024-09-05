@@ -10,9 +10,7 @@ const int x - переменная x не должна меняться в пр�
 int main(){
 
 	constexpr int SOME_LIB_MAJOR_VERSION {1237};
-	
 	constexpr int eye_count {2};
-	
 	constexpr double PI {3.14};
 
     //eye_count = 4;
@@ -40,7 +38,5 @@ int main(){
 
     std::cout << "App doing its thing..." << std::endl;
 
-
-   
     return 0;
 }
