@@ -1,16 +1,16 @@
 #include <iostream>
-#include "include/calculator.h"
+#include "include/solve_func.h"
 
 int main()
 {
   int lhv,rhv;
-  std::cout << "enter left value:";
+  std::cout << "введите ширину:";
   std::cin  >> lhv;
-  std::cout << "enter right value:";
+  std::cout << "введите высоту:";
   std::cin  >> rhv;
 
 
-  std::cout << "result: " << calculator(lhv,rhv) << std::endl;
+  std::cout << "result: " << solve_func(lhv,rhv) << std::endl;
 
   return 0;
 }
