@@ -1,19 +1,24 @@
 #include <gtest/gtest.h>
-#include "../include/calculator.h"
+#include "../include/solve_func.h"
 
 TEST(test_01, basic_test_set)
 {
-    ASSERT_TRUE(calculator(1,1)==2);
+    ASSERT_TRUE(solve_func(1,1)==0);
 }
 
 TEST(test_02, basic_test_set)
 {
-    ASSERT_TRUE(calculator(100,0)==100);
+    ASSERT_TRUE(solve_func(5,3)==14);
 }
 
 TEST(test_03, basic_test_set)
 {
-    ASSERT_TRUE(calculator(-100,-20)==-120);
+    ASSERT_TRUE(solve_func(-100,-20)==0);
+}
+
+TEST(test_04, basic_test_set)
+{
+    ASSERT_TRUE(solve_func(12,3)==35);
 }
 
 int main(int argc, char **argv) {
