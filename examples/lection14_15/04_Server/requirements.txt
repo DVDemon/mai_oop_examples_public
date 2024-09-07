@@ -1,4 +1,0 @@
-mysql-connector-python==8.0.31
-pandas==1.5.1
-SQLAlchemy==1.4.42
-PyMySQL==1.0.2
