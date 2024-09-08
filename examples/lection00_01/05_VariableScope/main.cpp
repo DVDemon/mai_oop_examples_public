@@ -3,7 +3,7 @@
 int global_var1{23}; // global variable
 
 void some_other_function(){
-    //local_var = 5;
+ //   local_var = 5;
 }
 
 void some_function(){

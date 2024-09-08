@@ -22,6 +22,7 @@ int main()
         // Whatever we want the loop to run
         std::cout << i << " : I love C++" << std::endl;
     }
+
     std::cout << "Loop done!" << std::endl;
 
     // Use size_t : a representation of some unsigned int for positive numbers [sizes]

@@ -2,9 +2,9 @@
 #include <iostream>
 
 
-//int main(int argc,char * argv[])
+int main(int argc,char * argv[]){
 //auto main() -> int {
-int main(){
+//int main(){
 
     std::cout << "Number1" << std::endl;
     std::cout << "Number2" << std::endl;

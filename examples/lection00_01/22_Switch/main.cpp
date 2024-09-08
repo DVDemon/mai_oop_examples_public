@@ -39,7 +39,8 @@ int main(){
         }
         break;
     
-        default: {
+        default: 
+        {
             std::cout << "No match found" << std::endl;
         }
     }

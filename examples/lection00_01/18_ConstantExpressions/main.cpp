@@ -31,7 +31,7 @@ int main(){
 	constexpr int chair_count{ table_count * 5};// Works
 
 
-   // static_assert( SOME_LIB_MAJOR_VERSION == 123);
+    // static_assert( SOME_LIB_MAJOR_VERSION == 123);
 
    // int age = 5;
    // static_assert( age == 5);

@@ -37,5 +37,6 @@ add_executable(30_ThisPointer 30_ThisPointer/main.cpp)
 add_executable(31_Struct 31_Struct/main.cpp)
 add_executable(32_SizeOfClassObjects 32_SizeOfClassObjects/main.cpp)
 add_executable(33_ConstMember 33_ConstMember/main.cpp)
+add_executable(34_ruleOfFour 34_ruleOfFour/main.cpp)
 
 add_subdirectory(lab_02)
