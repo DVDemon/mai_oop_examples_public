@@ -7,7 +7,7 @@ void proc2(void) {
     try {
 
         std::cout << "Proc2 called" << std::endl;
-        //std::string().at(1); // this generates an std::out_of_range
+        char a=std::string().at(1); // this generates an std::out_of_range
         throw 42; //custom class
 
     } catch (int ex1) {

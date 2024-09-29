@@ -3,13 +3,13 @@
 const double PI {3.1415926535897932384626433832795};
 
 class Cylinder {
-    public : 
+   public : 
         //Functions (methods)
         double volume(){
             return PI * base_radius * base_radius * height;
         }
 
-    public : 
+   // public : 
         //Member variables
         double base_radius{1};
         double height{1};

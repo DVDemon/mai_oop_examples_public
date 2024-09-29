@@ -8,7 +8,7 @@ struct MyClass {
         return counter;
     }
 
-     int foo(const int a) const{
+     int foo(const int a) const {
         //++counter;
         return get()+a;
     }
@@ -30,9 +30,9 @@ int main(int argc, char** argv) {
     //P3 = &b; //changing pointer - not allowed
 
 
-    MyClass a;
+    const MyClass a;
 
-    const int aa = a.foo(1);
+    int aa = a.get();
     std::cout << a.foo(1) << std::endl;
 
     return 0;

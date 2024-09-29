@@ -16,6 +16,9 @@ int main(){
     DashArray ds4(std::move(ds3));
     ds4.print(std::cout) << std::endl;
 
+    DashArray ds5(DashArray {'1','1','1','1','1','1','1'});
+    
+
     try{
 
         DashArray ds5 = ds4.remove(ds2);

@@ -31,7 +31,7 @@ int main(){
 
 
     //Raw pointers
-    /*
+    //*
 	Shape* shapes3[] {&circle1,&oval1,&circle2,&oval2,&circle3,&oval3};
 	
 	for ( Shape* shape_ptr : shapes3){

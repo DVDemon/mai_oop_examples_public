@@ -19,8 +19,8 @@ class Cylinder {
 
     private : 
         //Member variables
-        double base_radius{1};
-        double height{1};
+        double base_radius{};
+        double height{};
 };
 
 

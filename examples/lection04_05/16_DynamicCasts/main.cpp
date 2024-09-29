@@ -55,8 +55,8 @@ int main(){
 	//Calling non virtual methods on animal_ref won't work
 	//animal_ref.do_some_feline_thingy();
 	
-	//Dog & feline_ref {dynamic_cast<Dog&>(animal_ref)};
-	//feline_ref.do_some_dog_thingy();
+	// Dog & feline_ref {dynamic_cast<Dog&>(animal_ref)};
+	// feline_ref.do_some_dog_thingy();
 
 
     //Doing proper checks with references

@@ -15,14 +15,14 @@ std::string&& booRL(std::string &&val)
 {
     std::cout << "Rval: " << val << std::endl;
     std::cout << "R*val: " << &val << std::endl;
-    return std::move(val);
+    return std::move(val); // (std::string&&) val;
 }
 
 std::string& booRL(std::string &val)
 {
     std::cout << "Lval: " << val << std::endl;
     std::cout << "L*val: " << &val << std::endl;
-    return val;
+    return std::ref(val); // (std::string&) val;
 }
 
 int main()
@@ -38,8 +38,8 @@ int main()
     // std::cout << "*value: " << &value << " , *val2: " << &val2 << std::endl;
 
     //std::string &&val3 = booRL("Some value");
-    //std::string val3 = std::move(booRL("Some value"));
-    std::string &val3 = booRL(value);
+    std::string val3 = booRL("Some value");
+    //std::string &val3 = booRL(value);
     std::cout << "*val3: " << &val3 << std::endl;
     std::cout << "result: " << val3 << std::endl;
     return 1;

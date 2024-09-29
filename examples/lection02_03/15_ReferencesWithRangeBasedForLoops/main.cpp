@@ -22,7 +22,7 @@ int main(){
     //Printing after change
      std::cout << std::endl;
 	std::cout << "Scores : ";
-    for ( auto score : scores){
+    for ( const auto& score : scores){
         std::cout << " " << score ;
     }
 	std::cout << std::endl;

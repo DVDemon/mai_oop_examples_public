@@ -18,6 +18,7 @@ add_executable(12_InheritanceAndPolymorphismWithStaticMembers 12_InheritanceAndP
 add_executable(13_Final 13_Final/main.cpp 13_Final/bulldog.cpp 13_Final/animal.cpp 13_Final/cat.cpp 13_Final/wildcat.cpp 13_Final/pigeon.cpp 13_Final/bird.cpp 13_Final/crow.cpp 13_Final/feline.cpp 13_Final/dog.cpp 13_Final/)
 add_executable(16_DynamicCasts 16_DynamicCasts/main.cpp 16_DynamicCasts/animal.cpp 16_DynamicCasts/feline.cpp 16_DynamicCasts/dog.cpp)
 add_executable(17_TypeIdOperator 17_TypeIdOperator/main.cpp)
+add_executable(17_Multy 17_Multi/main.cpp)
 add_executable(18_PureVirtualFunctionsAndAbstractClasses 18_PureVirtualFunctionsAndAbstractClasses/main.cpp 18_PureVirtualFunctionsAndAbstractClasses/circle.cpp 18_PureVirtualFunctionsAndAbstractClasses/rectangle.cpp 18_PureVirtualFunctionsAndAbstractClasses/shape.cpp)
 add_executable(21_AdditionOperatorAsMember 21_AdditionOperatorAsMember/main.cpp 21_AdditionOperatorAsMember/point.cpp)
 add_executable(22_AdditionOperatorAsNonMember 22_AdditionOperatorAsNonMember/main.cpp 22_AdditionOperatorAsNonMember/point.cpp)
