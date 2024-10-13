@@ -11,6 +11,7 @@ struct Foo{
 template <class A>
 struct Foo<A,char,char>{
     A add(char b,char c){
+        //std::cout << "char" << std::endl;
         return static_cast<A>(b+c-'0'-'0');
     }
 };
@@ -32,7 +33,7 @@ int main(){
 
     std::cout<< Foo<int,int,int>().add(5,3) << std::endl;
     std::cout<< Foo<int,char,char>().add('2','2') << std::endl;
-    std::cout<< Foo<char,char,char>().add(48,1) << std::endl;
+    std::cout<< Foo<char,char,char>().add('0',1) << std::endl;
 
     std::cout<< add<int,int,int>(1,2) << std::endl;
     std::cout<< add<int,char,char>('1','2') << std::endl;

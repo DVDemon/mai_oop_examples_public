@@ -1,7 +1,9 @@
 #include <iostream>
 
 struct Animal {
-
+    void wow() {
+        std::cout << "Wow!!!" << std::endl;
+    }
 };
 
 struct Duck : Animal {
@@ -17,7 +19,6 @@ struct Bobr :  Animal {
 };
 
 struct Platypus : Duck, Bobr {
-
 };
 
 int main() {
@@ -28,6 +29,8 @@ int main() {
     Platypus p;
     p.swim();
     p.make_a_dam();
+    p.Bobr::wow();
+    p.Duck::wow();
 
     return 0;
 }

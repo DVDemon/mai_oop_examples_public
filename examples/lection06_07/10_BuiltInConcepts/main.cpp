@@ -13,7 +13,7 @@ public :
 	}
 	friend std::ostream& operator<< ( std::ostream& out, const Point<T> operand){
 		out << "Point [ x : " << operand.m_x
-					<< ", y : " << operand.m_y << "]";
+			<< ", y : " << operand.m_y << "]";
 		return out;
 	}
 	std::weak_ordering operator<=>(const Point& other) const = default;
@@ -37,7 +37,7 @@ struct  Cat
 int main(){
 
 	//Numbers
-	// std::floating_point<T>
+	//std::floating_point<T>
 	// static_assert(std::floating_point<int>);//Fails
 	// static_assert(std::floating_point<double>);
 

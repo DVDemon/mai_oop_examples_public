@@ -3,7 +3,7 @@
 #include <iostream>
 
 template <typename T>
-concept Number = std::is_default_constructible<T>::value || std::integral<T> || std::floating_point<T>;
+concept Number = std::is_default_constructible<T>::value && ( std::integral<T> || std::floating_point<T> || std::same_as<T,std::string>);
 
 template <Number T>
 class Human {

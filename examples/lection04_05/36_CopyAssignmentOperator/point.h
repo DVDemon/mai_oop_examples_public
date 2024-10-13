@@ -24,7 +24,7 @@ public:
 		return *this;
 	}
 
-	Point& operator= (Point&& right_operand){ // not const
+	Point& operator= (Point&& right_operand) noexcept{ // not const
 		std::cout << "Move assignment operator called" << std::endl;
 		if(this != & right_operand){
 			delete p_data;

@@ -10,6 +10,7 @@ public:
 	Point(double x, double y) : 
 		m_x(x), m_y(y){
 	}
+
 	~Point() = default;
 
 	void print_info(){
@@ -24,9 +25,7 @@ private :
 };
 
 
-inline Point operator+(const Point& left, const Point& right){
-	return Point(left.m_x + right.m_x , left.m_y + right.m_y );
-}
+
 
 
 #endif // POINT_H

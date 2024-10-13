@@ -58,7 +58,7 @@ int main(){
     //Shapes stored in collections
     Shape* shape_collection[]{&shape1,&oval1,&circle1};
 	 
-	 for(Shape* s_ptr : shape_collection){
+	for(Shape* s_ptr : shape_collection){
         s_ptr->draw();
     }
   

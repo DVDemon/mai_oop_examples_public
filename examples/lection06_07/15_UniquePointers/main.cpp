@@ -6,7 +6,7 @@ int main(){
 
 
     //Stack variables
-    /*
+    //*
     {
         Dog dog1("Dog1");
         // Calling functions on stack objects
@@ -21,7 +21,7 @@ int main(){
    //----------------------------------------------------------------------------------
     //Using raw pointers : Remember to manually release memory, 
     //						if you don't relase , you leak memory
-    /*
+    //*
         Dog* p_dog2 = new Dog("Dog2");
         int * p_int1 = new int(100);
         
@@ -38,7 +38,7 @@ int main(){
 
     //----------------------------------------------------------------------------------
     //Using unique_ptr : managed memory is owned by a single pointer at any moment.
-    /*
+    //*
     {
         Dog * p_dog_3 = new Dog("Dog3");
         std::unique_ptr<Dog> up_dog_4{p_dog_3}; // Can also manage a previously allocated 
@@ -77,7 +77,7 @@ int main(){
     //*/
 
 //----------------------------------------------------------------------------------
-    //*
+    /*
     //Copies not allowed
     std::unique_ptr<Dog> up_dog_8 = std::make_unique<Dog>("Dog8");
     up_dog_8->print_dog();
@@ -119,6 +119,7 @@ int main(){
     //destructor is called before the line : std::cout << "Doing something" << std::endl; SHOW THIS.
     
 	
+    /*
     std::unique_ptr<Dog> up_dog_13 = std::make_unique<Dog>("Dog13");
     //up_dog_13.reset(); // releases memory and sets pointer to nullptr
     
@@ -128,6 +129,7 @@ int main(){
     }else{
         std::cout << "up_dog_13 points is null : " << up_dog_13.get() << std::endl;
     }
+    //*/
 
  
 
