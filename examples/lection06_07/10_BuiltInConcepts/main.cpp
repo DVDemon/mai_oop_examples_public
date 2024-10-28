@@ -36,6 +36,7 @@ struct  Cat
 
 int main(){
 
+	BoxContainer<Point<int>> box;
 	//Numbers
 	//std::floating_point<T>
 	// static_assert(std::floating_point<int>);//Fails

@@ -31,7 +31,7 @@ typename std::enable_if<std::is_integral<T>::value,void>::type print(T& value){
 }
 
 // Функция, которая работает только с целочисленными типами 
-template<typename T, typename std::enable_if<std::is_integral<T>::value, int>::type=0> 
+template<typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0> 
 void print_integer(T value) { 
   std::cout << "Integer value: " << value << std::endl; 
 } 

@@ -9,7 +9,7 @@ template <class T>  struct Container{
 
 // шаблон функции с параметром типом
 template <class T> T print(T value){
-    std::cout << "Value:" << value << std::endl;
+    std::cout << "Value:" << value << " size:" << sizeof(T) << std::endl;
     return value;
 }
 
@@ -24,22 +24,23 @@ int main(int argc, char** argv) {
     // print(10); 
     print<const char*>("Hello world!");
     print<std::string>("Hello world!");
-    print("Hello world!");
+    print(std::string("Hello world!"));
 
     // // или можем указать явно
     // print<double>(0.5);
     // print<char>(48);
     
     // // простое создание шаблона
-    Container<int> a(10);
+    // Container<int> a(10);
 
-    // // параметром шаблона может быть тип сгененерированный на основе шаблона
-    Container<Container<const char*> > 
-        b(Container<const char*>("Hi there!"));
-    std::cout << b.payload.payload << std::endl;
+    // // // параметром шаблона может быть тип сгененерированный на основе шаблона
+    // Container<Container<const char*> > 
+    //     b(Container<const char*>("Hi there!"));
+    // std::cout << b.payload.payload << std::endl;
 
     // // так странно можно обратится к 10
-    std::cout << foo<100>::value << std::endl;
+    constexpr int A =10;
+    std::cout << foo<A>::value << std::endl;
     
     return 0;
 }

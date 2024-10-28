@@ -7,21 +7,21 @@ int main(){
 
     //Stack variables
     //*
-    {
-        Dog dog1("Dog1");
-        // Calling functions on stack objects
-        dog1.print_dog();
+    // {
+    //     Dog dog1("Dog1");
+    //     // Calling functions on stack objects
+    //     dog1.print_dog();
 
-    }
-    std::cout << "Hitting outside scope" << std::endl;
-    std::cout << "Done!" << std::endl;
+    // }
+    // std::cout << "Hitting outside scope" << std::endl;
+    // std::cout << "Done!" << std::endl;
     //*/
 
 
    //----------------------------------------------------------------------------------
     //Using raw pointers : Remember to manually release memory, 
     //						if you don't relase , you leak memory
-    //*
+    /*
         Dog* p_dog2 = new Dog("Dog2");
         int * p_int1 = new int(100);
         

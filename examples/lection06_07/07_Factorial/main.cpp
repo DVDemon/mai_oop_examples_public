@@ -6,7 +6,7 @@ template <uint64_t value> uint64_t Factorial(){
   return Factorial<value-1>()*value;    
 }
 
-template <> uint64_t Factorial<0>(){
+template <> uint64_t Factorial<1>(){
   return 1ull;    
 }
 
@@ -17,7 +17,7 @@ struct fact{
 };
  
 template<>
-struct fact<0>{
+struct fact<1>{
    static const uint64_t value = 1ull;
 };
  
