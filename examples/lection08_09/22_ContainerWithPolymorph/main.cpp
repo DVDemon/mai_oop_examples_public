@@ -6,6 +6,7 @@
 #include <exception>
 #include <algorithm>
 
+
 // Пользовательский memory_resource, который использует операторы new и delete
 class CustomMemoryResource : public std::pmr::memory_resource
 {
@@ -14,7 +15,7 @@ class CustomMemoryResource : public std::pmr::memory_resource
         size_t size {0};
     };
 
-    static constexpr size_t max_size{400};
+    static constexpr size_t max_size{600};
     char buffer[max_size];
     std::vector<Block> used_blocks;
 
@@ -76,6 +77,9 @@ public:
                                                          size_(size)
     {
         T *raw_ptr = allocator_.allocate(size); 
+        for(size_t i=0;i<size;++i) 
+            allocator_.construct(raw_ptr+i);
+        
         //allocator,con          // Allocate space for one T
         //new (raw_ptr) T(std::forward<Args>(args)...); // Use placement new with forwarded arguments
         data_ = std::unique_ptr<T, PolymorphicDeleter>(raw_ptr, PolymorphicDeleter{});
@@ -112,6 +116,9 @@ public:
         return size_;
     }
     ~Array() {
+        if constexpr (std::is_destructible_v<T>)
+            for(size_t i=0;i<size_;++i)
+            std::allocator_traits<allocator_type>::destroy(allocator_, data_.get() + i);
         allocator_.deallocate(data_.get(),size_);
     }
 };
@@ -120,6 +127,14 @@ int main()
 {
     CustomMemoryResource customResource;
     std::pmr::polymorphic_allocator<int> allocator(&customResource);
+
+    struct AB {
+        int a;
+        int b;
+    };
+
+    Array<AB, std::pmr::polymorphic_allocator<AB>> array(10, allocator);
+
     Array<int, std::pmr::polymorphic_allocator<int>> *array1,*array2,*array3,*array4;
 
     array1 = new Array<int, std::pmr::polymorphic_allocator<int>>(10,allocator);
