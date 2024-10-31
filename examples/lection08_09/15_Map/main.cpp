@@ -52,6 +52,11 @@ void testIterator() {
 	++iter; 
 	--iter;
 
+	auto it = values.find("Alpha");
+	if (it != std::end(values)) {
+		std::cout  << "Found:" << it->first << ":" << it->second << std::endl;
+	}
+
 	// But not random-access
 	// iter += 3;
 

@@ -165,7 +165,7 @@ void testCustomReallocate() {
         std::cout << "capacity = " << values.capacity() << std::endl;
         
         // много копирований
-        /*
+        //*
         SomeStruct entry{i};
         values.push_back(entry);
         //*/
@@ -175,10 +175,10 @@ void testCustomReallocate() {
 
 int main() {
 
-    // testPlacing();
-    // testReallocate();
-    // testReserve();
-    // testIterator();
+    testPlacing();
+    testReallocate();
+    testReserve();
+    testIterator();
     testCustomReallocate();
 
     return 0;

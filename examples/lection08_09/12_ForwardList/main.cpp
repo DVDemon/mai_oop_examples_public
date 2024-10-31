@@ -77,7 +77,7 @@ void testIterator() {
 int main() {
     testPlacing();
 
-    // testIterator();
+    testIterator();
 
     return 0;
 }

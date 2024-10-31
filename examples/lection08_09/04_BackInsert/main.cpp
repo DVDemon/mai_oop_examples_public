@@ -24,9 +24,9 @@ int main() {
 
 
     std::back_insert_iterator< std::vector<int> >  back_it(foo);
-    //my_copy(bar.begin(), bar.end(), back_it);
-    foo.resize(10);
-    std::copy(bar.begin(), bar.end(), foo.begin()); // bad
+    my_copy(bar.begin(), bar.end(), back_it);
+    //foo.resize(10);
+    //std::copy(bar.begin(), bar.end(), foo.begin()); // bad
 
     std::cout << "foo:";
     for (auto i : foo) std::cout << ' ' << i;
