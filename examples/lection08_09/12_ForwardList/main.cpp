@@ -7,7 +7,7 @@ void testPlacing() {
     int stackVariable = 0;
     std::forward_list<int> values;
     
-    for(int i=0;i<1000000;++i)
+    for(int i=0;i<100;++i)
      values.push_front(i);
 
 
@@ -19,8 +19,8 @@ void testPlacing() {
         //std::cout << "&value         = " << &v << std::endl;
         ++index;
         if (ptr) {
-            if((&v - ptr)>4)
-                std::cout << "diff = " << &v - ptr << ":" << index << std::endl;
+            //if((&v - ptr)>4)
+                std::cout << "diff = " << reinterpret_cast<unsigned long>(ptr)-reinterpret_cast<unsigned long>(&v) << ":" << index << std::endl;
         }
         ptr = &v;        
     }

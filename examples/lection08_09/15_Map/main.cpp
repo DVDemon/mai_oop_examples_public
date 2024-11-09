@@ -32,6 +32,10 @@ void testOrder() {
 	for(auto& v : values) {
 		std::cout << v.first << std::endl;
 	}
+
+	for(auto& [k,v] : values) {
+		std::cout << k << "," << v << std::endl;
+	}
 }
 
 void testIterator() {

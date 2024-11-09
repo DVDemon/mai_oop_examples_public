@@ -31,7 +31,8 @@ public:
         if(result+bytes >= max_size) throw std::bad_alloc();
 
         used_blocks.emplace_back(result,bytes);
-        std::sort(used_blocks.begin(),used_blocks.end(),[](auto & lhv,auto & rhv) { return lhv.offset<=rhv.offset;});
+        std::sort(used_blocks.begin(),used_blocks.end(),
+                [](auto & lhv,auto & rhv) { return lhv.offset<=rhv.offset;});
         std::cout << "allocate: " << result << ":" << bytes << std::endl;
         return buffer+result;//::operator new(bytes);
     }

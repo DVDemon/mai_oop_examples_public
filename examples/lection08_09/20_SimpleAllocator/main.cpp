@@ -140,18 +140,18 @@ void test2()
 
 int main(int argc, char **argv)
 {
-    // test1();
-    // test2();
+    test1();
+    test2();
 
-    std::map<int, int, std::less<int>,mai::Allocator<std::pair<const int,int>>> my_map;
+    // std::map<int, int, std::less<int>,mai::Allocator<std::pair<const int,int>>> my_map;
 
-    my_map[1]=10;
-    my_map[2]=20;
-    my_map[3]=30;
+    // my_map[1]=10;
+    // my_map[2]=20;
+    // my_map[3]=30;
 
 
-    for(const auto& [k,v]: my_map)
-        std::cout << k << "->" << v << std::endl;
+    // for(const auto& [k,v]: my_map)
+    //     std::cout << k << "->" << v << std::endl;
 
     return 0;
 }

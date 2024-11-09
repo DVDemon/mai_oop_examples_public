@@ -84,23 +84,23 @@ using map_type_with_allocator =
 
 auto main() -> int
 {
-    mai::allocator<int,10> a;
-    mai::allocator<int,10> b=a;
+    // mai::allocator<int,10> a;
+    // mai::allocator<int,10> b=a;
 
-    // заполняем значением факториала
-    map_type_with_allocator my_map_with_allocator;
-    my_map_with_allocator[1]=2;
-    my_map_with_allocator[2]=4;
-    my_map_with_allocator[3]=6;
-    my_map_with_allocator[4]=7;
+    // // заполняем значением факториала
+    // map_type_with_allocator my_map_with_allocator;
+    // my_map_with_allocator[1]=2;
+    // my_map_with_allocator[2]=4;
+    // my_map_with_allocator[3]=6;
+    // my_map_with_allocator[4]=7;
 
-    for (auto p : my_map_with_allocator)
-        std::cout << p.first << " " << p.second << std::endl;
+    // for (auto p : my_map_with_allocator)
+    //     std::cout << p.first << " " << p.second << std::endl;
 
 
-    // std::vector<int,mai::allocator<int,100>> my_vector;
-    // for(size_t i=0;i<10;++i) my_vector.push_back(i);
+    std::vector<int,mai::allocator<int,100>> my_vector;
+    for(size_t i=0;i<10;++i) my_vector.push_back(i);
 
-    // for(size_t i=0;i<10;++i) std::cout << my_vector[i] << std::endl;
+    for(size_t i=0;i<10;++i) std::cout << my_vector[i] << std::endl;
     return 0;
 }

@@ -12,7 +12,7 @@ void testPlacing() {
     std::cout << "&values        = " << &values << std::endl;
     std::cout << "values.data()  = " << values.data() << std::endl;
 
-    for(auto& v : values)
+    for(const auto& v : values)
         std::cout << v << ' ';
     std::cout << std::endl;
 
@@ -21,7 +21,8 @@ void testPlacing() {
     std::cout << std::endl;
 
 
-    for(auto it = std::begin(values);it!=std::end(values);++it)
+    int values2[] = {1,2,3,4,5};
+    for(auto it = std::begin(values2);it!=std::end(values2);++it)
         std::cout << *it << ' ';
     std::cout << std::endl;
 
@@ -86,7 +87,7 @@ void testIterator() {
 
     std::cout << *values.begin() << std::endl;
 
-    auto iter = std::next(values.cbegin(), 3);
+    auto iter = std::next(values.cbegin(), 3); /// values.cbegin()+3
     
     std::cout << *iter << std::endl;
 
@@ -166,8 +167,9 @@ void testCustomReallocate() {
         
         // много копирований
         //*
-        SomeStruct entry{i};
-        values.push_back(entry);
+        //SomeStruct entry{i};
+        //values.push_back(entry);
+        //values.push_back(SomeStruct(i));
         //*/
         values.emplace_back(i);
     }

@@ -39,8 +39,8 @@ public:
 class ConcreteVisitor1 : public Visitor {
 public:
     void visit(ConcreteElementA& element) override {
-        std::cout << "ConcreteVisitor1 visits ";
-        element.operationA();
+        // std::cout << "ConcreteVisitor1 visits ";
+        // element.operationA();
     }
 
     void visit(ConcreteElementB& element) override {
@@ -57,8 +57,8 @@ public:
     }
 
     void visit(ConcreteElementB& element) override {
-        std::cout << "ConcreteVisitor2 visits ";
-        element.operationB();
+        // std::cout << "ConcreteVisitor2 visits ";
+        // element.operationB();
     }
 };
 

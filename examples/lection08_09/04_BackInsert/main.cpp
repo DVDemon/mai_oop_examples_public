@@ -5,7 +5,8 @@
 
 //* копируем из bar в back_it
 template<class InputIterator, class OutputIterator >
-OutputIterator my_copy(InputIterator first, InputIterator last, OutputIterator result) {
+OutputIterator my_copy(InputIterator first, InputIterator last, 
+                      OutputIterator result) {
         while (first != last) {
             *result = *first;
             ++result;
