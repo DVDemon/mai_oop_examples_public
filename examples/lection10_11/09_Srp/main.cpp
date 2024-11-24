@@ -8,9 +8,7 @@ protected:
     std::string number;
     std::string buffer;
 public:
-
     Modem() : connected(false), number("") {
-
     }
 
     bool Deal(const char* value) {
@@ -39,16 +37,12 @@ public:
             res = buffer.front();
             buffer.erase(buffer.begin());
         }
-
-
         return res;
     }
 };
 
 auto main() -> int {
-
     Modem modem;
-
     modem.Deal("8-800-1234567");
 
     if (!modem.Connected()) {

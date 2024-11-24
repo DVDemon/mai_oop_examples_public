@@ -75,8 +75,8 @@ auto main() -> int{
 
     Menu m;
     
-    // m.add(std::make_shared<ItemBulka>());
-    // m.add(std::make_shared<ItemBulka>());
+    m.add(std::make_shared<ItemBulka>());
+    m.add(std::make_shared<ItemBulka>());
     m.add(std::make_shared<ItemButerbord>());
     m.add(std::make_shared<ItemCoffe>());
     m.add(std::make_shared<ItemCoffe>());

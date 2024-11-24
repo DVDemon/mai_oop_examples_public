@@ -59,6 +59,7 @@ std::shared_ptr<NPC> factory(std::istream &is)
 
 std::shared_ptr<NPC> factory(NpcType type, int x, int y)
 {
+    std::cout << "Type:" << (int)type << std::endl;
     std::shared_ptr<NPC> result;
     switch (type)
     {
@@ -153,7 +154,7 @@ int main()
 
     // Гененрируем начальное распределение монстров
     std::cout << "Generating ..." << std::endl;
-    for (size_t i = 0; i < 10; ++i)
+    for (size_t i = 0; i < 100; ++i)
         array.insert(factory(NpcType(std::rand() % 3 + 1),
                              std::rand() % 100,
                              std::rand() % 100));

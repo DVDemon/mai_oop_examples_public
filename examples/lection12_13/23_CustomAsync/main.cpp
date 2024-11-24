@@ -5,6 +5,8 @@
 #include <vector>
 
 #include <cassert>
+#include <iostream>
+#include <exception>
 
 enum class EventCode {
     start = 0,
@@ -43,22 +45,26 @@ public:
     int exec() {
         while (!m_quit) {
             if (!m_event_queue.empty()) {
-                auto ev = m_event_queue.front();
-                m_event_queue.pop();
+                try {
+                    auto ev = m_event_queue.front();
+                    m_event_queue.pop();
 
-                switch (ev.code) {
-                	// Special event for stopping
-                    case EventCode::quit:
-                        m_quit = true;
-                        break;
-                    // All other events are handled by handlers
-                    default:
-                        for (auto handler : m_handlers) {
-                        	assert(handler);
-                        	if (handler->event(ev))
-                        		break;
-                        }
-                }
+                    switch (ev.code) {
+                        // Special event for stopping
+                        case EventCode::quit:
+                            m_quit = true;
+                            break;
+                        // All other events are handled by handlers
+                        default:
+                            for (auto handler : m_handlers) {
+                                assert(handler);
+                                if (handler->event(ev))
+                                    break;
+                            }
+                    }
+                }catch(std::exception & ex) {
+                    std::cerr << "exception: " << ex.what() << std::endl;
+                 }
             } else {
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }

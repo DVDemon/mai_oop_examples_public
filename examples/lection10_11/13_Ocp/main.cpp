@@ -147,8 +147,8 @@ auto main() -> int {
     Modem modem;
     Channel<char> channel;
     
-    //if (Connect(&modem,std::make_shared<AddressPhone>(AddressPhone("8-800-8888888")))) {
-    if (Connect(&modem,std::make_shared<AddressIP>(AddressIP{127,0,0,1}))){
+    if (Connect(&modem,std::make_shared<AddressPhone>(AddressPhone("8-800-8888888")))) {
+    //if (Connect(&modem,std::make_shared<AddressIP>(AddressIP{127,0,0,1}))){
         Test(&modem, channel, channel);
         Disconnect(&modem);
     }
