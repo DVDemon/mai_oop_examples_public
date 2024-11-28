@@ -34,6 +34,7 @@ add_executable(24_CoSimple 24_CoSimple/main.cpp)
 add_executable(25_CoFibonacci 25_CoFibonacci/main.cpp)
 add_executable(26_Multivalue 26_Multivalue/main.cpp)
 add_executable(27_Ranger 27_Ranger/main.cpp)
+add_executable(28_Await 28_Await/main.cpp)
 
 
 target_link_libraries(01_ParameterFunction PRIVATE  ${CMAKE_THREAD_LIBS_INIT})
@@ -63,5 +64,6 @@ target_link_libraries(24_CoSimple PRIVATE  ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(25_CoFibonacci PRIVATE  ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(26_Multivalue PRIVATE  ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(27_Ranger PRIVATE  ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(28_Await PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 
 add_subdirectory(lab_07)
