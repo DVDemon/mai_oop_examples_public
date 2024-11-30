@@ -163,7 +163,7 @@ class FightManager
 {
 private:
     std::queue<FightEvent> events;
-    std::shared_mutex mtx;
+    std::mutex mtx;
 
     FightManager() {}
 
@@ -176,7 +176,7 @@ public:
 
     void add_event(FightEvent &&event)
     {
-        std::lock_guard<std::shared_mutex> lock(mtx);
+        std::lock_guard<std::mutex> lock(mtx);
         events.push(event);
     }
 
@@ -188,7 +188,7 @@ public:
                 std::optional<FightEvent> event;
 
                 {
-                    std::lock_guard<std::shared_mutex> lock(mtx);
+                    std::lock_guard<std::mutex> lock(mtx);
                     if (!events.empty())
                     {
                         event = events.back();
@@ -198,6 +198,7 @@ public:
 
                 if (event)
                 {
+                        std::lock_guard<std::mutex> lock(mtx);
                         if (event->attacker->is_alive())     // no zombie fighting!
                             if (event->defender->is_alive()) // already dead!
                                 if (event->defender->accept(event->attacker))

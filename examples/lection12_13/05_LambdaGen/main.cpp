@@ -22,7 +22,7 @@ int main()
 
 	std::cout << lambda_gen(25)(5) << std::endl;
 
-	auto lll = lambda_gen(1000);
+	auto lll = lambda_gen(0);
 
 	std::transform(elements.begin(),elements.end(),
 				   elements.begin(),

@@ -20,9 +20,10 @@ void NPC::fight_notify(const std::shared_ptr<NPC> defender, bool win)
 
 bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance)
 {
+    std::lock_guard<std::mutex> lck(mtx);
     auto [other_x, other_y] = other->position();
 
-    std::lock_guard<std::mutex> lck(mtx);
+    
     if ((std::pow(x - other_x, 2) + std::pow(y - other_y, 2)) <= std::pow(distance, 2))
         return true;
     else

@@ -72,7 +72,7 @@ Generator sequence(int start, int end) {
 }
 
 int main() {
-    auto gen = sequence(1, 5);
+    auto gen = sequence(1, 50);
 
 // Метод move_next возобновляет выполнение корутины и возвращает true, если корутина еще не завершилась. 
 // Метод current_value возвращает текущее значение, возвращенное корутиной.

@@ -65,9 +65,9 @@ void threadFunction(std::mutex *lock)
         std::cout << "waithing thread " << std::this_thread::get_id() << std::endl;
         lock->lock();
         std::cout << "entered thread " << std::this_thread::get_id() << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(rand() % 5));
+        std::this_thread::sleep_for(std::chrono::seconds(rand() % 3));
         std::cout << "leaving thread " << std::this_thread::get_id() << std::endl;
-        throw 0;
+ //       throw 0;
         lock->unlock();
     }
     catch (...)
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 
     long number = 0;
     std::mutex lock;
-    /*
+    //*
     {
         Scoped_Thread th1(std::move(std::thread(add_function,&number,&lock)));
         Scoped_Thread th2(std::move(std::thread(subst_function,&number,&lock)));

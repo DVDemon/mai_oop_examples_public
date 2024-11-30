@@ -86,7 +86,7 @@ void race_4() {
 }
 
 void race_5(){
-    int hc = std::thread::hardware_concurrency()-1;
+    int hc = std::thread::hardware_concurrency();
     std::vector<std::thread*> threads;
     for(int i=0;i<300/hc;i++)
     {

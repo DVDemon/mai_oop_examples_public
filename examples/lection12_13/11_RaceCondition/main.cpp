@@ -43,7 +43,7 @@ int main() {
     
     {
         Scoped_Thread th1(std::move(std::thread(add_function,&number)));
-    // }{
+//     }{
         Scoped_Thread th2(std::move(std::thread(subst_function,&number)));
     }
     

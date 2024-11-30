@@ -32,8 +32,8 @@ void go()
 {
     std::unique_lock<std::mutex> lck(mtx); // lock
     ready = true;
-    cv.notify_one();
-    //cv.notify_all(); // unlock all?
+    //cv.notify_one();
+    cv.notify_all(); // unlock all?
 }
 
 int main()

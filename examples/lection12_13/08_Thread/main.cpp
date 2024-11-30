@@ -24,6 +24,8 @@ int main() {
     
     my_thread1.join();
     my_thread2.join();
+
+    std::cout << "End" << std::endl;
     
 
     return 0;
