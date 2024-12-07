@@ -21,24 +21,20 @@ void NPC::fight_notify(const std::shared_ptr<NPC> defender, bool win)
 bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance)
 {
     std::lock_guard<std::mutex> lck(mtx);
-    auto [other_x, other_y] = other->position();
-
-    
+    const auto [other_x, other_y] = other->position();
     if ((std::pow(x - other_x, 2) + std::pow(y - other_y, 2)) <= std::pow(distance, 2))
         return true;
     else
         return false;
 }
 
-NpcType NPC::get_type()
+NpcType NPC::get_type() const
 {
-    std::lock_guard<std::mutex> lck(mtx);
     return type;
 }
 
-std::pair<int, int> NPC::position()
+std::pair<int, int> NPC::position() const
 {
-    std::lock_guard<std::mutex> lck(mtx);
     return {x, y};
 }
 
@@ -64,9 +60,8 @@ void NPC::move(int shift_x, int shift_y, int max_x, int max_y)
         y += shift_y;
 }
 
-bool NPC::is_alive()
+bool NPC::is_alive() const
 {
-    std::lock_guard<std::mutex> lck(mtx);
     return alive;
 }
 

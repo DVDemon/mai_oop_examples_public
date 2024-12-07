@@ -55,7 +55,7 @@ int main ()
   th1.join();
   th2.join();
   /*/
-  std::thread th1 (task_b);
+  std::thread th1 (task_a);
   std::thread th2 (task_b);
 
   th1.join();

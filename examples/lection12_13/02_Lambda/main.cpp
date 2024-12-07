@@ -19,7 +19,7 @@ int main()
 
     // lambda
     auto lambda = [elements](auto i) {
-        std::cout << i << " ";
+        std::cout << i << " " << elements.size() << std::endl;
         return 10;
     };
 
@@ -27,7 +27,7 @@ int main()
    // int a = lambda(7);
     for (int i : elements)
         lambda(i);
-       // [](int a) { std::cout << a << " "; }(i); // сделали и вызвали лямбду
+       //[](int a) { std::cout << a << " "; }(i); // сделали и вызвали лямбду
     std::cout << std::endl;
 
     // without lambda

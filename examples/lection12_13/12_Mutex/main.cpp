@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 
     long number = 0;
     std::mutex lock;
-    //*
+    /*
     {
         Scoped_Thread th1(std::move(std::thread(add_function,&number,&lock)));
         Scoped_Thread th2(std::move(std::thread(subst_function,&number,&lock)));

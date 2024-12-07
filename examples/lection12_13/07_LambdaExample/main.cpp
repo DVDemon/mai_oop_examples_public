@@ -15,7 +15,7 @@ struct Person
 };
 
 template <class T, class FILTER>
-void transform(std::vector<T> &input,
+void transform(const std::vector<T> &input,
               std::vector<T> &output, FILTER filter)
 {
     for (auto a : input)
@@ -24,7 +24,7 @@ void transform(std::vector<T> &input,
 };
 
 template <class T, class ACTION>
-void applay(std::vector<T> &input, ACTION action)
+void applay(const std::vector<T> &input, ACTION action)
 {
     for (auto a : input)
         action(a);

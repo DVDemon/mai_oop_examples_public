@@ -4,6 +4,7 @@
 #include <iterator>
 #include <numeric>
 
+
 int main(int argc, char *argv[])
 {
     std::vector<int> elements;

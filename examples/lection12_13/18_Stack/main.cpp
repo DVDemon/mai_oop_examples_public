@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
     std::vector<std::thread> threads;
 
     for (int i = 0; i < 100; i++)
-        threads.push_back(std::thread(foo, &stack, i));
+        threads.emplace_back(foo, &stack, i);
 
     for (auto &tt : threads)
         tt.join();

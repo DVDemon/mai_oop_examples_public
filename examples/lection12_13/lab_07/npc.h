@@ -57,8 +57,8 @@ public:
     virtual bool fight(std::shared_ptr<BlackKnight> other) = 0;
 
     virtual void print() = 0;
-    std::pair<int, int> position();
-    NpcType get_type();
+    std::pair<int, int> position() const;
+    NpcType get_type() const;
 
     virtual void save(std::ostream &os);
 
@@ -66,6 +66,6 @@ public:
 
     void move(int shift_x, int shift_y, int max_x, int max_y);
 
-    bool is_alive();
+    bool is_alive() const;
     void must_die();
 };

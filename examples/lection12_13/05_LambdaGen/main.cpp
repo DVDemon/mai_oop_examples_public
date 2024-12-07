@@ -8,7 +8,7 @@ int main()
 {
 	std::vector<int> elements;
 
-    for(int i=0;i<10;i++) elements.push_back(i);
+    for(int i=0;i<20;i++) elements.push_back(i);
 	std::function<void (int)> trace_lambda = [] (int i) { std::cout << i << " ";};
 
 	for (auto &ee : elements) trace_lambda(ee);
@@ -22,7 +22,7 @@ int main()
 
 	std::cout << lambda_gen(25)(5) << std::endl;
 
-	auto lll = lambda_gen(0);
+	auto lll = lambda_gen(15);
 
 	std::transform(elements.begin(),elements.end(),
 				   elements.begin(),

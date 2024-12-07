@@ -76,7 +76,7 @@ private:
 	bool m_quit = false;
     std::queue<Event> m_event_queue;
     std::vector<Handler *> m_handlers;
-    std::thread m_eventLoopThread;
+
 };
 
 void userThread(EventLoop& loop) {
