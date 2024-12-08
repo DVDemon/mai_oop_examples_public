@@ -51,7 +51,7 @@ std::string decompress(const std::string &s)
 
 int main()
 {
-    std::string s {"aaaaaaaaabbbbbbbcccccccc"};
+    std::string s {"aaaaaaaaabbbbbbbcccccccczzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzooo"};
     std::cout << compress(s) << std::endl;
     std::cout << decompress(compress(s)) << std::endl;
 }

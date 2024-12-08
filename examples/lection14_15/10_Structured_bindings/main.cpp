@@ -27,6 +27,8 @@ void example_map_tie() {
 			return std::tuple<Args&...>(args...);
 		}
 	*/
+
+
 	std::tie(iter, inserted) = map.emplace(0, "Petia");
 
 	std::cout << "First:" << std::endl;

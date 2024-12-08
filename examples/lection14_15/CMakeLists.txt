@@ -18,9 +18,7 @@ add_executable(11_Compress 11_Compress/main.cpp)
 add_executable(12_Chains 12_Chains/main.cpp)
 add_executable(13_nuclear_reaction 13_nuclear_reaction/main.cpp)
 add_executable(14_Remove_consecutive_whitespace 14_Remove_consecutive_whitespace/main.cpp)
-add_executable(15_Split 15_Split/main.cpp)
-add_executable(16_Transform_if 16_Transform_if/main.cpp)
-add_executable(17_Overloaded 17_Overloaded/main.cpp)
+add_executable(15_Overloaded 15_Overloaded/main.cpp)
 
 
 

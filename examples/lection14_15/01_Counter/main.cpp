@@ -42,23 +42,23 @@ public:
 
 int main(int argc, char** argv) {
 
-    std::vector<std::thread*> threads;
+    std::vector<std::thread> threads;
     std::mutex mtx;
     std::condition_variable cv;
     Counter cnt;
 
     for (int i = 0; i < 100; i++)
-        threads.push_back(new std::thread([&mtx,&cv](bool inc,Counter &count)
+        threads.emplace_back([&mtx,&cv,&cnt](bool inc)
                             {
                                 std::cout << "thread ready ..." << std::endl;
                                 std::unique_lock<std::mutex> lock(mtx);
                                 cv.wait(lock);
 
                                 for (int i = 0; i < 1000000; i++) 
-                                    if(inc) count.increment();
-                                    else count.decrement();
+                                    if(inc) cnt.increment();
+                                    else cnt.decrement();
                                 std::cout << "thread done" << std::endl;
-                            }, i%2,std::ref(cnt)));
+                            }, i%2);
 
     {
         std::cout << "Press any key" << std::endl;
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
         cv.notify_all();
     }
 
-    for (auto a : threads) a->join();
+    for (auto& a : threads) a.join();
     std::cout << "Result:" << cnt.get() << std::endl;
     return 0;
 }

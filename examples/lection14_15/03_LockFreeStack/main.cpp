@@ -41,8 +41,7 @@ public:
 		node *new_node = new node(data, head.load());
 		while (!head.compare_exchange_weak(
 			new_node->next,
-			new_node))
-			;
+			new_node));
 	}
 
 	std::shared_ptr<T> pop()
@@ -50,21 +49,19 @@ public:
 		node *old_head = head.load();
 		while (old_head && !head.compare_exchange_weak(
 							   old_head,
-							   old_head->next))
-			;
+							   old_head->next));
 		return old_head ? old_head->data : std::shared_ptr<T>();
 	}
 };
 
-void pop_and_push(stack<int> *stack, int number)
+void pop_and_push(stack<int> &stack, int number)
 {
 	for (int i = 0; i < 10; i++)
-		stack->push(i);
-	
+		stack.push(i);
 
 	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<int> res = stack->pop();
+		std::shared_ptr<int> res = stack.pop();
 		if (res.get() != nullptr)
 			print() << "[" << number << "] " << std::to_string(*res.get());
 		else
@@ -78,7 +75,7 @@ int main(int argc, char *argv[])
 	std::vector<std::thread> threads;
 
 	for (int i = 0; i < 1000; i++)
-		threads.push_back(std::thread(pop_and_push, &my_stack, i));
+		threads.emplace_back(pop_and_push, std::ref(my_stack), i);
 
 	for (auto &a : threads)
 		a.join();
