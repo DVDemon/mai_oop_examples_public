@@ -49,6 +49,13 @@ void testIterator() {
 		{"Echo", 5}
 	};
 
+	auto get_from_map = [&values](const auto & key) {
+		auto ptr = values.find(key);
+		return ptr == std::end(values) ? 0 : ptr->second;
+	};
+
+	std::cout << "val:" << get_from_map("Alph") << "," << get_from_map("Alpha")<< std::endl;
+
 	auto iter = values.begin();
 	std::cout << iter->first << ' ' << iter->second << std::endl;
 
@@ -69,8 +76,8 @@ void testIterator() {
 }
 
 int main() {
-	testUnique();
-	testOrder();
+	//testUnique();
+	//testOrder();
 	testIterator();
 
 	return 0;

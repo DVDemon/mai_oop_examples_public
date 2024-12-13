@@ -47,5 +47,5 @@ int main()
 */
 
     print_cart([](auto lhv, auto rhv) { std::cout << '(' << lhv << ',' << rhv << ')'; },
-               [](auto lhv, auto rhv) { return true; });
+               [](auto lhv, auto rhv) { return lhv<rhv; });
 }

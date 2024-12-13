@@ -6,4 +6,5 @@
 ```
 git config --global --add safe.directory /workspaces/mai_oop_examples_public/build/_deps/googletest-src
 git config --global --add safe.directory /workspaces/mai_oop_examples_public/build/_deps/pybind11-src
+git config --global --add safe.directory /workspaces/mai_oop_examples_public/build/_deps/cpp-httplib-src
 ```

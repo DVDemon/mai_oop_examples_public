@@ -19,6 +19,7 @@ add_executable(12_Chains 12_Chains/main.cpp)
 add_executable(13_nuclear_reaction 13_nuclear_reaction/main.cpp)
 add_executable(14_Remove_consecutive_whitespace 14_Remove_consecutive_whitespace/main.cpp)
 add_executable(15_Overloaded 15_Overloaded/main.cpp)
+add_subdirectory(20_Server)
 
 
 
