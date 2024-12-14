@@ -16,9 +16,8 @@ add_executable(09_Cartesian_product 09_Cartesian_product/main.cpp)
 add_executable(10_Structured_bindings 10_Structured_bindings/main.cpp)
 add_executable(11_Compress 11_Compress/main.cpp)
 add_executable(12_Chains 12_Chains/main.cpp)
-add_executable(13_nuclear_reaction 13_nuclear_reaction/main.cpp)
-add_executable(14_Remove_consecutive_whitespace 14_Remove_consecutive_whitespace/main.cpp)
 add_executable(15_Overloaded 15_Overloaded/main.cpp)
+add_executable(16_Variant 16_Variant/main.cpp)
 add_subdirectory(20_Server)
 
 
