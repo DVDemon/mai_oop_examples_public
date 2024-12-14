@@ -42,7 +42,7 @@ int main(){
             },
         [](auto& arg) { std::cout << arg << '\n';},
     };
-
+.
     for (auto v : vecVariant2) {                                         // (6)
         std::visit(DisplayMe, v);
     }

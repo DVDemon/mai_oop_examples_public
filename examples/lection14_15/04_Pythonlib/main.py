@@ -1,7 +1,7 @@
 import shapes
 
 # Создаем объект Circle
-circle = shapes.Circle(5.0)
+circle = shapes.Circle(15.0)
 
 # Вычисляем площадь и периметр
 print(f"Area: {circle.area()}")

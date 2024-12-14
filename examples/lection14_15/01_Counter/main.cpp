@@ -25,7 +25,13 @@ public:
 
     int increment_atomic() {
         int v = value_a.load();
-        while (!value_a.compare_exchange_weak(v, value + 1));
+        while (!value_a.compare_exchange_weak(v, v + 1));
+        return value_a.load();
+    }
+
+    int decrement_atomic() {
+        int v = value_a.load();
+        while (!value_a.compare_exchange_weak(v, v - 1));
         return value_a.load();
     }
 
@@ -51,12 +57,16 @@ int main(int argc, char** argv) {
         threads.emplace_back([&mtx,&cv,&cnt](bool inc)
                             {
                                 std::cout << "thread ready ..." << std::endl;
-                                std::unique_lock<std::mutex> lock(mtx);
-                                cv.wait(lock);
+                                {
+                                    std::unique_lock<std::mutex> lock(mtx);
+                                    cv.wait(lock);
+                                }
 
-                                for (int i = 0; i < 1000000; i++) 
-                                    if(inc) cnt.increment();
-                                    else cnt.decrement();
+                                for (int i = 0; i < 100000; i++) 
+                                    if(inc) cnt.increment_atomic();
+                                        else cnt.decrement_atomic();
+                                    // if(inc) cnt.increment();
+                                    // else cnt.decrement();
                                 std::cout << "thread done" << std::endl;
                             }, i%2);
 
@@ -68,7 +78,7 @@ int main(int argc, char** argv) {
     }
 
     for (auto& a : threads) a.join();
-    std::cout << "Result:" << cnt.get() << std::endl;
+    std::cout << "Result:" << cnt.get_a() << std::endl;
     return 0;
 }
 
