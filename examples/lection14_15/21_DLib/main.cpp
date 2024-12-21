@@ -1,6 +1,8 @@
 #include <dlib/clustering.h>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+
 
 int main() {
     // Используем тип данных для кластеризации из Dlib
@@ -17,12 +19,16 @@ int main() {
     std::vector<sample_type> samples;
 
     // Пример данных (2D точки)
-    samples.push_back(sample_type({1.0, 2.0}));
-    samples.push_back(sample_type({1.1, 2.1}));
-    samples.push_back(sample_type({5.0, 5.0}));
-    samples.push_back(sample_type({5.1, 5.1}));
-    samples.push_back(sample_type({10.0, 10.0}));
-    samples.push_back(sample_type({10.1, 10.1}));
+    std::srand(std::time(nullptr));
+    for(size_t i=0;i<100;++i){
+        samples.push_back(sample_type({std::rand() % 10 , std::rand() % 10}));
+    }
+    // samples.push_back(sample_type({1.0, 2.0}));
+    // samples.push_back(sample_type({1.1, 2.1}));
+    // samples.push_back(sample_type({5.0, 5.0}));
+    // samples.push_back(sample_type({5.1, 5.1}));
+    // samples.push_back(sample_type({10.0, 10.0}));
+    // samples.push_back(sample_type({10.1, 10.1}));
 
     // Указываем количество кластеров (k)
     std::vector<sample_type> initial_centers;
