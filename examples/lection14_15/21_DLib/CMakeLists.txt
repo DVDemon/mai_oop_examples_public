@@ -5,13 +5,13 @@ project(kmeans_example)
 set(CMAKE_CXX_STANDARD 11)
 
 # Загружаем OpenBLAS
-FetchContent_Declare(
-    openblas
-    GIT_REPOSITORY https://github.com/xianyi/OpenBLAS.git
-    GIT_TAG        v0.3.23  # Укажите нужную версию OpenBLAS
-)
+# FetchContent_Declare(
+#     openblas
+#     GIT_REPOSITORY https://github.com/xianyi/OpenBLAS.git
+#     GIT_TAG        v0.3.23  # Укажите нужную версию OpenBLAS
+# )
 
-FetchContent_MakeAvailable(openblas)
+# FetchContent_MakeAvailable(openblas)
 
 # Используем FetchContent для загрузки Dlib
 include(FetchContent)
