@@ -1,65 +1,255 @@
-#include <iostream>
+/*
+ * ЦИКЛ FOR В C++
+ * 
+ * Этот файл демонстрирует использование цикла for для повторения операций:
+ * - Базовый синтаксис цикла for
+ * - Использование size_t для счетчиков
+ * - Область видимости переменных цикла
+ * - Объявление итератора вне цикла
+ * - Использование констант вместо магических чисел
+ * - Практические примеры и рекомендации
+ */
 
-int main()
-{
+#include <iostream>  // Для потоков ввода-вывода
 
-    // Print I love C++ 10 times : The bad way
+int main() {
+    /*
+     * ПРОБЛЕМА ПОВТОРЕНИЯ КОДА
+     * 
+     * Иногда нужно выполнить одну и ту же операцию много раз.
+     * Плохой способ - копировать код много раз.
+     * Хороший способ - использовать циклы.
+     */
+    std::cout << "=== ПРОБЛЕМА ПОВТОРЕНИЯ КОДА ===" << std::endl;
+    std::cout << "Плохой способ - копирование кода:" << std::endl;
+    
+    // Этот код закомментирован, так как он демонстрирует плохой подход
+    /*
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    std::cout << "I love C++" << std::endl;
+    */
+    
+    std::cout << "Хороший способ - использование цикла for!" << std::endl;
+    std::cout << std::endl;
 
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-    // std::cout << "I love C++" << std::endl;
-
-    // for loop : the good way
-    for (unsigned int i{0}; i < 10000; ++i)
-    {
-        // Whatever we want the loop to run
-        std::cout << i << " : I love C++" << std::endl;
+    /*
+     * БАЗОВЫЙ ЦИКЛ FOR
+     * 
+     * for (инициализация; условие; обновление) { тело_цикла }
+     * 
+     * 1. Инициализация: выполняется один раз в начале
+     * 2. Условие: проверяется перед каждой итерацией
+     * 3. Обновление: выполняется после каждой итерации
+     * 4. Тело цикла: выполняется, если условие истинно
+     */
+    std::cout << "=== БАЗОВЫЙ ЦИКЛ FOR ===" << std::endl;
+    std::cout << "Демонстрация цикла for (ограничено 5 итерациями):" << std::endl;
+    
+    for (unsigned int counter{0}; counter < 5; ++counter) {
+        std::cout << "Итерация " << counter << ": Я люблю C++!" << std::endl;
     }
+    
+    std::cout << "Цикл завершен!" << std::endl;
+    std::cout << std::endl;
 
-    std::cout << "Loop done!" << std::endl;
-
-    // Use size_t : a representation of some unsigned int for positive numbers [sizes]
-
-    for (size_t i{0}; i < 10; ++i)
-    {
-        std::cout << i << " : I love C++" << std::endl;
+    /*
+     * ИСПОЛЬЗОВАНИЕ size_t
+     * 
+     * size_t - это тип для представления размеров и индексов.
+     * Он гарантированно может представить размер любого объекта в байтах.
+     * Рекомендуется использовать size_t для счетчиков циклов.
+     */
+    std::cout << "=== ИСПОЛЬЗОВАНИЕ size_t ===" << std::endl;
+    std::cout << "size_t - специальный тип для размеров и индексов:" << std::endl;
+    
+    for (size_t index{0}; index < 5; ++index) {
+        std::cout << "Индекс " << index << ": Я люблю C++!" << std::endl;
     }
-    std::cout << "Loop done!" << std::endl;
+    
+    std::cout << "Цикл завершен!" << std::endl;
+    std::cout << std::endl;
 
-    // Scope of the iterator
-
-    for (size_t i{0}; i < 10; ++i)
-    {
-        std::cout << i << " : I love C++" << std::endl;
+    /*
+     * ОБЛАСТЬ ВИДИМОСТИ ПЕРЕМЕННЫХ ЦИКЛА
+     * 
+     * Переменная, объявленная в цикле for, видна только внутри цикла.
+     * После завершения цикла эта переменная недоступна.
+     */
+    std::cout << "=== ОБЛАСТЬ ВИДИМОСТИ ПЕРЕМЕННЫХ ЦИКЛА ===" << std::endl;
+    std::cout << "Переменная цикла видна только внутри цикла:" << std::endl;
+    
+    for (size_t loop_variable{0}; loop_variable < 3; ++loop_variable) {
+        std::cout << "Внутри цикла: loop_variable = " << loop_variable << std::endl;
     }
-    std::cout << "Loop done!" << std::endl;
+    
+    // loop_variable здесь недоступна!
+    // std::cout << loop_variable; // ОШИБКА КОМПИЛЯЦИИ!
+    std::cout << "Вне цикла: loop_variable недоступна" << std::endl;
+    std::cout << std::endl;
 
-    // Iterator declared outside the loop
-    // Leave out the iterator declaration part
-    size_t i{0}; // Iterator defined outside
-    for (; i < 10; ++i)
-    {
-        std::cout << i << " : I love C++" << std::endl;
+    /*
+     * ОБЪЯВЛЕНИЕ ИТЕРАТОРА ВНЕ ЦИКЛА
+     * 
+     * Можно объявить переменную цикла вне цикла for.
+     * В этом случае она остается доступной после завершения цикла.
+     * Полезно, когда нужно знать финальное значение счетчика.
+     */
+    std::cout << "=== ОБЪЯВЛЕНИЕ ИТЕРАТОРА ВНЕ ЦИКЛА ===" << std::endl;
+    std::cout << "Переменная цикла объявлена вне цикла:" << std::endl;
+    
+    size_t external_counter{0};  // Итератор объявлен вне цикла
+    
+    for (; external_counter < 3; ++external_counter) {
+        std::cout << "Внутри цикла: external_counter = " << external_counter << std::endl;
     }
-    std::cout << "Loop done!" << std::endl;
-    std::cout << "i : " << i << std::endl;
+    
+    std::cout << "Цикл завершен!" << std::endl;
+    std::cout << "Вне цикла: external_counter = " << external_counter << std::endl;
+    std::cout << std::endl;
 
-    // Don't hard code values : BAD!
-
-    const size_t COUNT{100};
-
-    for (size_t i{0}; i < COUNT; ++i)
-    {
-        std::cout << i << " : I love C++" << std::endl;
+    /*
+     * ИСПОЛЬЗОВАНИЕ КОНСТАНТ ВМЕСТО МАГИЧЕСКИХ ЧИСЕЛ
+     * 
+     * Вместо использования "магических чисел" (hardcoded values)
+     * лучше использовать именованные константы.
+     * Это делает код более читаемым и легким для изменения.
+     */
+    std::cout << "=== ИСПОЛЬЗОВАНИЕ КОНСТАНТ ===" << std::endl;
+    std::cout << "Использование констант вместо магических чисел:" << std::endl;
+    
+    const size_t ITERATION_COUNT{4};  // Константа для количества итераций
+    
+    for (size_t iteration{0}; iteration < ITERATION_COUNT; ++iteration) {
+        std::cout << "Итерация " << iteration << ": Я люблю C++!" << std::endl;
     }
-    std::cout << "Loop done!" << std::endl;
+    
+    std::cout << "Цикл завершен! Выполнено " << ITERATION_COUNT << " итераций." << std::endl;
+    std::cout << std::endl;
 
+    /*
+     * ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ЦИКЛОВ FOR
+     * 
+     * Демонстрация различных способов использования циклов for
+     */
+    std::cout << "=== ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ===" << std::endl;
+    
+    // Пример 1: Обратный отсчет
+    std::cout << "Обратный отсчет:" << std::endl;
+    for (int countdown{5}; countdown >= 1; --countdown) {
+        std::cout << countdown << "... ";
+    }
+    std::cout << "Поехали!" << std::endl;
+    std::cout << std::endl;
+    
+    // Пример 2: Цикл с шагом
+    std::cout << "Четные числа от 0 до 10:" << std::endl;
+    for (int even_number{0}; even_number <= 10; even_number += 2) {
+        std::cout << even_number << " ";
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+    
+    // Пример 3: Вычисление суммы
+    std::cout << "Вычисление суммы чисел от 1 до 5:" << std::endl;
+    int sum = 0;
+    for (int number{1}; number <= 5; ++number) {
+        sum += number;
+        std::cout << "Добавляем " << number << ", сумма = " << sum << std::endl;
+    }
+    std::cout << "Итоговая сумма: " << sum << std::endl;
+    std::cout << std::endl;
+    
+    // Пример 4: Вложенные циклы
+    std::cout << "Таблица умножения (3x3):" << std::endl;
+    for (int row{1}; row <= 3; ++row) {
+        for (int col{1}; col <= 3; ++col) {
+            std::cout << row << "x" << col << "=" << (row * col) << "\t";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * РЕКОМЕНДАЦИИ ПО ИСПОЛЬЗОВАНИЮ ЦИКЛОВ FOR
+     * 
+     * Практические советы для эффективного использования
+     */
+    std::cout << "=== РЕКОМЕНДАЦИИ ПО ЦИКЛАМ FOR ===" << std::endl;
+    std::cout << "1. Используйте size_t для счетчиков циклов" << std::endl;
+    std::cout << "2. Используйте константы вместо магических чисел" << std::endl;
+    std::cout << "3. Выбирайте осмысленные имена для переменных цикла" << std::endl;
+    std::cout << "4. Используйте префиксный инкремент (++i) вместо постфиксного (i++)" << std::endl;
+    std::cout << "5. Избегайте изменения переменной цикла внутри тела цикла" << std::endl;
+    std::cout << "6. Используйте break и continue для управления потоком" << std::endl;
+    std::cout << "7. Будьте осторожны с бесконечными циклами" << std::endl;
+    std::cout << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: ЦИКЛ FOR В C++
+ * 
+ * 1. ОСНОВНЫЕ ПОНЯТИЯ:
+ *    - for - цикл с известным количеством итераций
+ *    - Инициализация, условие, обновление - три части цикла
+ *    - Итерация - одно выполнение тела цикла
+ * 
+ * 2. СИНТАКСИС:
+ *    - for (инициализация; условие; обновление) { тело }
+ *    - Любая из частей может быть пустой
+ *    - Точка с запятой обязательна между частями
+ * 
+ * 3. ОБЛАСТЬ ВИДИМОСТИ:
+ *    - Переменная цикла видна только внутри цикла
+ *    - Можно объявить переменную вне цикла
+ *    - Вложенные циклы могут использовать одинаковые имена
+ * 
+ * 4. ТИПЫ ДАННЫХ:
+ *    - size_t - рекомендуется для счетчиков
+ *    - int - для простых случаев
+ *    - unsigned - для неотрицательных значений
+ * 
+ * 5. ПРАКТИЧЕСКИЕ ПРИМЕНЕНИЯ:
+ *    - Обработка массивов и контейнеров
+ *    - Вычисления с повторяющимися операциями
+ *    - Генерация последовательностей
+ *    - Вложенные структуры данных
+ * 
+ * 6. ОПТИМИЗАЦИЯ:
+ *    - Используйте ++i вместо i++ (префиксный инкремент)
+ *    - Избегайте сложных вычислений в условии
+ *    - Используйте константы для неизменяемых значений
+ * 
+ * 7. РЕКОМЕНДАЦИИ:
+ *    - Выбирайте осмысленные имена переменных
+ *    - Используйте константы вместо магических чисел
+ *    - Избегайте изменения переменной цикла в теле
+ *    - Документируйте сложную логику циклов
+ * 
+ * 8. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Условие проверяется перед каждой итерацией
+ *    - Обновление выполняется после каждой итерации
+ *    - Бесконечные циклы могут зависнуть программу
+ *    - break и continue изменяют поток выполнения
+ * 
+ * 9. ДОПОЛНИТЕЛЬНЫЕ ВОЗМОЖНОСТИ:
+ *    - Range-based for (C++11) для контейнеров
+ *    - Structured bindings (C++17) для пар и кортежей
+ *    - Coroutines (C++20) для асинхронных циклов
+ *    - Parallel algorithms (C++17) для параллельного выполнения
+ * 
+ * 10. АЛЬТЕРНАТИВЫ:
+ *     - while - для циклов с неизвестным количеством итераций
+ *     - do-while - для циклов, выполняющихся минимум один раз
+ *     - Range-based for - для итерации по контейнерам
+ *     - Алгоритмы STL - для стандартных операций
+ */

@@ -1,27 +1,125 @@
-#include <iostream>
+/*
+ * СИМВОЛЫ И ТЕКСТ В C++
+ * 
+ * Этот файл демонстрирует работу с символьными данными:
+ * - Тип char для хранения отдельных символов
+ * - ASCII коды и их связь с символами
+ * - Размер типа char в памяти
+ * - Преобразование между символами и их числовыми кодами
+ * - Использование static_cast для явного преобразования типов
+ */
 
+#include <iostream>  // Для потоков ввода-вывода
 
 int main(){
-
-	char character1 {'a'};
-    char character2 {'r'};
-    char character3 {'r'};
-    char character4 {'o'};
-    char character5 {'w'};
+    /*
+     * ОБЪЯВЛЕНИЕ И ИНИЦИАЛИЗАЦИЯ СИМВОЛЬНЫХ ПЕРЕМЕННЫХ
+     * 
+     * char - тип для хранения одного символа
+     * Символы заключаются в одинарные кавычки ''
+     * Каждый символ имеет соответствующий ASCII код
+     */
+    char letter_a {'a'};  // Символ 'a'
+    char letter_r1 {'r'}; // Первая буква 'r' в слове
+    char letter_r2 {'r'}; // Вторая буква 'r' в слове
+    char letter_o {'o'};  // Символ 'o'
+    char letter_w {'w'};  // Символ 'w'
     
-    std::cout << character1 << std::endl;
-    std::cout << character2 << std::endl;
-    std::cout << character3 << std::endl;
-    std::cout << character4 << std::endl;
-    std::cout << character5 << std::endl;
+    /*
+     * ВЫВОД СИМВОЛОВ
+     * 
+     * При выводе char переменных отображается сам символ,
+     * а не его числовой код
+     */
+    std::cout << "=== ВЫВОД СИМВОЛОВ ===" << std::endl;
+    std::cout << "Символы по отдельности:" << std::endl;
+    std::cout << letter_a << std::endl;
+    std::cout << letter_r1 << std::endl;
+    std::cout << letter_r2 << std::endl;
+    std::cout << letter_o << std::endl;
+    std::cout << letter_w << std::endl;
+    
+    std::cout << "Слово целиком: " << letter_a << letter_r1 << letter_r2 << letter_o << letter_w << std::endl;
+    std::cout << std::endl;
 
-    //One byte in memory : 2^8 = 256 different values (0 ~ 255)
+    /*
+     * ASCII КОДЫ И ПРЕОБРАЗОВАНИЕ ТИПОВ
+     * 
+     * char занимает 1 байт в памяти: 2^8 = 256 различных значений (0-255)
+     * Каждый символ имеет соответствующий ASCII код
+     * Можно инициализировать char числовым значением
+     */
+    std::cout << "=== ASCII КОДЫ И ПРЕОБРАЗОВАНИЕ ТИПОВ ===" << std::endl;
+    std::cout << "char занимает " << sizeof(char) << " байт в памяти" << std::endl;
+    std::cout << "Диапазон значений: 0-255 (256 различных символов)" << std::endl;
     std::cout << std::endl;
     
-    char value = 65 ; // ASCII character code for 'A'
-    std::cout << "value : " << value << std::endl; // A
-    //std::cout << "value(int) : " << int(value) << std::endl; 
-    std::cout << "value(int) : " << static_cast<int>(value) << std::endl; 
+    // Инициализация char числовым значением (ASCII код)
+    char ascii_character = 65;  // ASCII код для символа 'A'
+    
+    // Вывод символа (отображается как символ)
+    std::cout << "Символ с ASCII кодом 65: " << ascii_character << std::endl;
+    
+    // Вывод числового кода символа
+    std::cout << "Числовой код символа: " << static_cast<int>(ascii_character) << std::endl;
+    
+    /*
+     * ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ASCII КОДОВ
+     */
+    std::cout << std::endl;
+    std::cout << "=== ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ASCII ===" << std::endl;
+    
+    char digit_zero = 48;    // ASCII код для '0'
+    char digit_nine = 57;    // ASCII код для '9'
+    char space_char = 32;    // ASCII код для пробела
+    char newline_char = 10;  // ASCII код для перевода строки
+    
+    std::cout << "Цифра 0: '" << digit_zero << "' (код " << static_cast<int>(digit_zero) << ")" << std::endl;
+    std::cout << "Цифра 9: '" << digit_nine << "' (код " << static_cast<int>(digit_nine) << ")" << std::endl;
+    std::cout << "Пробел: '" << space_char << "' (код " << static_cast<int>(space_char) << ")" << std::endl;
+    std::cout << "Перевод строки: '" << newline_char << "' (код " << static_cast<int>(newline_char) << ")" << std::endl;
 
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: СИМВОЛЫ И ТЕКСТ В C++
+ * 
+ * 1. ТИП CHAR:
+ *    - Хранит один символ
+ *    - Размер: 1 байт (256 различных значений: 0-255)
+ *    - Символы заключаются в одинарные кавычки ''
+ * 
+ * 2. ИНИЦИАЛИЗАЦИЯ:
+ *    - char c {'a'};     - символьная инициализация
+ *    - char c {65};      - числовая инициализация (ASCII код)
+ *    - char c {};        - инициализация по умолчанию (0)
+ * 
+ * 3. ASCII КОДЫ:
+ *    - Каждый символ имеет числовой код
+ *    - 'A' = 65, 'a' = 97, '0' = 48, ' ' = 32
+ *    - Можно использовать числовые коды для инициализации
+ * 
+ * 4. ПРЕОБРАЗОВАНИЕ ТИПОВ:
+ *    - static_cast<int>(char_var) - преобразование в int
+ *    - Автоматическое преобразование при арифметических операциях
+ *    - char автоматически преобразуется в int при выводе
+ * 
+ * 5. ПРАКТИЧЕСКИЕ СОВЕТЫ:
+ *    - Используйте символьные литералы для читаемости
+ *    - Помните о различии между 'A' и "A" (символ vs строка)
+ *    - Используйте static_cast для явного преобразования
+ *    - ASCII коды полезны для работы с символами программно
+ * 
+ * 6. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - char может быть знаковым или беззнаковым (зависит от компилятора)
+ *    - Для Unicode символов используйте wchar_t или char16_t/char32_t
+ *    - char занимает минимум 8 бит, но может быть больше
+ *    - При арифметических операциях char преобразуется в int
+ * 
+ * 7. СВЯЗЬ С ПРЕДЫДУЩИМИ ТЕМАМИ:
+ *    - char - это целочисленный тип (как int, но меньшего размера)
+ *    - Можно использовать все арифметические операции
+ *    - sizeof() работает с char так же, как с другими типами
+ *    - static_cast - безопасный способ преобразования типов
+ */

@@ -1,36 +1,238 @@
-#include <iostream>
+/*
+ * RANGE-BASED FOR LOOP В C++
+ * 
+ * Этот файл демонстрирует использование range-based for loop (C++11):
+ * - Сравнение с традиционным циклом for
+ * - Итерация по массивам и контейнерам
+ * - Использование auto для автоматического вывода типов
+ * - Инициализация коллекций на месте
+ * - Практические примеры и рекомендации
+ */
 
-int main()
-{
+#include <iostream>  // Для потоков ввода-вывода
 
-    int bag_of_values[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // This is a collection of integers
-    // The variable value will be assigned a value from the values array on each iteration
+int main() {
+    /*
+     * ПОДГОТОВКА ДАННЫХ ДЛЯ ДЕМОНСТРАЦИИ
+     * 
+     * Создаем массив целых чисел для демонстрации различных способов итерации
+     */
+    int numbers_array[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};  // Массив целых чисел
+    const size_t array_size = sizeof(numbers_array) / sizeof(numbers_array[0]);  // Размер массива
+    
+    std::cout << "=== RANGE-BASED FOR LOOP В C++ ===" << std::endl;
+    std::cout << "Демонстрация различных способов итерации по коллекциям" << std::endl;
+    std::cout << std::endl;
 
-    for (size_t i{0}; i < 10; ++i)
-    {
-        std::cout << "value : " << bag_of_values[i] << std::endl;
+    /*
+     * ПРИМЕР 1: ТРАДИЦИОННЫЙ ЦИКЛ FOR
+     * 
+     * Сравнение с традиционным способом итерации по массиву
+     * для понимания преимуществ range-based for loop
+     */
+    std::cout << "=== ПРИМЕР 1: ТРАДИЦИОННЫЙ ЦИКЛ FOR ===" << std::endl;
+    std::cout << "Итерация по массиву с использованием индексов:" << std::endl;
+    
+    for (size_t index{0}; index < array_size; ++index) {
+        std::cout << "Элемент [" << index << "]: " << numbers_array[index] << std::endl;
     }
+    std::cout << std::endl;
 
-    for (int value : bag_of_values)
-    {
-        // value holds a copy of the current iteration in the whole bag
-        std::cout << " value : " << value << std::endl;
+    /*
+     * ПРИМЕР 2: RANGE-BASED FOR LOOP С МАССИВОМ
+     * 
+     * Демонстрация range-based for loop с массивом.
+     * Синтаксис: for (тип переменная : коллекция) { тело }
+     * 
+     * Преимущества:
+     * - Более читаемый код
+     * - Автоматическое определение размера
+     * - Меньше ошибок с индексами
+     * - Работает с любыми контейнерами
+     */
+    std::cout << "=== ПРИМЕР 2: RANGE-BASED FOR LOOP С МАССИВОМ ===" << std::endl;
+    std::cout << "Итерация по массиву с использованием range-based for:" << std::endl;
+    
+    for (int current_number : numbers_array) {
+        // current_number содержит копию текущего элемента массива
+        std::cout << "Текущий элемент: " << current_number << std::endl;
     }
+    std::cout << std::endl;
 
-    // Specify the collection in place
-
-    for (int value : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    {
-        // value holds a copy of the current iteration in the whole bag
-        std::cout << " value : " << value << std::endl;
+    /*
+     * ПРИМЕР 3: RANGE-BASED FOR LOOP С ИНИЦИАЛИЗАЦИЕЙ НА МЕСТЕ
+     * 
+     * Демонстрация создания коллекции прямо в цикле.
+     * Полезно для небольших наборов данных или тестирования
+     */
+    std::cout << "=== ПРИМЕР 3: ИНИЦИАЛИЗАЦИЯ КОЛЛЕКЦИИ НА МЕСТЕ ===" << std::endl;
+    std::cout << "Итерация по коллекции, созданной на месте:" << std::endl;
+    
+    for (int current_value : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
+        // current_value содержит копию текущего элемента из списка инициализации
+        std::cout << "Значение из списка: " << current_value << std::endl;
     }
+    std::cout << std::endl;
 
-    // Auto type deduction
-    for (auto value : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    {
-        // value holds a copy of the current iteration in the whole bag
-        std::cout << " value : " << value << std::endl;
+    /*
+     * ПРИМЕР 4: ИСПОЛЬЗОВАНИЕ auto С RANGE-BASED FOR LOOP
+     * 
+     * Демонстрация автоматического вывода типов с ключевым словом auto.
+     * Особенно полезно при работе с контейнерами сложных типов
+     */
+    std::cout << "=== ПРИМЕР 4: АВТОМАТИЧЕСКИЙ ВЫВОД ТИПОВ С auto ===" << std::endl;
+    std::cout << "Итерация с автоматическим выводом типа:" << std::endl;
+    
+    for (auto current_value : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
+        // auto автоматически выводит тип int для элементов списка
+        std::cout << "Автоматический тип: " << current_value << std::endl;
     }
+    std::cout << std::endl;
 
+    /*
+     * ПРИМЕР 5: РАБОТА С РАЗНЫМИ ТИПАМИ ДАННЫХ
+     * 
+     * Демонстрация range-based for loop с различными типами данных
+     */
+    std::cout << "=== ПРИМЕР 5: РАЗНЫЕ ТИПЫ ДАННЫХ ===" << std::endl;
+    
+    // Массив символов
+    char letters[] = {'A', 'B', 'C', 'D', 'E'};
+    std::cout << "Итерация по символам:" << std::endl;
+    for (char current_letter : letters) {
+        std::cout << "Буква: " << current_letter << " (ASCII: " << static_cast<int>(current_letter) << ")" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // Массив чисел с плавающей точкой
+    double temperatures[] = {20.5, 22.3, 18.7, 25.1, 19.8};
+    std::cout << "Итерация по температурам:" << std::endl;
+    for (double current_temp : temperatures) {
+        std::cout << "Температура: " << current_temp << "°C" << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * ПРИМЕР 6: ПРАКТИЧЕСКОЕ ПРИМЕНЕНИЕ - ВЫЧИСЛЕНИЯ
+     * 
+     * Демонстрация практического использования range-based for loop
+     * для выполнения вычислений с элементами коллекции
+     */
+    std::cout << "=== ПРИМЕР 6: ПРАКТИЧЕСКИЕ ВЫЧИСЛЕНИЯ ===" << std::endl;
+    
+    int scores[] = {85, 92, 78, 96, 88, 91, 83, 89, 94, 87};
+    int total_score = 0;
+    int count = 0;
+    
+    std::cout << "Оценки студентов:" << std::endl;
+    for (int current_score : scores) {
+        std::cout << "Оценка " << (count + 1) << ": " << current_score << std::endl;
+        total_score += current_score;
+        ++count;
+    }
+    
+    double average_score = static_cast<double>(total_score) / count;
+    std::cout << "Средняя оценка: " << average_score << std::endl;
+    std::cout << std::endl;
+
+    /*
+     * ПРИМЕР 7: РАБОТА СО СТРОКАМИ
+     * 
+     * Демонстрация итерации по символам строки
+     */
+    std::cout << "=== ПРИМЕР 7: ИТЕРАЦИЯ ПО СИМВОЛАМ СТРОКИ ===" << std::endl;
+    
+    std::string word = "HELLO";
+    std::cout << "Анализ слова: " << word << std::endl;
+    
+    for (char current_char : word) {
+        std::cout << "Символ: " << current_char;
+        if (current_char >= 'A' && current_char <= 'Z') {
+            std::cout << " (заглавная буква)";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * РЕКОМЕНДАЦИИ ПО ИСПОЛЬЗОВАНИЮ RANGE-BASED FOR LOOP
+     * 
+     * Практические советы для эффективного использования
+     */
+    std::cout << "=== РЕКОМЕНДАЦИИ ===" << std::endl;
+    std::cout << "1. Используйте range-based for loop для итерации по контейнерам" << std::endl;
+    std::cout << "2. Предпочитайте auto для автоматического вывода типов" << std::endl;
+    std::cout << "3. Помните: переменная содержит КОПИЮ элемента" << std::endl;
+    std::cout << "4. Для изменения элементов используйте ссылки (int& element : container)" << std::endl;
+    std::cout << "5. Избегайте для очень больших объектов (используйте const&)" << std::endl;
+    std::cout << "6. Работает с любыми контейнерами, поддерживающими begin() и end()" << std::endl;
+    std::cout << "7. Более читаемый и безопасный код по сравнению с традиционными циклами" << std::endl;
+    std::cout << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: RANGE-BASED FOR LOOP В C++
+ * 
+ * 1. ОСНОВНЫЕ ПОНЯТИЯ:
+ *    - Range-based for loop (C++11) - современный способ итерации
+ *    - Синтаксис: for (тип переменная : коллекция) { тело }
+ *    - Автоматическая итерация по всем элементам коллекции
+ * 
+ * 2. СИНТАКСИС:
+ *    - for (тип переменная : коллекция) { тело }
+ *    - for (auto переменная : коллекция) { тело }
+ *    - for (const auto& переменная : коллекция) { тело }
+ * 
+ * 3. ПРЕИМУЩЕСТВА:
+ *    - Более читаемый и понятный код
+ *    - Автоматическое определение размера коллекции
+ *    - Меньше ошибок с индексами
+ *    - Работает с любыми контейнерами
+ *    - Безопасность типов
+ * 
+ * 4. ПРАКТИЧЕСКИЕ ПРИМЕНЕНИЯ:
+ *    - Итерация по массивам
+ *    - Работа со строками (символ за символом)
+ *    - Обработка контейнеров STL
+ *    - Инициализация коллекций на месте
+ *    - Вычисления с элементами коллекции
+ * 
+ * 5. ВАРИАНТЫ ИСПОЛЬЗОВАНИЯ:
+ *    - Копия элемента: for (int value : container)
+ *    - Ссылка на элемент: for (int& value : container)
+ *    - Константная ссылка: for (const int& value : container)
+ *    - Автоматический тип: for (auto value : container)
+ * 
+ * 6. ОГРАНИЧЕНИЯ:
+ *    - Не предоставляет доступ к индексу
+ *    - Переменная содержит копию элемента
+ *    - Не подходит для сложной логики итерации
+ *    - Требует поддержки begin() и end()
+ * 
+ * 7. РЕКОМЕНДАЦИИ:
+ *    - Используйте для простой итерации по всем элементам
+ *    - Предпочитайте auto для автоматического вывода типов
+ *    - Используйте ссылки для изменения элементов
+ *    - Используйте const& для больших объектов
+ *    - Рассмотрите традиционные циклы для сложной логики
+ * 
+ * 8. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Переменная содержит КОПИЮ элемента
+ *    - Для изменения используйте ссылки
+ *    - Работает с любыми контейнерами
+ *    - Более безопасен чем традиционные циклы
+ * 
+ * 9. АЛЬТЕРНАТИВЫ:
+ *    - Традиционный цикл for с индексами
+ *    - Итераторы для сложной логики
+ *    - Алгоритмы STL для стандартных операций
+ *    - Лямбда-функции для функционального стиля
+ * 
+ * 10. ДОПОЛНИТЕЛЬНЫЕ ВОЗМОЖНОСТИ:
+ *     - Structured bindings (C++17) для работы с парами
+ *     - Range-based for с инициализаторами (C++20)
+ *     - Concepts для ограничений типов (C++20)
+ *     - Ranges library для функционального программирования (C++20)
+ */

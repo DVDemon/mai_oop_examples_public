@@ -1,29 +1,97 @@
+/*
+ * ОПЕРАТОРЫ (STATEMENTS) И ФУНКЦИИ В C++
+ * 
+ * Этот файл демонстрирует:
+ * - Определение и использование пользовательских функций
+ * - Различные способы инициализации переменных
+ * - Операторы (statements) в C++
+ * - Вызов функций и передачу параметров
+ */
+
 #include <iostream>
 
-int addNumbers( int first_param, int second_param){
+/*
+ * ОПРЕДЕЛЕНИЕ ПОЛЬЗОВАТЕЛЬСКОЙ ФУНКЦИИ
+ * 
+ * Функция addNumbers принимает два целочисленных параметра
+ * и возвращает их сумму
+ */
+int addNumbers(int first_param, int second_param){
+    // Локальная переменная result хранит результат вычисления
     int result = first_param + second_param;
+    
+    // return возвращает значение из функции
     return result;
 }
 
 int main(){
+    /*
+     * ИНИЦИАЛИЗАЦИЯ ПЕРЕМЕННЫХ
+     * 
+     * В C++ есть несколько способов инициализации:
+     * 1. int var {value};  - современный способ (uniform initialization)
+     * 2. int var = value;  - классический способ
+     * 3. int var(value);   - функциональная инициализация
+     */
+    int first_number {13};  // Statement - оператор инициализации
+    int second_number {7};  // Statement - оператор инициализации
 
-    int first_number {13}; // Statement
-    int second_number {7};
+    // Выводим значения переменных
+    std::cout << "First number : " << first_number << std::endl;  // 13
+    std::cout << "Second number : " << second_number << std::endl;  // 7
 
-    std::cout << "First number : " << first_number << std::endl; // 13
-    std::cout << "Second number : " << second_number << std::endl; // 7
+    /*
+     * ВЫЧИСЛЕНИЕ СУММЫ БЕЗ ФУНКЦИИ
+     * 
+     * Оператор присваивания с арифметическим выражением
+     */
+    int sum = first_number + second_number;  // Statement - оператор присваивания
+    std::cout << "Sum : " << sum << std::endl;  // 20
 
-    int sum = first_number + second_number;
-    std::cout << "Sum : " << sum << std::endl; // 20
+    /*
+     * ВЫЗОВ ПОЛЬЗОВАТЕЛЬСКОЙ ФУНКЦИИ
+     * 
+     * addNumbers(25, 7) - вызов функции с аргументами 25 и 7
+     * Результат функции присваивается переменной sum
+     */
+    sum = addNumbers(25, 7);  // Statement - оператор присваивания с вызовом функции
+    std::cout << "Sum : " << sum << std::endl;  // 32
 
-    sum = addNumbers(25,7);
-    std::cout << "Sum : " << sum << std::endl; // 32
+    // Еще один вызов функции с другими аргументами
+    sum = addNumbers(30, 54);  // Statement
+    std::cout << "Sum : " << sum << std::endl;  // 84
 
-    sum = addNumbers(30,54);
-    std::cout << "Sum : " << sum << std::endl;
-
-    std::cout << "Sum : " << addNumbers(3,42) << std::endl;
-
+    /*
+     * ПРЯМОЙ ВЫВОД РЕЗУЛЬТАТА ФУНКЦИИ
+     * 
+     * Функция может быть вызвана прямо в выражении вывода
+     * Результат вычисляется и сразу выводится
+     */
+    std::cout << "Sum : " << addNumbers(3, 42) << std::endl;  // 45
 
     return 0;
 }
+
+/*
+ * КЛЮЧЕВЫЕ ПОНЯТИЯ:
+ * 
+ * 1. STATEMENT (ОПЕРАТОР) - это инструкция, которая выполняет действие:
+ *    - Инициализация переменных: int x {5};
+ *    - Присваивание: x = 10;
+ *    - Вызов функции: result = addNumbers(a, b);
+ *    - Вывод: std::cout << "Hello";
+ * 
+ * 2. ФУНКЦИЯ - это блок кода, который:
+ *    - Принимает параметры (аргументы)
+ *    - Выполняет вычисления
+ *    - Возвращает результат
+ * 
+ * 3. ПАРАМЕТРЫ vs АРГУМЕНТЫ:
+ *    - Параметры - это переменные в определении функции
+ *    - Аргументы - это значения, передаваемые при вызове функции
+ * 
+ * 4. ИНИЦИАЛИЗАЦИЯ ПЕРЕМЕННЫХ:
+ *    - {value} - современный способ, предотвращает сужение типов
+ *    - = value - классический способ
+ *    - (value) - функциональная инициализация
+ */

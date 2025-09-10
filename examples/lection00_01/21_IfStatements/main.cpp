@@ -1,110 +1,258 @@
-#include <iostream>
+/*
+ * УСЛОВНЫЕ ОПЕРАТОРЫ IF В C++
+ * 
+ * Этот файл демонстрирует использование условных операторов if:
+ * - Базовые условные операторы if
+ * - Операторы if-else
+ * - Вложенные условные операторы
+ * - Использование логических операторов в условиях
+ * - Практические примеры принятия решений
+ */
 
+#include <iostream>  // Для потоков ввода-вывода
 
-int main(){
-
-	int number1 {75};
-    int number2 {60};
-    bool result = (number1 < number2);//Expression yielding the condition
-    
-	
-	std::cout << std::boolalpha << "result : " << result << std::endl; 
-	
-	std::cout << std::endl;
-	std::cout << "free standing if statement" << std::endl;
-   
-    //if(result){
-    if(result) std::cout << "AAA" << std::endl;
-    
-	if(result == true){
-        std::cout << number1 << " is less than " << number2 << std::endl;
-    }
-    
-    //if(!result){
-	if(!(result == true)){
-        std::cout << number1 << " is NOT less than " << number2 << std::endl;
-    }
-
-    
-
-
-   	//Using else
-    
-	std::cout << std::endl;
-	std::cout << "using the else clause : " << std::endl;
-	
-	if(result == true){
-        std::cout << number1 << " is less than " << number2 << std::endl;
-    }else{
-        std::cout << number1 << " is NOT less than " << number2 << std::endl;
-    }
-    
-
-
-	//Use expression as condition directly
-
-	std::cout << std::endl;
-	std::cout << "Using expression as condition : " << std::endl;
-	
-	if(number1 < number2){
-        std::cout << number1 << " is less than " << number2 << std::endl;
-    }else{
-        std::cout << number1 << " is NOT less than " << number2 << std::endl;
-    }
-
-
-
-	//Nesting if statements
-	std::cout << std::endl;
-	std::cout << "Nesting if statements" << std::endl;
-	
-    bool red = false;
-    bool green {true};
-    bool yellow {false};
-    bool police_stop{true};
+int main() {
+    /*
+     * ПОДГОТОВКА ДАННЫХ ДЛЯ ДЕМОНСТРАЦИИ
+     * 
+     * Создаем переменные для демонстрации различных типов условий
+     */
+    int first_number {75};   // Первое число для сравнения
+    int second_number {60};  // Второе число для сравнения
     
     /*
-     *      If green : go
-     *      If red, yellow : stop
-     *      If green and police_stop : stop
-     * */
-
-     if(red){
-         std::cout << "Stop" << std::endl;
-     }
-     if(yellow){
-         std::cout << "Slow down" << std::endl;
-     }
-	 if(green){
-		 std::cout << "Go" << std::endl;
-	 }
-
-
-
-    std::cout << std::endl;
-	 std::cout << "Police officer stops(verbose)" << std::endl;
-	 if(green){
-         if(police_stop){
-             std::cout << "Stop" << std::endl;
-         }
-         else{
-             std::cout << "Go" << std::endl;
-         }
-
-     }
-
-
-
-     std::cout << std::endl;
-	 std::cout << "Police officer stops(less verbose)" << std::endl;
-	 if(green && !police_stop){
-         std::cout << "Go" << std::endl;
-     }else{
-         std::cout << "Stop" << std::endl;
-     }
-
-
+     * ВЫЧИСЛЕНИЕ УСЛОВИЯ
+     * 
+     * Условие - это выражение, которое возвращает true или false.
+     * В данном случае мы сравниваем два числа и сохраняем результат.
+     */
+    bool comparison_result = (first_number < second_number);  // Выражение, дающее условие
     
+    std::cout << "=== ПОДГОТОВКА ДАННЫХ ===" << std::endl;
+    std::cout << "Первое число: " << first_number << std::endl;
+    std::cout << "Второе число: " << second_number << std::endl;
+    std::cout << "Результат сравнения (первое < второго): " << std::boolalpha 
+              << comparison_result << std::endl;
+    std::cout << std::endl;
 
+    /*
+     * БАЗОВЫЙ УСЛОВНЫЙ ОПЕРАТОР IF
+     * 
+     * if (условие) { код }
+     * - Код выполняется только если условие истинно (true)
+     * - Если условие ложно (false), код пропускается
+     */
+    std::cout << "=== БАЗОВЫЙ УСЛОВНЫЙ ОПЕРАТОР IF ===" << std::endl;
+    
+    // Простая форма: if без фигурных скобок (только для одной строки)
+    if (comparison_result) std::cout << "Условие истинно!" << std::endl;
+    
+    // Полная форма: if с фигурными скобками
+    if (comparison_result == true) {
+        std::cout << first_number << " меньше чем " << second_number << std::endl;
+    }
+    
+    // Проверка отрицательного условия
+    if (!(comparison_result == true)) {
+        std::cout << first_number << " НЕ меньше чем " << second_number << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * УСЛОВНЫЙ ОПЕРАТОР IF-ELSE
+     * 
+     * if (условие) { код_если_истинно } else { код_если_ложно }
+     * - Выполняется один из двух блоков кода
+     * - Если условие истинно - выполняется первый блок
+     * - Если условие ложно - выполняется второй блок (else)
+     */
+    std::cout << "=== УСЛОВНЫЙ ОПЕРАТОР IF-ELSE ===" << std::endl;
+    
+    if (comparison_result == true) {
+        std::cout << first_number << " меньше чем " << second_number << std::endl;
+    } else {
+        std::cout << first_number << " НЕ меньше чем " << second_number << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * ИСПОЛЬЗОВАНИЕ ВЫРАЖЕНИЯ КАК УСЛОВИЯ НАПРЯМУЮ
+     * 
+     * Вместо сохранения результата в переменную, можно использовать
+     * выражение сравнения непосредственно в условии if
+     */
+    std::cout << "=== ВЫРАЖЕНИЕ КАК УСЛОВИЕ НАПРЯМУЮ ===" << std::endl;
+    
+    if (first_number < second_number) {
+        std::cout << first_number << " меньше чем " << second_number << std::endl;
+    } else {
+        std::cout << first_number << " НЕ меньше чем " << second_number << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * ВЛОЖЕННЫЕ УСЛОВНЫЕ ОПЕРАТОРЫ
+     * 
+     * Демонстрация сложной логики принятия решений с помощью
+     * вложенных условных операторов
+     */
+    std::cout << "=== ВЛОЖЕННЫЕ УСЛОВНЫЕ ОПЕРАТОРЫ ===" << std::endl;
+    
+    // Переменные для моделирования светофора
+    bool is_red_light = false;      // Красный свет
+    bool is_green_light = true;     // Зеленый свет
+    bool is_yellow_light = false;   // Желтый свет
+    bool is_police_stop = true;     // Остановка полиции
+    
+    /*
+     * ПРАВИЛА ДВИЖЕНИЯ:
+     * - Если зеленый свет: ехать
+     * - Если красный или желтый свет: остановиться
+     * - Если зеленый свет И остановка полиции: остановиться
+     */
+    
+    std::cout << "Состояние светофора:" << std::endl;
+    std::cout << "Красный: " << std::boolalpha << is_red_light << std::endl;
+    std::cout << "Желтый: " << std::boolalpha << is_yellow_light << std::endl;
+    std::cout << "Зеленый: " << std::boolalpha << is_green_light << std::endl;
+    std::cout << "Остановка полиции: " << std::boolalpha << is_police_stop << std::endl;
+    std::cout << std::endl;
+    
+    // Простая логика светофора
+    std::cout << "=== ПРОСТАЯ ЛОГИКА СВЕТОФОРА ===" << std::endl;
+    if (is_red_light) {
+        std::cout << "ОСТАНОВИТЬСЯ - красный свет!" << std::endl;
+    }
+    if (is_yellow_light) {
+        std::cout << "СБАВИТЬ СКОРОСТЬ - желтый свет!" << std::endl;
+    }
+    if (is_green_light) {
+        std::cout << "ЕХАТЬ - зеленый свет!" << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * СЛОЖНАЯ ЛОГИКА С ВЛОЖЕННЫМИ УСЛОВИЯМИ
+     * 
+     * Демонстрация вложенных if-else для обработки сложных условий
+     */
+    std::cout << "=== СЛОЖНАЯ ЛОГИКА (ВЛОЖЕННЫЕ УСЛОВИЯ) ===" << std::endl;
+    std::cout << "Остановка полиции (подробная логика):" << std::endl;
+    
+    if (is_green_light) {
+        if (is_police_stop) {
+            std::cout << "ОСТАНОВИТЬСЯ - полиция!" << std::endl;
+        } else {
+            std::cout << "ЕХАТЬ - зеленый свет, полиции нет" << std::endl;
+        }
+    } else {
+        std::cout << "ОСТАНОВИТЬСЯ - не зеленый свет" << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * ОПТИМИЗИРОВАННАЯ ЛОГИКА С ЛОГИЧЕСКИМИ ОПЕРАТОРАМИ
+     * 
+     * Использование логических операторов для упрощения сложных условий
+     */
+    std::cout << "=== ОПТИМИЗИРОВАННАЯ ЛОГИКА ===" << std::endl;
+    std::cout << "Остановка полиции (упрощенная логика):" << std::endl;
+    
+    if (is_green_light && !is_police_stop) {
+        std::cout << "ЕХАТЬ - зеленый свет и полиции нет" << std::endl;
+    } else {
+        std::cout << "ОСТАНОВИТЬСЯ - либо не зеленый свет, либо полиция" << std::endl;
+    }
+    std::cout << std::endl;
+
+    /*
+     * ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ УСЛОВНЫХ ОПЕРАТОРОВ
+     * 
+     * Демонстрация различных типов условий и их комбинирования
+     */
+    std::cout << "=== ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ===" << std::endl;
+    
+    // Пример 1: Проверка диапазона значений
+    int temperature = 25;
+    if (temperature < 0) {
+        std::cout << "Температура " << temperature << "°C - очень холодно!" << std::endl;
+    } else if (temperature < 10) {
+        std::cout << "Температура " << temperature << "°C - холодно" << std::endl;
+    } else if (temperature < 20) {
+        std::cout << "Температура " << temperature << "°C - прохладно" << std::endl;
+    } else if (temperature < 30) {
+        std::cout << "Температура " << temperature << "°C - тепло" << std::endl;
+    } else {
+        std::cout << "Температура " << temperature << "°C - жарко!" << std::endl;
+    }
+    
+    // Пример 2: Проверка четности числа
+    int number = 42;
+    if (number % 2 == 0) {
+        std::cout << "Число " << number << " четное" << std::endl;
+    } else {
+        std::cout << "Число " << number << " нечетное" << std::endl;
+    }
+    
+    // Пример 3: Комбинирование условий
+    bool is_weekend = false;
+    bool is_holiday = true;
+    if (is_weekend || is_holiday) {
+        std::cout << "Сегодня выходной день!" << std::endl;
+    } else {
+        std::cout << "Сегодня рабочий день" << std::endl;
+    }
+    std::cout << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: УСЛОВНЫЕ ОПЕРАТОРЫ IF В C++
+ * 
+ * 1. ОСНОВНЫЕ ПОНЯТИЯ:
+ *    - if - выполняет код только если условие истинно
+ *    - else - выполняет код если условие ложно
+ *    - Условие - выражение, возвращающее true или false
+ * 
+ * 2. СИНТАКСИС:
+ *    - if (условие) { код }
+ *    - if (условие) { код1 } else { код2 }
+ *    - if (условие1) { код1 } else if (условие2) { код2 } else { код3 }
+ * 
+ * 3. ТИПЫ УСЛОВИЙ:
+ *    - Сравнения: ==, !=, <, >, <=, >=
+ *    - Логические: && (И), || (ИЛИ), ! (НЕ)
+ *    - Булевы переменные: true, false
+ *    - Выражения: любые, возвращающие bool
+ * 
+ * 4. ВЛОЖЕННЫЕ УСЛОВИЯ:
+ *    - if внутри if для сложной логики
+ *    - Логические операторы для упрощения
+ *    - Приоритет операций: ! > && > ||
+ * 
+ * 5. ПРАКТИЧЕСКИЕ ПРИМЕНЕНИЯ:
+ *    - Принятие решений в программах
+ *    - Валидация входных данных
+ *    - Обработка различных сценариев
+ *    - Управление потоком выполнения
+ * 
+ * 6. РЕКОМЕНДАЦИИ:
+ *    - Используйте фигурные скобки даже для одной строки
+ *    - Предпочитайте логические операторы вложенным if
+ *    - Выбирайте осмысленные имена для булевых переменных
+ *    - Избегайте слишком глубокой вложенности
+ *    - Используйте else if для множественных условий
+ * 
+ * 7. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Условие вычисляется каждый раз при выполнении
+ *    - Будьте осторожны с операторами присваивания (=) в условиях
+ *    - Используйте == для сравнения, а не =
+ *    - Проверяйте граничные значения
+ * 
+ * 8. ДОПОЛНИТЕЛЬНЫЕ ВОЗМОЖНОСТИ:
+ *    - Тернарный оператор (условие ? значение1 : значение2)
+ *    - switch-case для множественных условий
+ *    - Логические операторы для оптимизации
+ *    - constexpr if (C++17) для условной компиляции
+ */

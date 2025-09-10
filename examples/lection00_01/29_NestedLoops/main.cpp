@@ -1,66 +1,278 @@
-#include <iostream>
-#include <iomanip>
+/*
+ * ВЛОЖЕННЫЕ ЦИКЛЫ В C++
+ * 
+ * Этот файл демонстрирует использование вложенных циклов:
+ * - Вложенные циклы for
+ * - Вложенные циклы while
+ * - Вложенные циклы do-while
+ * - Управление переменными во вложенных циклах
+ * - Практические примеры и рекомендации
+ */
 
-int main()
-{
+#include <iostream>  // Для потоков ввода-вывода
+#include <iomanip>   // Для манипуляторов форматирования (setw)
 
-    // Setw on numbers before you print them
-    const size_t ROWS{12};
-    const size_t COLS{3};
+int main() {
+    /*
+     * ПОДГОТОВКА КОНСТАНТ ДЛЯ ВЛОЖЕННЫХ ЦИКЛОВ
+     * 
+     * Определяем размеры таблицы для демонстрации вложенных циклов
+     */
+    const size_t TABLE_ROWS{12};  // Количество строк в таблице
+    const size_t TABLE_COLS{3};   // Количество столбцов в таблице
+    
+    std::cout << "=== ВЛОЖЕННЫЕ ЦИКЛЫ В C++ ===" << std::endl;
+    std::cout << "Демонстрация различных типов вложенных циклов" << std::endl;
+    std::cout << "Размер таблицы: " << TABLE_ROWS << " строк × " << TABLE_COLS << " столбцов" << std::endl;
+    std::cout << std::endl;
 
-    std::cout << "Tabular data visualization with nested for loops : " << std::endl;
+    /*
+     * ПРИМЕР 1: ВЛОЖЕННЫЕ ЦИКЛЫ FOR
+     * 
+     * Самый простой и распространенный способ создания вложенных циклов.
+     * Внешний цикл управляет строками, внутренний - столбцами.
+     * 
+     * Особенности:
+     * - Автоматическое управление переменными
+     * - Четкая структура и читаемость
+     * - Идеально подходит для работы с двумерными структурами
+     */
+    std::cout << "=== ПРИМЕР 1: ВЛОЖЕННЫЕ ЦИКЛЫ FOR ===" << std::endl;
+    std::cout << "Визуализация табличных данных с вложенными циклами for:" << std::endl;
+    
+    for (size_t current_row{0}; current_row < TABLE_ROWS; ++current_row) {
+        for (size_t current_col{0}; current_col < TABLE_COLS; ++current_col) {
+            // std::setw(2) устанавливает ширину поля в 2 символа для выравнивания
+            std::cout << "(строка " << std::setw(2) << current_row 
+                      << ", столбец " << std::setw(2) << current_col << ")  ";
+        }
+        std::cout << std::endl;  // Переход на новую строку после завершения внутреннего цикла
+    }
+    std::cout << std::endl;
 
-    for (size_t row{0}; row < ROWS; ++row)
-    {
-        for (size_t col{0}; col < COLS; ++col)
-        {
+    /*
+     * ПРИМЕР 2: ВЛОЖЕННЫЕ ЦИКЛЫ WHILE
+     * 
+     * Демонстрация вложенных циклов while с явным управлением переменными.
+     * 
+     * ВАЖНО: Необходимо сбрасывать переменную внутреннего цикла
+     * после завершения каждой итерации внешнего цикла!
+     */
+    std::cout << "=== ПРИМЕР 2: ВЛОЖЕННЫЕ ЦИКЛЫ WHILE ===" << std::endl;
+    std::cout << "Визуализация табличных данных с вложенными циклами while:" << std::endl;
+    
+    size_t row_index{0};  // Индекс текущей строки
+    size_t col_index{0};  // Индекс текущего столбца
+    
+    while (row_index < TABLE_ROWS) {
+        while (col_index < TABLE_COLS) {
+            std::cout << "(строка " << std::setw(2) << row_index 
+                      << ", столбец " << std::setw(2) << col_index << ") ";
+            ++col_index;  // Переход к следующему столбцу
+        }
+        std::cout << std::endl;  // Переход на новую строку
+        
+        col_index = 0;  // ВАЖНО! Сброс индекса столбца для следующей строки
+        ++row_index;    // Переход к следующей строке
+    }
+    std::cout << std::endl;
 
-            std::cout << "( row " << std::setw(2) << row << ",col " << std::setw(2) << col << ")  ";
+    /*
+     * ПРИМЕР 3: ВЛОЖЕННЫЕ ЦИКЛЫ DO-WHILE
+     * 
+     * Демонстрация вложенных циклов do-while.
+     * 
+     * Особенности:
+     * - Гарантированное выполнение хотя бы один раз
+     * - Требует явного управления переменными
+     * - Необходим сброс переменной внутреннего цикла
+     */
+    std::cout << "=== ПРИМЕР 3: ВЛОЖЕННЫЕ ЦИКЛЫ DO-WHILE ===" << std::endl;
+    std::cout << "Визуализация табличных данных с вложенными циклами do-while:" << std::endl;
+    
+    row_index = 0;  // Сброс индексов для нового примера
+    col_index = 0;
+    
+    do {  // Внешний цикл по строкам
+        do {  // Внутренний цикл по столбцам
+            std::cout << "(строка " << std::setw(2) << row_index 
+                      << ", столбец " << std::setw(2) << col_index << ")   ";
+            ++col_index;  // Переход к следующему столбцу
+        } while (col_index < TABLE_COLS);
+        
+        std::cout << std::endl;  // Переход на новую строку
+        
+        col_index = 0;  // ВАЖНО! Сброс индекса столбца для следующей строки
+        ++row_index;    // Переход к следующей строке
+    } while (row_index < TABLE_ROWS);
+    
+    std::cout << std::endl;
+
+    /*
+     * ПРИМЕР 4: ПРАКТИЧЕСКОЕ ПРИМЕНЕНИЕ - ТАБЛИЦА УМНОЖЕНИЯ
+     * 
+     * Демонстрация практического использования вложенных циклов
+     * для создания таблицы умножения
+     */
+    std::cout << "=== ПРИМЕР 4: ТАБЛИЦА УМНОЖЕНИЯ ===" << std::endl;
+    std::cout << "Создание таблицы умножения с помощью вложенных циклов:" << std::endl;
+    
+    const size_t multiplication_size = 5;
+    std::cout << "Таблица умножения " << multiplication_size << "×" << multiplication_size << ":" << std::endl;
+    std::cout << std::endl;
+    
+    // Заголовок таблицы
+    std::cout << "   ";
+    for (size_t header_col = 1; header_col <= multiplication_size; ++header_col) {
+        std::cout << std::setw(4) << header_col;
+    }
+    std::cout << std::endl;
+    
+    // Тело таблицы
+    for (size_t mult_row = 1; mult_row <= multiplication_size; ++mult_row) {
+        std::cout << std::setw(2) << mult_row << " ";
+        for (size_t mult_col = 1; mult_col <= multiplication_size; ++mult_col) {
+            std::cout << std::setw(4) << (mult_row * mult_col);
         }
         std::cout << std::endl;
     }
-
-    // While loop
     std::cout << std::endl;
-    std::cout << "Tabular data visualization with nested while loops : " << std::endl;
 
-    // Remember to reset col to 0 after the inner loop is done for the next row
-    //  to use the right columns.
-    size_t row{0};
-    size_t col{0};
-
-    while (row < ROWS)
-    {
-        while (col < COLS)
-        {
-            std::cout << "( row " << std::setw(2) << row << ",col " << std::setw(2) << col << ") ";
-            ++col;
+    /*
+     * ПРИМЕР 5: ТРЕУГОЛЬНИК ИЗ СИМВОЛОВ
+     * 
+     * Демонстрация создания геометрических фигур с помощью вложенных циклов
+     */
+    std::cout << "=== ПРИМЕР 5: ТРЕУГОЛЬНИК ИЗ СИМВОЛОВ ===" << std::endl;
+    std::cout << "Создание треугольника с помощью вложенных циклов:" << std::endl;
+    
+    const size_t triangle_height = 6;
+    for (size_t triangle_row = 1; triangle_row <= triangle_height; ++triangle_row) {
+        // Вывод пробелов для выравнивания
+        for (size_t space_count = 0; space_count < triangle_height - triangle_row; ++space_count) {
+            std::cout << " ";
+        }
+        
+        // Вывод символов треугольника
+        for (size_t star_count = 0; star_count < 2 * triangle_row - 1; ++star_count) {
+            std::cout << "*";
         }
         std::cout << std::endl;
-        col = 0; // Reset col to 0 to allow printing from col 0 . col is in main
-                 // function local scope now.
-        ++row;
     }
-
     std::cout << std::endl;
-    std::cout << "Tabular data visualization with nested do while loops : " << std::endl;
 
-    row = 0;
-    col = 0;
-
-    do
-    { // row
-        do
-        {
-            std::cout << "( row " << std::setw(2) << row << ",col " << std::setw(2) << col << ")   ";
-            ++col;
-        } while (col < COLS);
-
+    /*
+     * ПРИМЕР 6: ОБРАБОТКА ДВУМЕРНОГО МАССИВА
+     * 
+     * Демонстрация работы с двумерными структурами данных
+     */
+    std::cout << "=== ПРИМЕР 6: ОБРАБОТКА ДВУМЕРНОГО МАССИВА ===" << std::endl;
+    std::cout << "Создание и обработка двумерного массива:" << std::endl;
+    
+    const size_t array_rows = 3;
+    const size_t array_cols = 4;
+    int matrix[array_rows][array_cols];
+    
+    // Заполнение массива значениями
+    std::cout << "Заполнение массива:" << std::endl;
+    for (size_t arr_row = 0; arr_row < array_rows; ++arr_row) {
+        for (size_t arr_col = 0; arr_col < array_cols; ++arr_col) {
+            matrix[arr_row][arr_col] = arr_row * array_cols + arr_col + 1;
+            std::cout << std::setw(3) << matrix[arr_row][arr_col] << " ";
+        }
         std::cout << std::endl;
-        col = 0; // Reset col to 0 to allow printing from col 0 . col is in main
-                 // function local scope now.
-        ++row;
-    } while (row < ROWS);
+    }
+    
+    // Вычисление суммы всех элементов
+    int total_sum = 0;
+    for (size_t sum_row = 0; sum_row < array_rows; ++sum_row) {
+        for (size_t sum_col = 0; sum_col < array_cols; ++sum_col) {
+            total_sum += matrix[sum_row][sum_col];
+        }
+    }
+    std::cout << "Сумма всех элементов: " << total_sum << std::endl;
+    std::cout << std::endl;
 
+    /*
+     * РЕКОМЕНДАЦИИ ПО ИСПОЛЬЗОВАНИЮ ВЛОЖЕННЫХ ЦИКЛОВ
+     * 
+     * Практические советы для эффективного использования
+     */
+    std::cout << "=== РЕКОМЕНДАЦИИ ===" << std::endl;
+    std::cout << "1. Используйте вложенные циклы для работы с двумерными структурами" << std::endl;
+    std::cout << "2. Предпочитайте циклы for для вложенных конструкций" << std::endl;
+    std::cout << "3. Внимательно управляйте переменными во вложенных циклах" << std::endl;
+    std::cout << "4. Сбрасывайте переменные внутреннего цикла после каждой итерации внешнего" << std::endl;
+    std::cout << "5. Используйте осмысленные имена для переменных циклов" << std::endl;
+    std::cout << "6. Избегайте слишком глубокой вложенности (более 3-4 уровней)" << std::endl;
+    std::cout << "7. Рассмотрите альтернативы для сложных случаев (функции, алгоритмы STL)" << std::endl;
+    std::cout << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: ВЛОЖЕННЫЕ ЦИКЛЫ В C++
+ * 
+ * 1. ОСНОВНЫЕ ПОНЯТИЯ:
+ *    - Вложенные циклы - циклы внутри других циклов
+ *    - Внешний цикл управляет основным процессом
+ *    - Внутренний цикл выполняется для каждой итерации внешнего
+ *    - Сложность O(n×m) для двух вложенных циклов
+ * 
+ * 2. ТИПЫ ВЛОЖЕННЫХ ЦИКЛОВ:
+ *    - for внутри for - самый распространенный
+ *    - while внутри while - требует явного управления
+ *    - do-while внутри do-while - гарантированное выполнение
+ *    - Смешанные типы (for внутри while и т.д.)
+ * 
+ * 3. ОСОБЕННОСТИ:
+ *    - Внутренний цикл выполняется полностью для каждой итерации внешнего
+ *    - Переменные внутреннего цикла должны сбрасываться
+ *    - Общее количество итераций = произведение размеров циклов
+ *    - Подходит для работы с двумерными структурами
+ * 
+ * 4. ПРАКТИЧЕСКИЕ ПРИМЕНЕНИЯ:
+ *    - Обработка двумерных массивов и матриц
+ *    - Создание таблиц и графиков
+ *    - Генерация геометрических фигур
+ *    - Поиск и сортировка в двумерных структурах
+ *    - Игры (шахматы, крестики-нолики)
+ * 
+ * 5. ПРЕИМУЩЕСТВА:
+ *    - Естественность для двумерных задач
+ *    - Четкая структура и логика
+ *    - Легкость понимания и отладки
+ *    - Гибкость в управлении
+ * 
+ * 6. НЕДОСТАТКИ:
+ *    - Высокая вычислительная сложность
+ *    - Сложность управления переменными
+ *    - Риск ошибок в сбросе переменных
+ *    - Может быть неэффективным для больших данных
+ * 
+ * 7. РЕКОМЕНДАЦИИ:
+ *    - Используйте для двумерных структур
+ *    - Предпочитайте циклы for
+ *    - Внимательно управляйте переменными
+ *    - Избегайте глубокой вложенности
+ *    - Используйте осмысленные имена
+ * 
+ * 8. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Сброс переменных внутреннего цикла обязателен
+ *    - Общее количество итераций = произведение размеров
+ *    - Внутренний цикл выполняется полностью каждый раз
+ *    - Сложность растет экспоненциально с глубиной вложенности
+ * 
+ * 9. АЛЬТЕРНАТИВЫ:
+ *    - Алгоритмы STL для стандартных операций
+ *    - Функции для инкапсуляции логики
+ *    - Одномерные циклы с вычислением индексов
+ *    - Рекурсия для некоторых случаев
+ * 
+ * 10. ДОПОЛНИТЕЛЬНЫЕ ВОЗМОЖНОСТИ:
+ *     - break и continue во вложенных циклах
+ *     - Метки для выхода из нескольких циклов
+ *     - Динамические размеры циклов
+ *     - Условные циклы внутри вложенных конструкций
+ */

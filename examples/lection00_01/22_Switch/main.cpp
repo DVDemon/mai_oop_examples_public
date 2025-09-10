@@ -1,65 +1,285 @@
-#include <iostream>
-#include <string>
+/*
+ * ОПЕРАТОР SWITCH В C++
+ * 
+ * Этот файл демонстрирует использование оператора switch для
+ * множественного выбора:
+ * - Базовый синтаксис switch-case
+ * - Множественные case для одного действия
+ * - Использование break для предотвращения "проваливания"
+ * - Блок default для необработанных случаев
+ * - Ограничения на типы данных в switch
+ */
 
+#include <iostream>  // Для потоков ввода-вывода
+#include <string>    // Для работы со строками
 
-// Tools
-const int Pen{ 10 };
-const int Marker{ 20 };
-const int Eraser{ 30 };
-const int Rectangle{ 40 };
-const int Circle{ 50 };
-const int Ellipse{ 60 };
+/*
+ * КОНСТАНТЫ ДЛЯ ИНСТРУМЕНТОВ РИСОВАНИЯ
+ * 
+ * Определяем константы для различных инструментов графического редактора.
+ * Используем целые числа для демонстрации работы switch с целочисленными типами.
+ */
+const int TOOL_PEN {10};        // Инструмент: ручка
+const int TOOL_MARKER {20};     // Инструмент: маркер
+const int TOOL_ERASER {30};     // Инструмент: ластик
+const int TOOL_RECTANGLE {40};  // Инструмент: прямоугольник
+const int TOOL_CIRCLE {50};     // Инструмент: круг
+const int TOOL_ELLIPSE {60};    // Инструмент: эллипс
 
+int main() {
+    /*
+     * ВЫБОР АКТИВНОГО ИНСТРУМЕНТА
+     * 
+     * Устанавливаем активный инструмент для демонстрации работы switch.
+     * В реальной программе это значение могло бы приходить от пользователя.
+     */
+    int active_tool {TOOL_ERASER};  // Текущий активный инструмент
+    
+    std::cout << "=== ДЕМОНСТРАЦИЯ ОПЕРАТОРА SWITCH ===" << std::endl;
+    std::cout << "Активный инструмент: " << active_tool << std::endl;
+    std::cout << std::endl;
 
-int main(){
-
-    int tool {Eraser};
-
-    switch (tool)
-    {
-        case Pen : {
-             std::cout << "Active tool is Pen" << std::endl;
+    /*
+     * ОСНОВНОЙ ОПЕРАТОР SWITCH
+     * 
+     * switch (выражение) {
+     *     case значение1: код1; break;
+     *     case значение2: код2; break;
+     *     default: код_по_умолчанию;
+     * }
+     * 
+     * switch сравнивает значение выражения с константами в case
+     * и выполняет соответствующий блок кода.
+     */
+    switch (active_tool) {
+        /*
+         * CASE ДЛЯ РУЧКИ
+         * 
+         * Если active_tool равен TOOL_PEN (10), выполняется этот блок.
+         * break завершает выполнение switch и переходит к следующему оператору.
+         */
+        case TOOL_PEN: {
+            std::cout << "Активный инструмент: Ручка" << std::endl;
+            std::cout << "Режим: рисование линий" << std::endl;
         }
         break;
 
-        case Marker : {
-             std::cout << "Active tool is Marker" << std::endl;
+        /*
+         * CASE ДЛЯ МАРКЕРА
+         * 
+         * Если active_tool равен TOOL_MARKER (20), выполняется этот блок.
+         */
+        case TOOL_MARKER: {
+            std::cout << "Активный инструмент: Маркер" << std::endl;
+            std::cout << "Режим: выделение текста" << std::endl;
         }
         break;
         
-        case Eraser :
-        case Rectangle : 
-        case Circle : {
-             std::cout << "Drawing Shapes" << std::endl;
+        /*
+         * МНОЖЕСТВЕННЫЕ CASE ДЛЯ ОДНОГО ДЕЙСТВИЯ
+         * 
+         * Несколько case без break между ними выполняют один и тот же код.
+         * Это называется "проваливанием" (fall-through).
+         * 
+         * В данном случае TOOL_ERASER, TOOL_RECTANGLE и TOOL_CIRCLE
+         * выполняют одинаковое действие.
+         */
+        case TOOL_ERASER:
+        case TOOL_RECTANGLE: 
+        case TOOL_CIRCLE: {
+            std::cout << "Активный инструмент: Инструмент рисования фигур" << std::endl;
+            std::cout << "Режим: создание геометрических объектов" << std::endl;
         }
         break;
 
-        case Ellipse : {
-             std::cout << "Active tool is Ellipse" << std::endl;
+        /*
+         * CASE ДЛЯ ЭЛЛИПСА
+         * 
+         * Отдельный case для эллипса с собственным действием.
+         */
+        case TOOL_ELLIPSE: {
+            std::cout << "Активный инструмент: Эллипс" << std::endl;
+            std::cout << "Режим: рисование овальных фигур" << std::endl;
         }
         break;
     
-        default: 
-        {
-            std::cout << "No match found" << std::endl;
+        /*
+         * БЛОК DEFAULT
+         * 
+         * Выполняется, если ни один case не соответствует значению.
+         * default необязателен, но рекомендуется для обработки неожиданных значений.
+         */
+        default: {
+            std::cout << "Неизвестный инструмент!" << std::endl;
+            std::cout << "Выберите инструмент из доступных" << std::endl;
         }
     }
 
-    std::cout << "Moving on" << std::endl;
-
+    std::cout << std::endl;
+    std::cout << "Продолжение выполнения программы..." << std::endl;
+    std::cout << std::endl;
 
     /*
-    // Condition can only be integer of enum (We'll learn about enums later in the course)
-    std::string name {"John"};
-    switch (name) // Compiler error!
-    {
+     * ОГРАНИЧЕНИЯ НА ТИПЫ ДАННЫХ В SWITCH
+     * 
+     * switch может работать только с целочисленными типами и enum.
+     * Строки, вещественные числа и другие типы не поддерживаются.
+     */
+    std::cout << "=== ОГРАНИЧЕНИЯ SWITCH ===" << std::endl;
     
+    // Этот код закомментирован, так как вызывает ошибку компиляции
+    /*
+    std::string user_name {"Иван"};
+    switch (user_name) {  // ОШИБКА КОМПИЛЯЦИИ!
+        // switch не может работать со строками
     }
     */
+    
+    std::cout << "switch работает только с целочисленными типами и enum" << std::endl;
+    std::cout << "Для строк используйте if-else или другие подходы" << std::endl;
+    std::cout << std::endl;
 
+    /*
+     * ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ SWITCH
+     * 
+     * Демонстрация различных способов использования switch
+     */
+    std::cout << "=== ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ===" << std::endl;
+    
+    // Пример 1: Обработка кодов ошибок
+    int error_code = 404;
+    std::cout << "Код ошибки: " << error_code << std::endl;
+    
+    switch (error_code) {
+        case 200:
+            std::cout << "Успешно" << std::endl;
+            break;
+        case 404:
+            std::cout << "Не найдено" << std::endl;
+            break;
+        case 500:
+            std::cout << "Внутренняя ошибка сервера" << std::endl;
+            break;
+        default:
+            std::cout << "Неизвестная ошибка" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // Пример 2: Обработка меню
+    int menu_choice = 2;
+    std::cout << "Выбор в меню: " << menu_choice << std::endl;
+    
+    switch (menu_choice) {
+        case 1:
+            std::cout << "Открыть файл" << std::endl;
+            break;
+        case 2:
+            std::cout << "Сохранить файл" << std::endl;
+            break;
+        case 3:
+            std::cout << "Выход" << std::endl;
+            break;
+        default:
+            std::cout << "Неверный выбор" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // Пример 3: Обработка дней недели
+    int day_of_week = 3;
+    std::cout << "День недели (1-7): " << day_of_week << std::endl;
+    
+    switch (day_of_week) {
+        case 1:
+        case 7:
+            std::cout << "Выходной день" << std::endl;
+            break;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            std::cout << "Рабочий день" << std::endl;
+            break;
+        default:
+            std::cout << "Неверный день недели" << std::endl;
+    }
+    std::cout << std::endl;
 
-
-
-   
+    /*
+     * РЕКОМЕНДАЦИИ ПО ИСПОЛЬЗОВАНИЮ SWITCH
+     * 
+     * Практические советы для эффективного использования
+     */
+    std::cout << "=== РЕКОМЕНДАЦИИ ПО SWITCH ===" << std::endl;
+    std::cout << "1. Используйте switch для множественного выбора" << std::endl;
+    std::cout << "2. Всегда добавляйте break после case (кроме намеренного fall-through)" << std::endl;
+    std::cout << "3. Включайте блок default для обработки неожиданных значений" << std::endl;
+    std::cout << "4. Используйте константы для значений case" << std::endl;
+    std::cout << "5. Группируйте связанные case для одного действия" << std::endl;
+    std::cout << "6. Избегайте слишком длинных switch (рассмотрите альтернативы)" << std::endl;
+    std::cout << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: ОПЕРАТОР SWITCH В C++
+ * 
+ * 1. ОСНОВНЫЕ ПОНЯТИЯ:
+ *    - switch - оператор множественного выбора
+ *    - case - метки для различных значений
+ *    - break - завершение выполнения case
+ *    - default - обработка необработанных случаев
+ * 
+ * 2. СИНТАКСИС:
+ *    - switch (выражение) { case значение: код; break; default: код; }
+ *    - Выражение должно быть целочисленного типа или enum
+ *    - case значения должны быть константами времени компиляции
+ * 
+ * 3. ПРАВИЛА РАБОТЫ:
+ *    - switch сравнивает значение с константами в case
+ *    - Выполняется код первого подходящего case
+ *    - break завершает выполнение switch
+ *    - Без break выполнение "проваливается" в следующий case
+ * 
+ * 4. FALL-THROUGH (ПРОВАЛИВАНИЕ):
+ *    - Несколько case без break выполняют один код
+ *    - Полезно для группировки связанных действий
+ *    - Может быть источником ошибок, если забыть break
+ * 
+ * 5. ОГРАНИЧЕНИЯ:
+ *    - Работает только с целочисленными типами (int, char, enum)
+ *    - Не работает со строками, вещественными числами
+ *    - case значения должны быть константами
+ * 
+ * 6. ПРАКТИЧЕСКИЕ ПРИМЕНЕНИЯ:
+ *    - Обработка меню и команд
+ *    - Обработка кодов ошибок
+ *    - Машины состояний
+ *    - Парсинг простых языков
+ * 
+ * 7. ПРЕИМУЩЕСТВА ПЕРЕД IF-ELSE:
+ *    - Более читаемый код для множественного выбора
+ *    - Лучшая производительность (компилятор может оптимизировать)
+ *    - Легче добавлять новые случаи
+ *    - Меньше вероятность ошибок
+ * 
+ * 8. РЕКОМЕНДАЦИИ:
+ *    - Используйте для 3+ альтернатив
+ *    - Всегда добавляйте break (кроме намеренного fall-through)
+ *    - Включайте default для обработки ошибок
+ *    - Используйте константы для значений case
+ *    - Документируйте намеренное fall-through
+ * 
+ * 9. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - switch не создает новую область видимости для case
+ *    - Переменные в case должны быть в блоках {}
+ *    - default может быть в любом месте switch
+ *    - case значения должны быть уникальными
+ * 
+ * 10. ДОПОЛНИТЕЛЬНЫЕ ВОЗМОЖНОСТИ:
+ *     - switch с enum (будет изучено позже)
+ *     - constexpr switch (C++17)
+ *     - Pattern matching (C++23)
+ *     - Альтернативы: if-else, std::map, полиморфизм
+ */

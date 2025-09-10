@@ -1,80 +1,179 @@
-#include <iostream>
-#include <iomanip>
+/*
+ * ДРОБНЫЕ ЧИСЛА В C++
+ * 
+ * Этот файл демонстрирует работу с вещественными числами:
+ * - Типы float, double, long double
+ * - Точность и размеры типов
+ * - Научная нотация
+ * - Специальные значения: бесконечность и NaN
+ * - Проблемы точности при работе с вещественными числами
+ */
 
-
+#include <iostream>  // Для потоков ввода-вывода
+#include <iomanip>   // Для манипуляторов форматирования
 
 int main(){
-
-    //Declare and initialize the variables
-    float number1 {1.12345678901234567890f}; // Precision : 7
-    double number2 {1.12345678901234567890}; // Precision : 15
-    long double number3  {1.12345678901234567890L};
+    /*
+     * ОБЪЯВЛЕНИЕ И ИНИЦИАЛИЗАЦИЯ ВЕЩЕСТВЕННЫХ ПЕРЕМЕННЫХ
+     * 
+     * В C++ есть три основных типа для вещественных чисел:
+     * - float - одинарная точность (обычно 4 байта)
+     * - double - двойная точность (обычно 8 байт)
+     * - long double - расширенная точность (обычно 8-16 байт)
+     */
     
-    //Print out the sizes
-    std::cout << "sizeof float : " << sizeof(float) << std::endl;
-    std::cout << "sizeof double : " << sizeof(double) << std::endl;
-    std::cout << "sizeof long double : " << sizeof(long double) << std::endl;
-
-
-
-    //Precision
-    std::cout << std::setprecision(20); // Control the precision from std::cout.
-    std::cout << "number1 is : " << number1 << std::endl; //7 digits
-    std::cout << "number2 is : " << number2 << std::endl; // 15'ish digits
-    std::cout << "number3 is : " << number3 << std::endl; // 15+ digits
-
-
-    //Float problems : The precision is usually too limited
-    //for a lot of applications
-    float number4 = 192400023.0f;               // Error : narrowing conversion
-
-    std::cout << "number4 : " << number4 << std::endl;
-
-
-    //Scientific notation
-    //What we have seen so far in terms of floating point types
-    //is fixed notation. There is another notation, scientific
-    //that is handy if you have really huge numbers or small numbers
-    //to represent
-
-    std::cout << "-------------------------" << std::endl;
+    // Демонстрация различных типов с одинаковым значением
+    float float_value {1.12345678901234567890f};     // Точность: ~7 значащих цифр
+    double double_value {1.12345678901234567890};    // Точность: ~15 значащих цифр
+    long double long_double_value {1.12345678901234567890L}; // Точность: 15+ значащих цифр
     
-    double number5 {192400023};
-    double number6 {1.92400023e8};
-    double number7 {1.924e8};           // Can ommit the lower 00023
-                                        // for simplicity if our application allows that.
-    double number8 {0.00000000003498};
-    double number9 {3.498e-11}; // multiply with 10 exp(-11)
-    
-    std::cout << "number5 is : " << number5 << std::endl;
-    std::cout << "number6 is : " << number6 << std::endl;
-    std::cout << "number7 is : " << number7 << std::endl;
-    std::cout << "number8 is : " << number8 << std::endl;
-    std::cout << "number9 is : " << number9 << std::endl;
-
-
-
-    //Infinity and Nan
+    /*
+     * РАЗМЕРЫ ТИПОВ ВЕЩЕСТВЕННЫХ ЧИСЕЛ
+     * 
+     * sizeof() показывает, сколько байт памяти занимает каждый тип
+     * Размеры могут отличаться на разных системах
+     */
+    std::cout << "=== РАЗМЕРЫ ТИПОВ ВЕЩЕСТВЕННЫХ ЧИСЕЛ ===" << std::endl;
+    std::cout << "sizeof(float) : " << sizeof(float) << " байт" << std::endl;
+    std::cout << "sizeof(double) : " << sizeof(double) << " байт" << std::endl;
+    std::cout << "sizeof(long double) : " << sizeof(long double) << " байт" << std::endl;
     std::cout << std::endl;
-    std::cout << "Infinity and NaN" << std::endl;
-    
-    double number10{ -5.6 };
-    double number11{};//Initialized to 0
-    double number12{};  //Initialized to 0
 
-    //Infinity
-    double result { number10 / number11 };
+
+
+    /*
+     * ТОЧНОСТЬ ВЕЩЕСТВЕННЫХ ЧИСЕЛ
+     * 
+     * Каждый тип имеет ограниченную точность:
+     * - float: ~7 значащих цифр
+     * - double: ~15 значащих цифр  
+     * - long double: 15+ значащих цифр
+     * 
+     * setprecision() позволяет контролировать количество выводимых цифр
+     */
+    std::cout << "=== ДЕМОНСТРАЦИЯ ТОЧНОСТИ ===" << std::endl;
+    std::cout << std::setprecision(20); // Устанавливаем высокую точность вывода
     
+    std::cout << "float_value : " << float_value << std::endl;      // ~7 значащих цифр
+    std::cout << "double_value : " << double_value << std::endl;    // ~15 значащих цифр
+    std::cout << "long_double_value : " << long_double_value << std::endl; // 15+ значащих цифр
+    std::cout << std::endl;
+
+    /*
+     * ПРОБЛЕМЫ ТОЧНОСТИ FLOAT
+     * 
+     * float имеет ограниченную точность, что может привести к потере данных
+     * при работе с большими числами
+     */
+    std::cout << "=== ПРОБЛЕМЫ ТОЧНОСТИ FLOAT ===" << std::endl;
+    float large_float_value = 192400023.0f;  // Большое число для float
     
-    std::cout << number10 << "/" << number11 << "  yields " << result << std::endl;
-    std::cout << result << " + " << number10 << " yields " << result + number10 << std::endl;
+    std::cout << "large_float_value : " << large_float_value << std::endl;
+    std::cout << "Обратите внимание на потерю точности!" << std::endl;
+    std::cout << std::endl;
+
+
+    /*
+     * НАУЧНАЯ НОТАЦИЯ
+     * 
+     * До сих пор мы видели обычную (фиксированную) нотацию.
+     * Научная нотация полезна для очень больших или очень малых чисел.
+     * Формат: мантисса e показатель_степени
+     * Например: 1.23e5 = 1.23 × 10^5 = 123000
+     */
+    std::cout << "=== НАУЧНАЯ НОТАЦИЯ ===" << std::endl;
     
-    //NaN
-    result = number11 / number12;
+    // Обычная нотация
+    double normal_notation {192400023};
     
+    // Научная нотация - полная форма
+    double scientific_full {1.92400023e8};  // 1.92400023 × 10^8
     
-    std::cout << number11 << "/" << number12 << " = " << result << std::endl;
+    // Научная нотация - упрощенная форма (можно опустить лишние цифры)
+    double scientific_simple {1.924e8};     // 1.924 × 10^8
     
-   
+    // Очень маленькие числа
+    double very_small_normal {0.00000000003498};
+    double very_small_scientific {3.498e-11}; // 3.498 × 10^(-11)
+    
+    std::cout << "Обычная нотация: " << normal_notation << std::endl;
+    std::cout << "Научная (полная): " << scientific_full << std::endl;
+    std::cout << "Научная (простая): " << scientific_simple << std::endl;
+    std::cout << "Очень малое (обычная): " << very_small_normal << std::endl;
+    std::cout << "Очень малое (научная): " << very_small_scientific << std::endl;
+    std::cout << std::endl;
+
+
+
+    /*
+     * СПЕЦИАЛЬНЫЕ ЗНАЧЕНИЯ: БЕСКОНЕЧНОСТЬ И NaN
+     * 
+     * При работе с вещественными числами могут возникать специальные значения:
+     * - Infinity (бесконечность) - результат деления на ноль
+     * - NaN (Not a Number) - результат неопределенных операций
+     */
+    std::cout << "=== СПЕЦИАЛЬНЫЕ ЗНАЧЕНИЯ ===" << std::endl;
+    
+    double dividend {-5.6};  // Делимое
+    double zero1 {};         // Инициализировано нулем
+    double zero2 {};         // Инициализировано нулем
+
+    /*
+     * БЕСКОНЕЧНОСТЬ
+     * 
+     * Деление ненулевого числа на ноль дает бесконечность
+     * Знак бесконечности зависит от знака делимого
+     */
+    double infinity_result { dividend / zero1 };
+    
+    std::cout << dividend << " / " << zero1 << " = " << infinity_result << std::endl;
+    std::cout << infinity_result << " + " << dividend << " = " << infinity_result + dividend << std::endl;
+    
+    /*
+     * NaN (Not a Number)
+     * 
+     * Деление нуля на ноль дает NaN
+     * NaN распространяется через все арифметические операции
+     */
+    double nan_result = zero1 / zero2;
+    
+    std::cout << zero1 << " / " << zero2 << " = " << nan_result << std::endl;
+    std::cout << "NaN + любое число = " << nan_result + 10.0 << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: ВЕЩЕСТВЕННЫЕ ЧИСЛА В C++
+ * 
+ * 1. ТИПЫ ВЕЩЕСТВЕННЫХ ЧИСЕЛ:
+ *    - float - одинарная точность (4 байта, ~7 значащих цифр)
+ *    - double - двойная точность (8 байт, ~15 значащих цифр)
+ *    - long double - расширенная точность (8-16 байт, 15+ значащих цифр)
+ * 
+ * 2. ТОЧНОСТЬ И ОГРАНИЧЕНИЯ:
+ *    - Каждый тип имеет ограниченную точность
+ *    - float может терять точность с большими числами
+ *    - Используйте double для большинства вычислений
+ * 
+ * 3. НАУЧНАЯ НОТАЦИЯ:
+ *    - Формат: мантисса e показатель_степени
+ *    - Полезна для очень больших или малых чисел
+ *    - Пример: 1.23e5 = 1.23 × 10^5 = 123000
+ * 
+ * 4. СПЕЦИАЛЬНЫЕ ЗНАЧЕНИЯ:
+ *    - Infinity - результат деления ненулевого числа на ноль
+ *    - NaN (Not a Number) - результат неопределенных операций
+ *    - Эти значения распространяются через арифметические операции
+ * 
+ * 5. ПРАКТИЧЕСКИЕ СОВЕТЫ:
+ *    - Используйте double вместо float для большинства случаев
+ *    - Будьте осторожны с сравнениями вещественных чисел
+ *    - Используйте научную нотацию для очень больших/малых чисел
+ *    - Проверяйте на NaN и бесконечность при необходимости
+ * 
+ * 6. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Вещественные числа не всегда точны из-за ограничений двоичного представления
+ *    - Не используйте == для сравнения вещественных чисел
+ *    - Размеры типов могут отличаться на разных системах
+ */

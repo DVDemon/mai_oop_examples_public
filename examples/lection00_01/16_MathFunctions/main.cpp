@@ -1,54 +1,186 @@
-#include <iostream>
-#include <cmath>
+/*
+ * МАТЕМАТИЧЕСКИЕ ФУНКЦИИ В C++
+ * 
+ * Этот файл демонстрирует использование математических функций из библиотеки <cmath>:
+ * - Округление (floor, ceil, round)
+ * - Абсолютное значение (abs)
+ * - Экспоненциальные функции (exp, pow)
+ * - Логарифмические функции (log, log10)
+ * - Квадратный корень (sqrt)
+ * - Практические примеры применения
+ */
 
+#include <iostream>  // Для потоков ввода-вывода
+#include <cmath>     // Для математических функций
 
-int main(){
+int main() {
+    /*
+     * ОКРУГЛЕНИЕ ВНИЗ И ВВЕРХ
+     * 
+     * floor() - округляет вниз до ближайшего целого числа
+     * ceil() - округляет вверх до ближайшего целого числа
+     * 
+     * Эти функции полезны для работы с вещественными числами,
+     * когда нужно получить целые значения
+     */
+    double sample_weight {7.7};  // Пример веса для демонстрации округления
+    
+    std::cout << "=== ОКРУГЛЕНИЕ ВНИЗ И ВВЕРХ ===" << std::endl;
+    std::cout << "Исходное значение: " << sample_weight << std::endl;
+    std::cout << "Округление вниз (floor): " << std::floor(sample_weight) << std::endl;
+    std::cout << "Округление вверх (ceil): " << std::ceil(sample_weight) << std::endl;
+    std::cout << std::endl;
 
-	double weight { 7.7 };
+    /*
+     * АБСОЛЮТНОЕ ЗНАЧЕНИЕ
+     * 
+     * abs() - возвращает абсолютное значение числа (убирает знак минус)
+     * Полезно для работы с расстояниями, разностями и другими величинами,
+     * где важен только размер, а не направление
+     */
+    double positive_weight {7.7};
+    double negative_savings {-5000.0};  // Отрицательные сбережения (долг)
     
-    //floor
-    std::cout << "Weight rounded to floor is : " << std::floor(weight) << std::endl;
-    
-    //ceil 
-    std::cout << "Weight rounded to ceil is : " << std::ceil(weight) << std::endl;
-    
-    //abs
-    double savings {-5000 };
-  
-    std::cout << "Abs of weight is : " << std::abs(weight) << std::endl;
-    std::cout << "Abs of savings is : " << std::abs(savings) << std::endl;
-    
-    //exp : f(x) = e ^ x , where e = 2.71828 . Test the result here against a calculator
-    double exponential = std::exp(10);
-    std::cout << "The exponential of 10 is : " << exponential << std::endl;
-    
-    //pow
-    std::cout << "3 ^ 4 is : " << std::pow(3,4) << std::endl;
-    std::cout << "9^3 is : " << std::pow(9,3) << std::endl;
+    std::cout << "=== АБСОЛЮТНОЕ ЗНАЧЕНИЕ ===" << std::endl;
+    std::cout << "Абсолютное значение " << positive_weight << " = " << std::abs(positive_weight) << std::endl;
+    std::cout << "Абсолютное значение " << negative_savings << " = " << std::abs(negative_savings) << std::endl;
+    std::cout << "Размер долга: " << std::abs(negative_savings) << " рублей" << std::endl;
+    std::cout << std::endl;
 
-
-    //log : reverse function of pow. if 2^3 = 8 , log 8 in base 2 = 3.  Log is like asking
-    // to which exponent should we elevate 2 to get eight ? Log, by default computes the log
-    // in base e. There also is another function which uses base 10 called log10
+    /*
+     * ЭКСПОНЕНЦИАЛЬНЫЕ ФУНКЦИИ
+     * 
+     * exp(x) - вычисляет e^x, где e ≈ 2.71828 (число Эйлера)
+     * pow(base, exponent) - вычисляет base^exponent
+     * 
+     * Эти функции широко используются в науке, инженерии и финансах
+     */
+    std::cout << "=== ЭКСПОНЕНЦИАЛЬНЫЕ ФУНКЦИИ ===" << std::endl;
     
-    // Try the reverse operation of  e^4 = 54.59 , it will be log 54.59 in base e = ? 
-    std::cout << "Log ; to get 54.59, you would elevate e to the power of : "
-             << std::log(54.59) << std::endl;
+    // Экспоненциальная функция
+    double exponential_result = std::exp(10);  // e^10
+    std::cout << "e^10 = " << exponential_result << std::endl;
     
-    //log10 , 10 ^ 4 = 10000  , to get 10k , you'd need to elevate 10 to the power of ? , this is log in base 10
-    std::cout << "To get 10000, you'd need to elevate 10 to the power of : "
-                 << std::log10(10000) << std::endl; // 4
+    // Степенные функции
+    std::cout << "3^4 = " << std::pow(3, 4) << std::endl;  // 3 в степени 4
+    std::cout << "9^3 = " << std::pow(9, 3) << std::endl;  // 9 в степени 3
+    std::cout << "2^8 = " << std::pow(2, 8) << std::endl;  // 2 в степени 8 (256)
+    std::cout << std::endl;
 
-
-
-    //sqrt
-    std::cout << "The square root of 81 is : " << std::sqrt(81) << std::endl;
+    /*
+     * ЛОГАРИФМИЧЕСКИЕ ФУНКЦИИ
+     * 
+     * log(x) - натуральный логарифм (по основанию e)
+     * log10(x) - десятичный логарифм (по основанию 10)
+     * 
+     * Логарифм - это обратная функция к возведению в степень.
+     * Если 2^3 = 8, то log₂(8) = 3 (логарифм 8 по основанию 2 равен 3)
+     */
+    std::cout << "=== ЛОГАРИФМИЧЕСКИЕ ФУНКЦИИ ===" << std::endl;
     
-    //round. Halfway points are rounded away from 0. 2,5 is rounded to 5 for example
-    std::cout << "3.654 rounded to : " << std::round(3.654) << std::endl;
-    std::cout << "2.5 is rounded to : " << std::round(2.5) << std::endl;
-    std::cout << "2.4 is rounded to : " << std::round(2.4) << std::endl;
+    // Натуральный логарифм
+    double test_value = 54.59;
+    std::cout << "Чтобы получить " << test_value << ", нужно возвести e в степень: " 
+              << std::log(test_value) << std::endl;
     
-   
+    // Десятичный логарифм
+    double large_number = 10000;
+    std::cout << "Чтобы получить " << large_number << ", нужно возвести 10 в степень: " 
+              << std::log10(large_number) << std::endl;
+    
+    // Проверка: 10^4 = 10000
+    std::cout << "Проверка: 10^" << std::log10(large_number) << " = " 
+              << std::pow(10, std::log10(large_number)) << std::endl;
+    std::cout << std::endl;
+
+    /*
+     * КВАДРАТНЫЙ КОРЕНЬ
+     * 
+     * sqrt(x) - вычисляет квадратный корень из x
+     * Полезно для вычисления расстояний, площадей и других геометрических задач
+     */
+    std::cout << "=== КВАДРАТНЫЙ КОРЕНЬ ===" << std::endl;
+    std::cout << "Квадратный корень из 81 = " << std::sqrt(81) << std::endl;
+    std::cout << "Квадратный корень из 144 = " << std::sqrt(144) << std::endl;
+    std::cout << "Квадратный корень из 2 = " << std::sqrt(2) << std::endl;
+    std::cout << std::endl;
+
+    /*
+     * ОКРУГЛЕНИЕ ДО БЛИЖАЙШЕГО ЦЕЛОГО
+     * 
+     * round(x) - округляет до ближайшего целого числа
+     * При равенстве округляет в сторону от нуля (2.5 → 3, -2.5 → -3)
+     * 
+     * Это отличается от floor() и ceil(), которые всегда округляют в одну сторону
+     */
+    std::cout << "=== ОКРУГЛЕНИЕ ДО БЛИЖАЙШЕГО ЦЕЛОГО ===" << std::endl;
+    std::cout << "3.654 округляется до: " << std::round(3.654) << std::endl;
+    std::cout << "2.5 округляется до: " << std::round(2.5) << std::endl;      // В сторону от нуля
+    std::cout << "2.4 округляется до: " << std::round(2.4) << std::endl;
+    std::cout << "-2.5 округляется до: " << std::round(-2.5) << std::endl;   // В сторону от нуля
+    std::cout << "-2.4 округляется до: " << std::round(-2.4) << std::endl;
+    std::cout << std::endl;
+
+    /*
+     * ПРАКТИЧЕСКИЙ ПРИМЕР: ВЫЧИСЛЕНИЕ РАССТОЯНИЯ
+     * 
+     * Демонстрация комбинирования математических функций
+     * для решения реальной задачи
+     */
+    std::cout << "=== ПРАКТИЧЕСКИЙ ПРИМЕР: РАССТОЯНИЕ МЕЖДУ ТОЧКАМИ ===" << std::endl;
+    
+    // Координаты двух точек
+    double x1 = 3.0, y1 = 4.0;  // Первая точка
+    double x2 = 0.0, y2 = 0.0;  // Вторая точка (начало координат)
+    
+    // Вычисление расстояния по формуле: √((x2-x1)² + (y2-y1)²)
+    double distance = std::sqrt(std::pow(x2 - x1, 2) + std::pow(y2 - y1, 2));
+    
+    std::cout << "Точка 1: (" << x1 << ", " << y1 << ")" << std::endl;
+    std::cout << "Точка 2: (" << x2 << ", " << y2 << ")" << std::endl;
+    std::cout << "Расстояние между точками: " << distance << std::endl;
+    std::cout << std::endl;
+    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: МАТЕМАТИЧЕСКИЕ ФУНКЦИИ В C++
+ * 
+ * 1. ОКРУГЛЕНИЕ:
+ *    - floor(x) - округление вниз
+ *    - ceil(x) - округление вверх
+ *    - round(x) - округление до ближайшего (от нуля при равенстве)
+ * 
+ * 2. АБСОЛЮТНОЕ ЗНАЧЕНИЕ:
+ *    - abs(x) - убирает знак минус
+ * 
+ * 3. ЭКСПОНЕНЦИАЛЬНЫЕ ФУНКЦИИ:
+ *    - exp(x) - e^x (натуральная экспонента)
+ *    - pow(base, exponent) - base^exponent
+ * 
+ * 4. ЛОГАРИФМИЧЕСКИЕ ФУНКЦИИ:
+ *    - log(x) - натуральный логарифм (по основанию e)
+ *    - log10(x) - десятичный логарифм (по основанию 10)
+ * 
+ * 5. КВАДРАТНЫЙ КОРЕНЬ:
+ *    - sqrt(x) - квадратный корень из x
+ * 
+ * 6. ПРАКТИЧЕСКИЕ ПРИМЕНЕНИЯ:
+ *    - Геометрические вычисления (расстояния, площади)
+ *    - Финансовые расчеты (сложные проценты)
+ *    - Научные вычисления
+ *    - Обработка данных
+ * 
+ * 7. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Все функции работают с вещественными числами
+ *    - Некоторые функции могут возвращать NaN или бесконечность
+ *    - Проверяйте входные данные на корректность
+ *    - Используйте подходящую точность для ваших задач
+ * 
+ * 8. ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ:
+ *    - sin, cos, tan - тригонометрические функции
+ *    - asin, acos, atan - обратные тригонометрические функции
+ *    - fmod - остаток от деления для вещественных чисел
+ *    - fmax, fmin - максимум и минимум для вещественных чисел
+ */

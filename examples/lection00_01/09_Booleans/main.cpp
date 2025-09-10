@@ -1,37 +1,119 @@
-#include <iostream>
+/*
+ * БУЛЕВЫ ЗНАЧЕНИЯ В C++
+ * 
+ * Этот файл демонстрирует работу с логическими значениями:
+ * - Тип bool и его значения true/false
+ * - Использование булевых переменных в условиях
+ * - Различные способы проверки булевых значений
+ * - Размер типа bool в памяти
+ * - Форматы вывода булевых значений (числовой и текстовый)
+ */
 
+#include <iostream>  // Для потоков ввода-вывода
 
 int main(){
-
-    bool red_light {false};
-    bool green_light{true};
+    /*
+     * ОБЪЯВЛЕНИЕ И ИНИЦИАЛИЗАЦИЯ БУЛЕВЫХ ПЕРЕМЕННЫХ
+     * 
+     * bool - тип для хранения логических значений
+     * Может принимать только два значения: true или false
+     * Внутренне хранится как 1 (true) или 0 (false)
+     */
+    bool is_red_light_on {false};   // Красный свет выключен
+    bool is_green_light_on {true};  // Зеленый свет включен
     
-    if(red_light == true){
-        std::cout << "Stop!" << std::endl;
-    }else{
-        std::cout << "Go through!" << std::endl;
+    /*
+     * ИСПОЛЬЗОВАНИЕ БУЛЕВЫХ ЗНАЧЕНИЙ В УСЛОВИЯХ
+     * 
+     * Демонстрация двух способов проверки булевых значений:
+     * 1. Явное сравнение с true (избыточно, но понятно)
+     * 2. Прямое использование булевой переменной (рекомендуется)
+     */
+    std::cout << "=== ПРОВЕРКА СОСТОЯНИЯ СВЕТОФОРА ===" << std::endl;
+    
+    // Способ 1: Явное сравнение с true (избыточно)
+    if(is_red_light_on == true){
+        std::cout << "Красный свет горит - СТОП!" << std::endl;
+    } else {
+        std::cout << "Красный свет не горит - можно ехать!" << std::endl;
     }
 
-    if(green_light){
-        std::cout << "The light is green!" << std::endl;
-    }else{
-        std::cout << "The light is NOT green!" << std::endl;
+    // Способ 2: Прямое использование булевой переменной (рекомендуется)
+    if(is_green_light_on){
+        std::cout << "Зеленый свет горит - можно ехать!" << std::endl;
+    } else {
+        std::cout << "Зеленый свет не горит - остановиться!" << std::endl;
     }
-
-    //sizeof()
-    std::cout << "sizeof(bool) : " << sizeof(bool) << std::endl;
-
-
-    //Printing out a bool
-    //1 -->> true
-    //0 -->> false
     std::cout << std::endl;
-    std::cout << "red_light : " << red_light << std::endl;
-    std::cout << "green_light : " << green_light << std::endl;
 
-    std::cout << std::boolalpha;
-    std::cout << "red_light : " << red_light << std::endl;
-    std::cout << "green_light : " << green_light << std::endl;
+    /*
+     * РАЗМЕР ТИПА BOOL В ПАМЯТИ
+     * 
+     * sizeof(bool) показывает, сколько байт занимает булевая переменная
+     * Обычно это 1 байт, хотя для хранения достаточно 1 бита
+     */
+    std::cout << "=== РАЗМЕР ТИПА BOOL ===" << std::endl;
+    std::cout << "sizeof(bool) : " << sizeof(bool) << " байт" << std::endl;
+    std::cout << std::endl;
+
+    /*
+     * ФОРМАТЫ ВЫВОДА БУЛЕВЫХ ЗНАЧЕНИЙ
+     * 
+     * По умолчанию булевые значения выводятся как числа:
+     * - true выводится как 1
+     * - false выводится как 0
+     * 
+     * std::boolalpha позволяет выводить true/false в текстовом виде
+     */
+    std::cout << "=== ФОРМАТЫ ВЫВОДА БУЛЕВЫХ ЗНАЧЕНИЙ ===" << std::endl;
+    
+    // Числовой формат (по умолчанию)
+    std::cout << "Числовой формат (по умолчанию):" << std::endl;
+    std::cout << "is_red_light_on : " << is_red_light_on << std::endl;    // 0
+    std::cout << "is_green_light_on : " << is_green_light_on << std::endl; // 1
+    std::cout << std::endl;
+    
+    // Текстовый формат
+    std::cout << "Текстовый формат (std::boolalpha):" << std::endl;
+    std::cout << std::boolalpha;  // Включаем текстовый формат
+    std::cout << "is_red_light_on : " << is_red_light_on << std::endl;    // false
+    std::cout << "is_green_light_on : " << is_green_light_on << std::endl; // true
    
     return 0;
 }
+
+/*
+ * РЕЗЮМЕ: БУЛЕВЫ ЗНАЧЕНИЯ В C++
+ * 
+ * 1. ТИП BOOL:
+ *    - Хранит только два значения: true или false
+ *    - Внутренне представлен как 1 (true) или 0 (false)
+ *    - Размер: обычно 1 байт
+ * 
+ * 2. ИНИЦИАЛИЗАЦИЯ:
+ *    - bool variable {true};   - явная инициализация
+ *    - bool variable {false};  - явная инициализация
+ *    - bool variable {};       - инициализация по умолчанию (false)
+ * 
+ * 3. ИСПОЛЬЗОВАНИЕ В УСЛОВИЯХ:
+ *    - if (bool_var) - прямое использование (рекомендуется)
+ *    - if (bool_var == true) - явное сравнение (избыточно)
+ *    - if (!bool_var) - проверка на false
+ * 
+ * 4. ФОРМАТЫ ВЫВОДА:
+ *    - По умолчанию: 1 (true) или 0 (false)
+ *    - std::boolalpha: true или false
+ *    - std::noboolalpha: возврат к числовому формату
+ * 
+ * 5. ПРАКТИЧЕСКИЕ СОВЕТЫ:
+ *    - Используйте понятные имена переменных (is_, has_, can_)
+ *    - Избегайте сравнения с true/false в условиях
+ *    - Используйте std::boolalpha для отладки
+ *    - Булевые значения автоматически преобразуются в числа при необходимости
+ * 
+ * 6. ВАЖНЫЕ ЗАМЕЧАНИЯ:
+ *    - Любое ненулевое значение преобразуется в true
+ *    - Ноль преобразуется в false
+ *    - Булевые значения можно использовать в арифметических операциях
+ *    - sizeof(bool) может отличаться на разных системах
+ */
