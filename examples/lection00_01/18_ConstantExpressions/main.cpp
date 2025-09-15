@@ -121,13 +121,13 @@ int main() {
     std::cout << "=== static_assert - ПРОВЕРКА КОНСТАНТ ===" << std::endl;
     
     // Проверка версии библиотеки
-    // static_assert(library_major_version == 1237, "Неверная версия библиотеки!");
+    static_assert(library_major_version == 1237, "Неверная версия библиотеки!");
     
     // Проверка математических констант
     // static_assert(seconds_per_year == 31536000, "Неверное количество секунд в году!");
     
     // Проверка логических условий
-    // static_assert(human_eye_count == 2, "У человека должно быть 2 глаза!");
+    static_assert(human_eye_count == 2, "У человека должно быть 2 глаза!");
     
     std::cout << "static_assert позволяет проверять условия во время компиляции" << std::endl;
     std::cout << "Раскомментируйте строки выше, чтобы увидеть проверки в действии" << std::endl;

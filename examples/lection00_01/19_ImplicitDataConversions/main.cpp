@@ -81,7 +81,7 @@ int main() {
     std::cout << "=== ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ ПРЕОБРАЗОВАНИЙ ===" << std::endl;
     
     // Пример 1: char → int
-    char letter = 'A';
+    const char letter = 'A';
     int ascii_code = letter;  // char автоматически преобразуется в int
     std::cout << "Символ '" << letter << "' имеет ASCII код: " << ascii_code << std::endl;
     

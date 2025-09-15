@@ -2,4 +2,4 @@
 
 #include <string>
 
-int calculator(int ,int );
+int calculator(int gg,int );

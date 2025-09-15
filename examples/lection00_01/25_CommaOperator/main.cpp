@@ -30,10 +30,10 @@ int main() {
      * 
      * Создаем переменные для демонстрации работы оператора запятой
      */
-    int increment_value {5};    // Значение для инкремента
-    int first_number {10};      // Первое число
-    int second_number {20};     // Второе число  
-    int third_number {25};      // Третье число
+    constexpr int increment_value {5};    // Значение для инкремента
+    constexpr int first_number {10};      // Первое число
+    constexpr int second_number {20};     // Второе число  
+    constexpr int third_number {25};      // Третье число
     
     std::cout << "=== ИСХОДНЫЕ ЗНАЧЕНИЯ ===" << std::endl;
     std::cout << "increment_value: " << increment_value << std::endl;
@@ -58,7 +58,7 @@ int main() {
     std::cout << "=== СЛОЖНЫЙ ПРИМЕР С ОПЕРАТОРОМ ЗАПЯТОЙ ===" << std::endl;
     std::cout << "Выполняем сложное выражение с оператором запятой..." << std::endl;
     
-    int result = (first_number *= ++increment_value, 
+    constexpr int result = (first_number *= ++increment_value, 
                   second_number = (++increment_value), 
                   third_number += ++increment_value);
     
