@@ -1,165 +1,151 @@
 #include <iostream>
 
-
-int main(){
-
-
-    //A raw variable that can be modified
-	std::cout << std::endl;
-    std::cout << "Raw variable that can be modified : " << std::endl;
-	
-    int number {5};// Not constant, can change number any way we want
-    std::cout << "number : " << number << std::endl;
-	std::cout << "&number : " << &number << std::endl;
-    //Modify
-    number = 12;
-    number += 7;
+int main() {
     
-    //Access - Print out
-    std::cout << "number : " << number << std::endl;
-	std::cout << "&number : " << &number << std::endl;
+    // ==========================================
+    // 1. ОБЫЧНАЯ ПЕРЕМЕННАЯ (БЕЗ CONST)
+    // ==========================================
+    
+    std::cout << "=== Обычная переменная (можно изменять) ===" << std::endl;
+    
+    int modifiable_variable{5};  // Обычная переменная - можно изменять любым способом
+    std::cout << "Значение переменной: " << modifiable_variable << std::endl;
+    std::cout << "Адрес переменной: " << &modifiable_variable << std::endl;
+    
+    // Изменяем значение
+    modifiable_variable = 12;
+    modifiable_variable += 7;
+    
+    std::cout << "После изменений:" << std::endl;
+    std::cout << "Значение переменной: " << modifiable_variable << std::endl;
+    std::cout << "Адрес переменной: " << &modifiable_variable << std::endl;
     std::cout << std::endl;
-
-
-
-
-	//Pointer : Can modify the data and the pointer itself
- 
-    int *p_number1 {nullptr};
-    int  number1{23};
     
-    p_number1 = &number1;
-    std::cout << "Pointer and value pointed to : both modifiable : " << std::endl;
-    std::cout << "p_number1 :" << p_number1 << std::endl; // Address
-    std::cout << "*p_number1 : " << *p_number1 << std::endl; // 23
-	std::cout << "number1 : " << number1 << std::endl; // 23
+    // ==========================================
+    // 2. ОБЫЧНЫЙ УКАЗАТЕЛЬ (БЕЗ CONST)
+    // ==========================================
     
-    //Change the pointed to value through pointer
-	std::cout << std::endl;
-    std::cout << "Modifying the value pointed to p_number1 through the pointer : " << std::endl;
-    *p_number1 = 432;
-	std::cout << "p_number1 : " << p_number1 << std::endl;
-    std::cout << "*p_number1  : " << *p_number1 << std::endl;
-	std::cout << "number1 : " << number1 << std::endl;
-
-    //Change the pointer itself to make it point somewhere else
-	std::cout << std::endl;
-	std::cout << "Changing the pointer itself to make it point somewhere else" << std::endl;
-    int number2 {56};
-    p_number1 = &number2;
-    std::cout << "p_number1 :" << p_number1 << std::endl;
-    std::cout << "*p_number1  : " << *p_number1 << std::endl;
-	std::cout << "number1 : " << number1 << std::endl;
-	std::cout << "number2 : " << number2 << std::endl;
+    std::cout << "=== Обычный указатель (можно изменять и указатель, и данные) ===" << std::endl;
+    
+    int* modifiable_pointer{nullptr};
+    int target_variable1{23};
+    
+    modifiable_pointer = &target_variable1;
+    std::cout << "Адрес в указателе: " << modifiable_pointer << std::endl;
+    std::cout << "Значение через указатель: " << *modifiable_pointer << std::endl;
+    std::cout << "Значение переменной напрямую: " << target_variable1 << std::endl;
+    
+    // Изменяем значение через указатель
+    std::cout << std::endl << "Изменяем значение через указатель:" << std::endl;
+    *modifiable_pointer = 432;
+    std::cout << "Адрес в указателе: " << modifiable_pointer << std::endl;
+    std::cout << "Значение через указатель: " << *modifiable_pointer << std::endl;
+    std::cout << "Значение переменной напрямую: " << target_variable1 << std::endl;
+    
+    // Изменяем сам указатель (заставляем указывать на другую переменную)
+    std::cout << std::endl << "Изменяем сам указатель:" << std::endl;
+    int target_variable2{56};
+    modifiable_pointer = &target_variable2;
+    std::cout << "Адрес в указателе: " << modifiable_pointer << std::endl;
+    std::cout << "Значение через указатель: " << *modifiable_pointer << std::endl;
+    std::cout << "Первая переменная: " << target_variable1 << std::endl;
+    std::cout << "Вторая переменная: " << target_variable2 << std::endl;
     std::cout << std::endl;
-
-
-
-
-    //Pointer to const
-	//Pointer pointing to constant data : You can't modify the data through pointer
-
-    std::cout << "Pointer is modifiable , pointed to value is constant : " << std::endl;
-	int number3 {632}; // Although you can omit the const on number3 here and it is still 
-                             // going to compile, it is advised to be as explicit as possible in
-                             // your code and put the const in front. Make your intents CLEAR.
-							 
-    const int* p_number3 {&number3}; // Can't modify number3 through p_number3
     
-    std::cout << "p_number3 :" << p_number3 << std::endl;
-    std::cout << "*p_number3 : " << *p_number3 << std::endl;
-	
-	std::cout << std::endl;
-    std::cout << "Modifying the value pointed to by p_number3 through the pointer (Compile Error) : " << std::endl;
-    //*p_number3 = 444; // Compile error 
-                      
-    //Although we can't change what's pointed to by p_number3,
-	//we can still change where it's pointing
-
-	std::cout << std::endl;
-    std::cout << "Changing the address pointed to by p_number3 : " << std::endl;
-    int number4 {872};
-    p_number3 = &number4;
+    // ==========================================
+    // 3. УКАЗАТЕЛЬ НА КОНСТАНТНЫЕ ДАННЫЕ (const int*)
+    // ==========================================
     
-    std::cout << "p_number3 :" << p_number3 << std::endl;
-    std::cout << "*p_number3 : " << *p_number3 << std::endl;
+    std::cout << "=== Указатель на константные данные (указатель можно изменять, данные - нет) ===" << std::endl;
     
-    std::cout << std::endl; 
-
-
-
-
-	//const keyword applies to the variable name.
-
-	std::cout << "const keyword applies to a variable name : " << std::endl;
-	
-	int protected_var {10}; // Can make it const to protect it if we want.Show this
-	
-	//p_protected_var is a pointer to const data, we can't
-	//modify the data through this pointer : regardless of
-	//whether the data itself is declared const or not.
-	const int* p_protected_var {&protected_var};
-	
-	//*p_protected_var = 55;
-	protected_var = 66;
-	std::cout << "protected_var : " << protected_var << std::endl;
-	std::cout << "p_protected_var : " << p_protected_var << std::endl;
-	std::cout << "*p_protected_var : " << *p_protected_var << std::endl;
-	std::cout << std::endl;
-
-	//You can't set up a modifiable pointer to const data though,
-	//You'll get a compiler error :Invalid convertion from 'const type*' to 'type*'.
-	const int some_data{55};
-	//int * p_some_data {&some_data}; // Compiler error.
-	//*p_some_data = 66;
-
-
-
-	//Both pointer and pointed to value are constant
-
-    const int number5 {459};
-    const int* const p_number5 {&number5 };
-    std::cout << "Pointer is constant, value pointed to is constant : " << std::endl;
-    std::cout << "p_number5 :" << p_number5 << std::endl;
-    std::cout << "*p_number5 : " << *p_number5 << std::endl;
+    int source_variable{632};  // Рекомендуется явно указывать const для ясности намерений
+    const int* pointer_to_const_data{&source_variable};  // Нельзя изменять данные через этот указатель
     
-    //Can't modify the pointed to value through the pointer
-    std::cout << "Changing value pointed to by p_number5 through the pointer (Compile Error) " << std::endl;
-    //*p_number5 = 222; // Error : Trying to assign to read only location
+    std::cout << "Адрес в указателе: " << pointer_to_const_data << std::endl;
+    std::cout << "Значение через указатель: " << *pointer_to_const_data << std::endl;
     
-    //Can't change where the pointer is pointing to : The pointer is now itself constant
-    std::cout << "Changing the pointer p_number5 address itself (Compile Error) "<< std::endl;
-    int number6 {333};
-    //p_number5 = &number6;  // Error : Trying to assign to read only location
-	
-	std::cout << std::endl;
-
-
-
-	//Pointer is constant (can't make it point anywere else)
-	//but pointed to value can change
-    std::cout << "Pointer is contant, pointed to value can change : " << std::endl;
-    int number7 {982};
+    // Попытка изменить данные через указатель вызовет ошибку компиляции:
+    std::cout << std::endl << "Попытка изменить данные через указатель (ОШИБКА КОМПИЛЯЦИИ):" << std::endl;
+    // *pointer_to_const_data = 444;  // ОШИБКА: нельзя изменять константные данные
     
-    int * const p_number7 { &number7};
+    // Но можно изменить сам указатель (заставить указывать на другую переменную)
+    std::cout << std::endl << "Изменяем адрес в указателе:" << std::endl;
+    int another_variable{872};
+    pointer_to_const_data = &another_variable;
+    std::cout << "Адрес в указателе: " << pointer_to_const_data << std::endl;
+    std::cout << "Значение через указатель: " << *pointer_to_const_data << std::endl;
+    std::cout << std::endl;
     
-    std::cout << "p_number7 :" << p_number7 << std::endl;
-    std::cout << "*p_number7 : " << *p_number7 << std::endl;
-    std::cout << "Changing value pointed to through p_number7 pointer : " << std::endl;
-    //p_number7++;
-    *p_number7 = 456;
-    std::cout << "The value pointed to by p_number7 now is : " << *p_number7 << std::endl;
+    // ==========================================
+    // 4. КЛЮЧЕВОЕ СЛОВО CONST ПРИМЕНЯЕТСЯ К ИМЕНИ ПЕРЕМЕННОЙ
+    // ==========================================
     
-    int number8 {2928};
-    std::cout << "Changing the address where p_number7 is pointing (Compile Error)." << std::endl;
-    //p_number7 = &number8;
+    std::cout << "=== const применяется к имени переменной ===" << std::endl;
     
-	
-
-
-
-
-	
-   
+    int regular_variable{10};  // Можно сделать const для защиты, если нужно
+    
+    // pointer_to_protected_data - это указатель на константные данные
+    // Мы не можем изменять данные через этот указатель, независимо от того,
+    // объявлены ли сами данные как const или нет
+    const int* pointer_to_protected_data{&regular_variable};
+    
+    // *pointer_to_protected_data = 55;  // ОШИБКА: нельзя изменять через указатель на const
+    regular_variable = 66;  // Но можно изменять напрямую
+    std::cout << "Значение переменной напрямую: " << regular_variable << std::endl;
+    std::cout << "Адрес в указателе: " << pointer_to_protected_data << std::endl;
+    std::cout << "Значение через указатель: " << *pointer_to_protected_data << std::endl;
+    std::cout << std::endl;
+    
+    // Нельзя создать модифицируемый указатель на константные данные
+    std::cout << "Попытка создать модифицируемый указатель на const данные (ОШИБКА КОМПИЛЯЦИИ):" << std::endl;
+    const int const_data{55};
+    // int* modifiable_pointer_to_const{&const_data};  // ОШИБКА: недопустимое преобразование
+    // *modifiable_pointer_to_const = 66;
+    
+    // ==========================================
+    // 5. КОНСТАНТНЫЙ УКАЗАТЕЛЬ НА КОНСТАНТНЫЕ ДАННЫЕ (const int* const)
+    // ==========================================
+    
+    std::cout << "=== Константный указатель на константные данные (ничего нельзя изменить) ===" << std::endl;
+    
+    const int const_value{459};
+    const int* const const_pointer_to_const{&const_value};
+    
+    std::cout << "Адрес в указателе: " << const_pointer_to_const << std::endl;
+    std::cout << "Значение через указатель: " << *const_pointer_to_const << std::endl;
+    
+    // Нельзя изменить данные через указатель
+    std::cout << std::endl << "Попытка изменить данные через указатель (ОШИБКА КОМПИЛЯЦИИ):" << std::endl;
+    // *const_pointer_to_const = 222;  // ОШИБКА: попытка записи в read-only память
+    
+    // Нельзя изменить адрес в указателе
+    std::cout << "Попытка изменить адрес в указателе (ОШИБКА КОМПИЛЯЦИИ):" << std::endl;
+    int different_variable{333};
+    // const_pointer_to_const = &different_variable;  // ОШИБКА: попытка записи в read-only память
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 6. КОНСТАНТНЫЙ УКАЗАТЕЛЬ НА МОДИФИЦИРУЕМЫЕ ДАННЫЕ (int* const)
+    // ==========================================
+    
+    std::cout << "=== Константный указатель на модифицируемые данные (указатель нельзя изменить, данные - можно) ===" << std::endl;
+    
+    int modifiable_target{982};
+    int* const const_pointer_to_modifiable{&modifiable_target};
+    
+    std::cout << "Адрес в указателе: " << const_pointer_to_modifiable << std::endl;
+    std::cout << "Значение через указатель: " << *const_pointer_to_modifiable << std::endl;
+    
+    // Можно изменить данные через указатель
+    std::cout << std::endl << "Изменяем данные через указатель:" << std::endl;
+    // const_pointer_to_modifiable++;  // ОШИБКА: нельзя изменять константный указатель
+    *const_pointer_to_modifiable = 456;
+    std::cout << "Новое значение через указатель: " << *const_pointer_to_modifiable << std::endl;
+    
+    // Нельзя изменить адрес в указателе
+    std::cout << std::endl << "Попытка изменить адрес в указателе (ОШИБКА КОМПИЛЯЦИИ):" << std::endl;
+    int another_target{2928};
+    // const_pointer_to_modifiable = &another_target;  // ОШИБКА: нельзя изменять константный указатель
+    
     return 0;
 }

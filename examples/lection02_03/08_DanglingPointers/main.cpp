@@ -1,122 +1,194 @@
 #include <iostream>
 
-
-
-int main(){
-
-	//Case1 : Uninitialized pointer
-    //*
-	int * p_number; // Dangling uninitialized pointer
-   
-	std::cout << std::endl;
-	std::cout << "Case 1 : Uninitialized pointer : ." << std::endl;
-	std::cout << "p_number : " << p_number << std::endl;
-    std::cout << "*p_number : " << *p_number << std::endl; //CRASH!
-    //*/
-
-
-   //Case 2 : deleted pointer
-   //*
-   std::cout << std::endl;
-   std::cout << "Case 2 : Deleted pointer" << std::endl;
-   int * p_number1 {new int{67}};
-   
-   std::cout << "*p_number1 (before delete) : " << *p_number1 << std::endl;
-   
-   delete p_number1;
-		
-   std::cout << "*p_number1(after delete) : " << *p_number1 << std::endl;
-   //*/
-
-
-	//Case 3 : Multiple pointers pointing to same address
-    //*
-	std::cout << std::endl;
-	std::cout << "Case 3 : Multiple pointers pointing to same address : " << std::endl;
-	
-    int *p_number3 {new int{83}};
-    int *p_number4 {p_number3};
+int main() {
     
-    std::cout << "p_number3 - " << p_number3 << " - " << *p_number3 << std::endl;
-    std::cout << "p_number4 - " << p_number4 << " - " << *p_number4 << std::endl;
+    // ==========================================
+    // 1. СЛУЧАЙ 1: НЕИНИЦИАЛИЗИРОВАННЫЕ УКАЗАТЕЛИ
+    // ==========================================
     
-    //Deleting p_number3
-    delete p_number3;
+    std::cout << "=== СЛУЧАЙ 1: Неинициализированные указатели (ВИСЯЧИЕ УКАЗАТЕЛИ) ===" << std::endl;
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН и может вызвать КРАШ:" << std::endl;
     
-    //p_number4 points to deleted memory. Dereferncing it will lead to
-	//undefined behaviour : Crash/ garbage or whatever
-    std::cout<< "p_number4(after deleting p_number3) - " << p_number4 << " - " << *p_number4 << std::endl;
-    //*/
-
-
-    //Solution1 : Initialize your pointers immediately upon declaration
-    //*
-	std::cout << std::endl;
-	std::cout << "Solution 1 : " << std::endl;
-    int *p_number5{nullptr};
-    int *p_number6{new int(87)};
-	
-	//Check for nullptr before use
-
-	if(p_number6!= nullptr){
-		std::cout << "*p_number6 : " << *p_number6 << std::endl;
-	}else{
-        std::cout << "Invalid address" << std::endl;
-    }
-    //*/
-
-
-	//Solution 2 : 
-    //Right after you call delete on a pointer, remember to reset
-	//the pointer to nullptr to make it CLEAR it doesn't point anywere
-    //*
-	std::cout << std::endl;
-	std::cout << "Solution 2 : " << std::endl;
-    int *p_number7{new int{82}};
+    // ОПАСНЫЙ КОД - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
+    /*
+    int* dangling_uninitialized_pointer;  // Висячий неинициализированный указатель
     
-    //Use the pointer however you want
-    std::cout << "p_number7 - " << p_number7 << " - " << *p_number7 << std::endl;
-   
-    delete p_number7;
-    p_number7 = nullptr; // Reset the pointer
-	
-	//Check for nullptr before use
-	if(p_number7!= nullptr){
-		std::cout << "*p_number7 : " << *p_number7 << std::endl;
-	}else{
-        std::cout << "Invalid memory access!" << std::endl;
-    }
-   //*/
-
-
-	//Solution 3 
-	//For multiple pointers pointing to the same address ,  Make sure there is
-	//one clear pointer (master pointer) that owns the memory ( responsible for releasing when
-    // necessary) , other pointers should only be able to dereference when the master pointer is valid
+    std::cout << "Адрес в неинициализированном указателе: " << dangling_uninitialized_pointer << std::endl;
+    std::cout << "Попытка чтения из неинициализированного указателя: " << *dangling_uninitialized_pointer << std::endl;  // КРАШ!
+    */
     
-	std::cout << std::endl;
-	std::cout << "Solution 3 : " << std::endl;
-    int * p_number8 {new int{382}};// Let's say p_number8 is the master pointer
-    int * p_number9 {p_number8};
+    std::cout << "Неинициализированные указатели содержат случайные адреса памяти!" << std::endl;
+    std::cout << "Разыменование таких указателей может вызвать краш программы!" << std::endl;
+    std::cout << std::endl;
     
-    //Dereference the pointers and use them
-    std::cout << "p_number8 - " << p_number8 << " - " << *p_number8 << std::endl;
+    // ==========================================
+    // 2. СЛУЧАЙ 2: УКАЗАТЕЛИ НА ОСВОБОЖДЕННУЮ ПАМЯТЬ
+    // ==========================================
     
-    if(!(p_number8 == nullptr)){ // Only use slave pointers when master pointer is valid
-           std::cout<< "p_number9 - " << p_number9 << " - " << *p_number9 << std::endl;
+    std::cout << "=== СЛУЧАЙ 2: Указатели на освобожденную память (ВИСЯЧИЕ УКАЗАТЕЛИ) ===" << std::endl;
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН:" << std::endl;
+    
+    // ОПАСНЫЙ КОД - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
+    /*
+    int* pointer_to_deleted_memory{new int{67}};
+    
+    std::cout << "Значение до освобождения памяти: " << *pointer_to_deleted_memory << std::endl;
+    
+    delete pointer_to_deleted_memory;  // Освобождаем память
+    
+    std::cout << "Попытка чтения из освобожденной памяти: " << *pointer_to_deleted_memory << std::endl;  // ОПАСНО!
+    */
+    
+    std::cout << "После delete указатель становится висячим!" << std::endl;
+    std::cout << "Разыменование такого указателя приводит к неопределенному поведению!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 3. СЛУЧАЙ 3: НЕСКОЛЬКО УКАЗАТЕЛЕЙ НА ОДИН АДРЕС
+    // ==========================================
+    
+    std::cout << "=== СЛУЧАЙ 3: Несколько указателей на один адрес (ВИСЯЧИЕ УКАЗАТЕЛИ) ===" << std::endl;
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН:" << std::endl;
+    
+    // ОПАСНЫЙ КОД - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
+    /*
+    int* master_pointer{new int{83}};
+    int* slave_pointer{master_pointer};  // Оба указателя указывают на один адрес
+    
+    std::cout << "Мастер-указатель: " << master_pointer << " - " << *master_pointer << std::endl;
+    std::cout << "Слейв-указатель: " << slave_pointer << " - " << *slave_pointer << std::endl;
+    
+    delete master_pointer;  // Освобождаем память через мастер-указатель
+    
+    // Слейв-указатель теперь указывает на освобожденную память
+    std::cout << "Слейв-указатель после освобождения: " << slave_pointer << " - " << *slave_pointer << std::endl;  // ОПАСНО!
+    */
+    
+    std::cout << "Когда несколько указателей указывают на один адрес," << std::endl;
+    std::cout << "освобождение памяти через один указатель делает остальные висячими!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 4. РЕШЕНИЕ 1: НЕМЕДЛЕННАЯ ИНИЦИАЛИЗАЦИЯ УКАЗАТЕЛЕЙ
+    // ==========================================
+    
+    std::cout << "=== РЕШЕНИЕ 1: Немедленная инициализация указателей ===" << std::endl;
+    
+    int* safe_pointer1{nullptr};        // Безопасная инициализация в nullptr
+    int* safe_pointer2{new int(87)};    // Инициализация валидным адресом
+    
+    // Проверяем на nullptr перед использованием
+    if (safe_pointer1 != nullptr) {
+        std::cout << "safe_pointer1: " << *safe_pointer1 << std::endl;
+    } else {
+        std::cout << "safe_pointer1 указывает на nullptr - безопасно" << std::endl;
     }
     
-    delete p_number8; // Master releases the memory
-    p_number8 = nullptr;
-    
-    if(!(p_number8 == nullptr)){ // Only use slave pointers when master pointer is valid
-           std::cout<< "p_number9 - " << p_number9 << " - " << *p_number9 << std::endl;
-    }else{
-        std::cerr << "WARNING : Trying to use an invalid pointer" << std::endl;
+    if (safe_pointer2 != nullptr) {
+        std::cout << "safe_pointer2: " << *safe_pointer2 << std::endl;
+    } else {
+        std::cout << "safe_pointer2 указывает на nullptr" << std::endl;
     }
     
-
-    std::cout << "Program is ending well" << std::endl;
-  
+    // Освобождаем память
+    delete safe_pointer2;
+    safe_pointer2 = nullptr;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 5. РЕШЕНИЕ 2: СБРОС УКАЗАТЕЛЯ В nullptr ПОСЛЕ delete
+    // ==========================================
+    
+    std::cout << "=== РЕШЕНИЕ 2: Сброс указателя в nullptr после delete ===" << std::endl;
+    
+    int* managed_pointer{new int{82}};
+    
+    // Используем указатель
+    std::cout << "managed_pointer: " << managed_pointer << " - " << *managed_pointer << std::endl;
+    
+    // Освобождаем память и СРАЗУ сбрасываем указатель в nullptr
+    delete managed_pointer;
+    managed_pointer = nullptr;  // ВАЖНО: сбрасываем указатель!
+    
+    // Проверяем на nullptr перед использованием
+    if (managed_pointer != nullptr) {
+        std::cout << "managed_pointer: " << *managed_pointer << std::endl;
+    } else {
+        std::cout << "managed_pointer указывает на nullptr - безопасно!" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 6. РЕШЕНИЕ 3: МАСТЕР-СЛЕЙВ АРХИТЕКТУРА
+    // ==========================================
+    
+    std::cout << "=== РЕШЕНИЕ 3: Мастер-слейв архитектура ===" << std::endl;
+    
+    // Мастер-указатель владеет памятью и отвечает за её освобождение
+    int* master_pointer{new int{382}};
+    // Слейв-указатель только читает данные, не освобождает память
+    int* slave_pointer{master_pointer};
+    
+    std::cout << "Мастер-указатель: " << master_pointer << " - " << *master_pointer << std::endl;
+    
+    // Используем слейв-указатель только когда мастер-указатель валиден
+    if (master_pointer != nullptr) {
+        std::cout << "Слейв-указатель: " << slave_pointer << " - " << *slave_pointer << std::endl;
+    }
+    
+    // Мастер освобождает память
+    delete master_pointer;
+    master_pointer = nullptr;
+    
+    // После освобождения памяти мастер-указателем, слейв-указатель становится невалидным
+    if (master_pointer != nullptr) {
+        std::cout << "Слейв-указатель: " << slave_pointer << " - " << *slave_pointer << std::endl;
+    } else {
+        std::cerr << "ПРЕДУПРЕЖДЕНИЕ: Попытка использовать невалидный указатель!" << std::endl;
+        std::cout << "Слейв-указатель больше не должен использоваться!" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 7. ПРАВИЛА ИЗБЕЖАНИЯ ВИСЯЧИХ УКАЗАТЕЛЕЙ
+    // ==========================================
+    
+    std::cout << "=== Правила избежания висячих указателей ===" << std::endl;
+    std::cout << "1. ВСЕГДА инициализируйте указатели при объявлении" << std::endl;
+    std::cout << "2. ВСЕГДА устанавливайте указатель в nullptr после delete" << std::endl;
+    std::cout << "3. ВСЕГДА проверяйте указатель на nullptr перед использованием" << std::endl;
+    std::cout << "4. Используйте мастер-слейв архитектуру для множественных указателей" << std::endl;
+    std::cout << "5. НИКОГДА не разыменовывайте указатели без проверки" << std::endl;
+    std::cout << "6. Используйте умные указатели (smart pointers) в современном C++" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 8. ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ БЕЗОПАСНОСТИ
+    // ==========================================
+    
+    std::cout << "=== Дополнительные примеры безопасности ===" << std::endl;
+    
+    // Безопасное создание и использование указателя
+    int* safe_example{new int{100}};
+    
+    if (safe_example) {  // Проверка на nullptr (сокращенная форма)
+        std::cout << "Безопасное использование: " << *safe_example << std::endl;
+        
+        // Изменяем значение
+        *safe_example = 200;
+        std::cout << "Новое значение: " << *safe_example << std::endl;
+    }
+    
+    // Безопасное освобождение
+    delete safe_example;
+    safe_example = nullptr;
+    
+    // Проверка после освобождения
+    if (!safe_example) {  // Проверка на nullptr (отрицательная форма)
+        std::cout << "Память успешно освобождена, указатель сброшен в nullptr" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    std::cout << "Программа завершается корректно" << std::endl;
     return 0;
 }

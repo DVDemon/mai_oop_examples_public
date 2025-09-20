@@ -1,127 +1,151 @@
 #include <iostream>
 
-
-int main(){
-
-//Increment/ decrement pointer addresses manually
-	
-    int scores[10] {11,12,13,14,15,16,17,18,19,20};
-
-    //scores++;
+int main() {
     
-    int * p_score { scores};
+    // ==========================================
+    // 1. СОЗДАНИЕ МАССИВА И УКАЗАТЕЛЯ
+    // ==========================================
     
-    //*
-    std::cout << "Values in scores array (p_score pointer increment) : " << std::endl;
-	
-    std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	
-	std::cout << "Address : " << p_score << " value : " <<  *(p_score) << std::endl;
-	++p_score; // Moves froward by sizeof(int) : 4 bytes
-	std::cout << std::endl;
-    //*/
-
-   //*
-	std::cout << std::endl;
-	std::cout << "Explicit addition of integer : " << std::endl;
-	p_score = scores; // Reset the pointer to the start of the array
-	std::cout << "scores[4] : " << *(p_score + 4) << std::endl; // Moves forward by 4 * sizeof(int)
-	//*/
-
-    //Can use loops to print these things out : easier
-    //*
-    p_score = scores;
+    // Создаем массив из 10 элементов
+    int student_scores[10]{11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
     
-	std::cout << std::endl;
-    std::cout << "Pointer arithmetic on p_scores pointer and a for loop: " << std::endl;
-    for ( size_t i{0} ; i < std::size(scores) ; ++i){
-        std::cout <<"Value : "<< *(p_score + i) << std::endl; // scores[i]
+    // Создаем указатель на массив
+    int* navigation_pointer{student_scores};
+    
+    // Попытка инкрементировать имя массива вызовет ошибку компиляции:
+    // student_scores++;  // ОШИБКА: нельзя изменять имя массива
+    
+    // ==========================================
+    // 2. РУЧНОЕ УВЕЛИЧЕНИЕ АДРЕСА УКАЗАТЕЛЯ
+    // ==========================================
+    
+    std::cout << "=== Ручное увеличение адреса указателя ===" << std::endl;
+    std::cout << "Каждый инкремент перемещает указатель на sizeof(int) = " << sizeof(int) << " байт" << std::endl;
+    std::cout << std::endl;
+    
+    // Демонстрируем ручное перемещение указателя по массиву
+    for (int i = 0; i < 10; ++i) {
+        std::cout << "Адрес: " << navigation_pointer << " | Значение: " << *navigation_pointer << std::endl;
+        if (i < 9) {  // Не инкрементируем после последнего элемента
+            ++navigation_pointer;  // Перемещаемся на sizeof(int) байт вперед
+        }
     }
-    //*/
-
-
-    //Can also do arithmetic on the array name
-    //just like any pointer.
-    //*
-    p_score = scores;
+    std::cout << std::endl;
     
-	std::cout << std::endl;
-    std::cout << "Pointer arithmetic on array name: " << std::endl;
-    for ( size_t i{0} ; i < std::size(scores) ; ++i){
-        std::cout <<"Value : "<< *(scores + i) << std::endl;
-	}
-    //*/
-
-    // Can Print the elements in reverse order
-    //*
-	std::cout<< std::endl;
-    std::cout << "Elements in reverse order with decrementing pointer arithmetic: " << std::endl;
-    for ( size_t i{std::size(scores)} ; i > 0 ; --i){
-        std::cout <<"Value : "<< *(scores + i -1) << std::endl;	// Here we do the -1 thing, because
-																//scores is already pointing to the first
-																//element in the array.
-    }
-    //*/
-
-	//Print in reverse order with -- operator on p_score
-   //*
-	std::cout<< std::endl;
-    std::cout << "Elements in reverse order -- arithmetic on the p_scores pointer: " << std::endl;
-    p_score = scores + std::size(scores) -1;
-	for ( size_t i{std::size(scores)} ; i > 0 ; --i){
-        std::cout <<"Value : "<< *(p_score--) << std::endl;		// Here we do the -1 thing, because
-																//scores is already pointing to the first
-																//element in the array.
-    }
-    //*/
-
-    // Can Print the elements in reverse order with array index
-    //*
-	std::cout<< std::endl;
-    std::cout << "Elements in reverse order with array index notation: " << std::endl;
-    for ( size_t i{std::size(scores)} ; i > 0 ; --i){
-        std::cout <<"Value : "<< scores [ i -1] << std::endl;
-    }
-    //*/
-
-    p_score = scores;
+    // ==========================================
+    // 3. ЯВНОЕ СЛОЖЕНИЕ С ЦЕЛЫМ ЧИСЛОМ
+    // ==========================================
     
-    scores[0] = 31; // Array index notation
-    *(scores + 1) = 32; // Equivalent to scores[1] = 32 . Pointer arithmetic on array name
-    *(p_score + 2) = 33; // Equivalent to scores[2] = 33 . Pointer arithmetic on p_score pointer
+    std::cout << "=== Явное сложение указателя с целым числом ===" << std::endl;
+    navigation_pointer = student_scores;  // Сбрасываем указатель на начало массива
     
-	std::cout << std::endl;
-	std::cout << "Printing out the array after modification of 3 first elements: " << std::endl;
-    for ( size_t i{0} ; i < std::size(scores) ; ++i){
-        std::cout <<"Value : "<< scores[i] << std::endl;
+    // Перемещаемся на 4 элемента вперед
+    std::cout << "Элемент с индексом 4: " << *(navigation_pointer + 4) << std::endl;
+    std::cout << "Адрес элемента с индексом 4: " << (navigation_pointer + 4) << std::endl;
+    std::cout << "Разность адресов: " << (navigation_pointer + 4) - navigation_pointer << " элементов" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 4. АРИФМЕТИКА УКАЗАТЕЛЕЙ В ЦИКЛЕ
+    // ==========================================
+    
+    std::cout << "=== Арифметика указателей в цикле ===" << std::endl;
+    navigation_pointer = student_scores;
+    
+    std::cout << "Элементы массива через арифметику указателей:" << std::endl;
+    for (size_t i{0}; i < std::size(student_scores); ++i) {
+        std::cout << "Элемент " << i << ": " << *(navigation_pointer + i) << std::endl;
     }
-	
-	
-   
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 5. АРИФМЕТИКА НА ИМЕНИ МАССИВА
+    // ==========================================
+    
+    std::cout << "=== Арифметика на имени массива ===" << std::endl;
+    std::cout << "Имя массива ведет себя как указатель на первый элемент:" << std::endl;
+    
+    for (size_t i{0}; i < std::size(student_scores); ++i) {
+        std::cout << "Элемент " << i << ": " << *(student_scores + i) << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 6. ОБРАТНЫЙ ПОРЯДОК ЧЕРЕЗ АРИФМЕТИКУ УКАЗАТЕЛЕЙ
+    // ==========================================
+    
+    std::cout << "=== Обратный порядок через арифметику указателей ===" << std::endl;
+    std::cout << "Элементы в обратном порядке:" << std::endl;
+    
+    for (size_t i{std::size(student_scores)}; i > 0; --i) {
+        // Используем (i - 1) потому что массив начинается с индекса 0
+        std::cout << "Элемент " << (i - 1) << ": " << *(student_scores + i - 1) << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 7. ОБРАТНЫЙ ПОРЯДОК ЧЕРЕЗ ДЕКРЕМЕНТ УКАЗАТЕЛЯ
+    // ==========================================
+    
+    std::cout << "=== Обратный порядок через декремент указателя ===" << std::endl;
+    
+    // Устанавливаем указатель на последний элемент массива
+    navigation_pointer = student_scores + std::size(student_scores) - 1;
+    
+    std::cout << "Элементы в обратном порядке через декремент:" << std::endl;
+    for (size_t i{std::size(student_scores)}; i > 0; --i) {
+        std::cout << "Значение: " << *(navigation_pointer--) << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 8. ОБРАТНЫЙ ПОРЯДОК ЧЕРЕЗ ИНДЕКСАЦИЮ МАССИВА
+    // ==========================================
+    
+    std::cout << "=== Обратный порядок через индексацию массива ===" << std::endl;
+    std::cout << "Элементы в обратном порядке через индексацию:" << std::endl;
+    
+    for (size_t i{std::size(student_scores)}; i > 0; --i) {
+        std::cout << "Элемент " << (i - 1) << ": " << student_scores[i - 1] << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 9. ИЗМЕНЕНИЕ ЭЛЕМЕНТОВ МАССИВА РАЗЛИЧНЫМИ СПОСОБАМИ
+    // ==========================================
+    
+    std::cout << "=== Изменение элементов массива различными способами ===" << std::endl;
+    
+    // Сбрасываем указатель на начало массива
+    navigation_pointer = student_scores;
+    
+    // Изменяем элементы тремя различными способами:
+    student_scores[0] = 31;           // Способ 1: Индексация массива
+    *(student_scores + 1) = 32;       // Способ 2: Арифметика на имени массива
+    *(navigation_pointer + 2) = 33;   // Способ 3: Арифметика на указателе
+    
+    std::cout << "Массив после изменения первых трех элементов:" << std::endl;
+    for (size_t i{0}; i < std::size(student_scores); ++i) {
+        std::cout << "Элемент " << i << ": " << student_scores[i] << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 10. ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ АРИФМЕТИКИ УКАЗАТЕЛЕЙ
+    // ==========================================
+    
+    std::cout << "=== Дополнительные примеры арифметики указателей ===" << std::endl;
+    
+    navigation_pointer = student_scores;
+    
+    // Разность указателей
+    int* start_pointer = student_scores;
+    int* end_pointer = student_scores + 5;
+    std::cout << "Разность указателей (элементов между ними): " << (end_pointer - start_pointer) << std::endl;
+    
+    // Сравнение указателей
+    std::cout << "start_pointer < end_pointer: " << (start_pointer < end_pointer) << std::endl;
+    std::cout << "start_pointer == end_pointer: " << (start_pointer == end_pointer) << std::endl;
+    
     return 0;
 }

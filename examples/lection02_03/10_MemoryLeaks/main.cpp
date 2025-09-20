@@ -1,42 +1,208 @@
 #include <iostream>
 
-int main(){
-
+int main() {
+    
+    // ==========================================
+    // 1. УТЕЧКА ПАМЯТИ: ПЕРЕНАЗНАЧЕНИЕ УКАЗАТЕЛЯ
+    // ==========================================
+    
+    std::cout << "=== УТЕЧКА ПАМЯТИ: Переопределение указателя ===" << std::endl;
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он демонстрирует УТЕЧКУ ПАМЯТИ:" << std::endl;
+    
+    // КОД С УТЕЧКОЙ ПАМЯТИ - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
     /*
-    int *p_number {new int{67}}; // Points to some address, let's call that address1
+    int* leaked_pointer{new int{67}};  // Указывает на адрес1 в куче
     
-    //Should delete and reset here 
+    // ДОЛЖНЫ БЫЛИ БЫ ОСВОБОДИТЬ ПАМЯТЬ ЗДЕСЬ:
+    // delete leaked_pointer;
+    // leaked_pointer = nullptr;
     
-    int number{55}; // stack variable
+    int stack_variable{55};  // Переменная в стеке
     
-    p_number = &number; // Now p_number points to address2 , but address1 is still in use by 
-                        // our program. But our program has lost access to that memory location.
-						//Memory has been leaked.
-    //*/
-
-	//Double allocation 
+    // ПЕРЕНАЗНАЧАЕМ УКАЗАТЕЛЬ НА СТЕКОВУЮ ПЕРЕМЕННУЮ
+    leaked_pointer = &stack_variable;  // Теперь указывает на адрес2 (стек)
+    
+    // Адрес1 в куче все еще занят нашей программой,
+    // но мы потеряли доступ к этой области памяти!
+    // ПАМЯТЬ УТЕКЛА!
+    */
+    
+    std::cout << "Переопределение указателя без освобождения памяти приводит к утечке!" << std::endl;
+    std::cout << "Память остается выделенной, но становится недоступной!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 2. УТЕЧКА ПАМЯТИ: ДВОЙНОЕ ВЫДЕЛЕНИЕ
+    // ==========================================
+    
+    std::cout << "=== УТЕЧКА ПАМЯТИ: Двойное выделение памяти ===" << std::endl;
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он демонстрирует УТЕЧКУ ПАМЯТИ:" << std::endl;
+    
+    // КОД С УТЕЧКОЙ ПАМЯТИ - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
     /*
-    int *p_number1 {new int{55}};
+    int* double_allocation_pointer{new int{55}};
     
-	//Use the pointer
+    // Используем указатель
+    std::cout << "Первое выделение: " << *double_allocation_pointer << std::endl;
     
-	//Should delete and reset here.
-	
-    p_number1 = new int{44}; // memory with int{55} leaked.
-
-    delete p_number1;
-    p_number1 = nullptr;
-    //*/
-
-	//Nested scopes with dynamically allocated memory
-	{
-		int *p_number2 {new int{57}};
-
-        //Use the dynamic memory
-
-	}
-	//Memory with int{57} leaked.
-
-    std::cout << "Program ending well" << std::endl;
+    // ДОЛЖНЫ БЫЛИ БЫ ОСВОБОДИТЬ ПАМЯТЬ ЗДЕСЬ:
+    // delete double_allocation_pointer;
+    // double_allocation_pointer = nullptr;
+    
+    // ВЫДЕЛЯЕМ ПАМЯТЬ ВТОРОЙ РАЗ БЕЗ ОСВОБОЖДЕНИЯ ПЕРВОЙ
+    double_allocation_pointer = new int{44};  // Память с int{55} УТЕКЛА!
+    
+    std::cout << "Второе выделение: " << *double_allocation_pointer << std::endl;
+    
+    // Освобождаем только последнюю выделенную память
+    delete double_allocation_pointer;
+    double_allocation_pointer = nullptr;
+    
+    // Память с int{55} остается утечкой!
+    */
+    
+    std::cout << "Двойное выделение памяти без освобождения предыдущей приводит к утечке!" << std::endl;
+    std::cout << "Каждое new должно иметь соответствующий delete!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 3. УТЕЧКА ПАМЯТИ: ВЛОЖЕННЫЕ ОБЛАСТИ ВИДИМОСТИ
+    // ==========================================
+    
+    std::cout << "=== УТЕЧКА ПАМЯТИ: Вложенные области видимости ===" << std::endl;
+    std::cout << "Следующий код демонстрирует УТЕЧКУ ПАМЯТИ:" << std::endl;
+    
+    // КОД С УТЕЧКОЙ ПАМЯТИ - ДЕМОНСТРАЦИЯ:
+    {
+        int* scoped_pointer{new int{57}};  // Выделяем память в области видимости
+        
+        std::cout << "Память выделена в области видимости: " << *scoped_pointer << std::endl;
+        
+        // Используем динамическую память
+        *scoped_pointer = 100;
+        std::cout << "Измененное значение: " << *scoped_pointer << std::endl;
+        
+        // НЕ ОСВОБОЖДАЕМ ПАМЯТЬ ПЕРЕД ВЫХОДОМ ИЗ ОБЛАСТИ ВИДИМОСТИ!
+        // delete scoped_pointer;  // ЭТА СТРОКА ОТСУТСТВУЕТ!
+        // scoped_pointer = nullptr;
+    }
+    // ПАМЯТЬ С int{57} УТЕКЛА!
+    // Указатель scoped_pointer больше не существует,
+    // но память в куче остается выделенной!
+    
+    std::cout << "Память утекла при выходе из области видимости!" << std::endl;
+    std::cout << "Память остается выделенной до завершения программы!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 4. ПРАВИЛЬНЫЕ ПРИМЕРЫ БЕЗ УТЕЧЕК ПАМЯТИ
+    // ==========================================
+    
+    std::cout << "=== ПРАВИЛЬНЫЕ ПРИМЕРЫ БЕЗ УТЕЧЕК ПАМЯТИ ===" << std::endl;
+    
+    // Пример 1: Правильное управление одним указателем
+    std::cout << "Пример 1: Правильное управление одним указателем" << std::endl;
+    {
+        int* correct_pointer{new int{42}};
+        
+        std::cout << "Выделена память: " << *correct_pointer << std::endl;
+        
+        // Используем память
+        *correct_pointer *= 2;
+        std::cout << "Удвоенное значение: " << *correct_pointer << std::endl;
+        
+        // ПРАВИЛЬНО: Освобождаем память перед выходом из области видимости
+        delete correct_pointer;
+        correct_pointer = nullptr;
+        
+        std::cout << "Память корректно освобождена" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // Пример 2: Правильное переопределение указателя
+    std::cout << "Пример 2: Правильное переопределение указателя" << std::endl;
+    {
+        int* safe_pointer{new int{100}};
+        
+        std::cout << "Первое выделение: " << *safe_pointer << std::endl;
+        
+        // ПРАВИЛЬНО: Освобождаем память перед переопределением
+        delete safe_pointer;
+        safe_pointer = nullptr;
+        
+        // Теперь безопасно переопределяем
+        int stack_value{200};
+        safe_pointer = &stack_value;
+        
+        std::cout << "Переопределен на стековую переменную: " << *safe_pointer << std::endl;
+        // Не нужно delete, так как указывает на стек
+    }
+    std::cout << std::endl;
+    
+    // Пример 3: Правильное двойное выделение
+    std::cout << "Пример 3: Правильное двойное выделение" << std::endl;
+    {
+        int* managed_pointer{new int{300}};
+        
+        std::cout << "Первое выделение: " << *managed_pointer << std::endl;
+        
+        // ПРАВИЛЬНО: Освобождаем память перед новым выделением
+        delete managed_pointer;
+        managed_pointer = nullptr;
+        
+        // Теперь безопасно выделяем новую память
+        managed_pointer = new int{400};
+        
+        std::cout << "Второе выделение: " << *managed_pointer << std::endl;
+        
+        // Освобождаем последнюю выделенную память
+        delete managed_pointer;
+        managed_pointer = nullptr;
+        
+        std::cout << "Все выделения корректно освобождены" << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 5. ПРАВИЛА ПРЕДОТВРАЩЕНИЯ УТЕЧЕК ПАМЯТИ
+    // ==========================================
+    
+    std::cout << "=== Правила предотвращения утечек памяти ===" << std::endl;
+    std::cout << "1. ВСЕГДА освобождайте память с помощью delete/delete[]" << std::endl;
+    std::cout << "2. ВСЕГДА устанавливайте указатель в nullptr после delete" << std::endl;
+    std::cout << "3. НИКОГДА не переопределяйте указатель без освобождения памяти" << std::endl;
+    std::cout << "4. НИКОГДА не выходите из области видимости без освобождения памяти" << std::endl;
+    std::cout << "5. Используйте RAII (Resource Acquisition Is Initialization)" << std::endl;
+    std::cout << "6. Предпочитайте умные указатели (smart pointers)" << std::endl;
+    std::cout << "7. Используйте инструменты для обнаружения утечек памяти" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 6. ПОСЛЕДСТВИЯ УТЕЧЕК ПАМЯТИ
+    // ==========================================
+    
+    std::cout << "=== Последствия утечек памяти ===" << std::endl;
+    std::cout << "Утечки памяти могут привести к:" << std::endl;
+    std::cout << "- Постепенному увеличению потребления памяти программой" << std::endl;
+    std::cout << "- Замедлению работы программы" << std::endl;
+    std::cout << "- Нехватке памяти в системе" << std::endl;
+    std::cout << "- Крашу программы при исчерпании памяти" << std::endl;
+    std::cout << "- Нестабильной работе системы" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 7. СОВРЕМЕННЫЕ РЕШЕНИЯ
+    // ==========================================
+    
+    std::cout << "=== Современные решения для предотвращения утечек ===" << std::endl;
+    std::cout << "В современном C++ рекомендуется:" << std::endl;
+    std::cout << "- Использовать std::unique_ptr для единоличного владения" << std::endl;
+    std::cout << "- Использовать std::shared_ptr для разделяемого владения" << std::endl;
+    std::cout << "- Использовать std::make_unique и std::make_shared" << std::endl;
+    std::cout << "- Использовать контейнеры STL вместо сырых массивов" << std::endl;
+    std::cout << "- Применять принцип RAII" << std::endl;
+    std::cout << std::endl;
+    
+    std::cout << "Программа завершается корректно" << std::endl;
     return 0;
 }

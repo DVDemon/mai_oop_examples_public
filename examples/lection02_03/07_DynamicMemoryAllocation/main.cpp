@@ -1,132 +1,179 @@
 #include <iostream>
 
-
-int main(){
-
-	//How we've used pointers so far
-    //*
-	int number {22}; // Stack
-	
-	int * p_number = &number;
-	
-	std::cout << std::endl;
-	std::cout << "Declaring pointer and assigning address : " << std::endl;
-	std::cout << "number : " << number << std::endl;
-	std::cout << "p_number : " << p_number << std::endl;
-	std::cout << "&number : " << &number << std::endl;
-	std::cout << "*p_number : " << *p_number <<  std::endl;
-	
-	
-	int * p_number1; // Uninitialized pointer , contains junk address
-	int number1 {12};
-	p_number1 = &number1; // Make it point to a valid address
-	std::cout << std::endl;
-	std::cout << "Uninitialized pointer : " << std::endl;
-	std::cout << "*p_number1 : " << *p_number1 << std::endl;
-    //*/
-
-   //BAD
-	//Writing into uninitialized pointer through dereference
+int main() {
+    
+    // ==========================================
+    // 1. ОБЫЧНОЕ ИСПОЛЬЗОВАНИЕ УКАЗАТЕЛЕЙ (СТЕК)
+    // ==========================================
+    
+    std::cout << "=== Обычное использование указателей (стек) ===" << std::endl;
+    
+    int stack_variable{22};  // Переменная в стеке
+    int* pointer_to_stack{&stack_variable};  // Указатель на переменную в стеке
+    
+    std::cout << "Значение переменной в стеке: " << stack_variable << std::endl;
+    std::cout << "Адрес переменной в стеке: " << &stack_variable << std::endl;
+    std::cout << "Адрес в указателе: " << pointer_to_stack << std::endl;
+    std::cout << "Значение через указатель: " << *pointer_to_stack << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 2. НЕИНИЦИАЛИЗИРОВАННЫЕ УКАЗАТЕЛИ
+    // ==========================================
+    
+    std::cout << "=== Неинициализированные указатели ===" << std::endl;
+    
+    int* uninitialized_pointer;  // Содержит случайный адрес (мусор)
+    int valid_variable{12};
+    uninitialized_pointer = &valid_variable;  // Направляем на валидный адрес
+    
+    std::cout << "После инициализации указателя:" << std::endl;
+    std::cout << "Значение через указатель: " << *uninitialized_pointer << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 3. ОПАСНОСТЬ РАБОТЫ С НЕИНИЦИАЛИЗИРОВАННЫМИ УКАЗАТЕЛЯМИ
+    // ==========================================
+    
+    std::cout << "=== ОПАСНОСТЬ: Работа с неинициализированными указателями ===" << std::endl;
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН и может вызвать КРАШ:" << std::endl;
+    
+    // ОПАСНЫЙ КОД - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
     /*
-	int *p_number2; // Contains junk address : could be anything
-    std::cout << "Writing in the 55" << std::endl;
-	*p_number2 = 55; // Writing into junk address : BAD!
-	std::cout << std::endl;
-	std::cout << "Writing into uninitialized pointer through dereference" << std::endl;
-	std::cout << "p_number2 : " << p_number2 << std::endl; // Reading from junk address.
-    std::cout << "Dereferencing bad memory" << std::endl;
-	std::cout << "*p_number2 : " << *p_number2 << std::endl;
-    //*/
-	
-	
-	//Initializing pointer to null
-    //*
-	//int *p_number3{nullptr}; // Also works
-	int * p_number3 {}; // Initialized with pointer equivalent of zero : nullptr
-						// A pointer pointing nowhere
-    std::cout << "Writting into nullptr memory" << std::endl;
-	//*p_number3 = 33; // Writting into a pointer pointing nowhere : BAD, CRASH
-    std::cout << "Done writting" << std::endl;
-	
-	std::cout << std::endl;
-	std::cout << "Reading and writting through nullptr : " << std::endl;
-	//std::cout << "p_number3 : " << p_number3 << std::endl;
-	//std::cout << "*p_number3 : " << *p_number3 << std::endl;// Reading from nullptr
-															// BAD, CRASH.
-    //*/
-
-
-    //Dynamic heap memory
-    //*
-	int *p_number4{nullptr};
-	p_number4 = new int; 	// Dynamically allocate space for a single int on the heap
-							// This memory belongs to our program from now on. The system
-							// can't use it for anything else, untill we return it.
-							//After this line executes, we will have a valid memory location
-							// allocated. The size of the allocated memory will be such that it
-							// can store the type pointed to by the pointer
-						
-					
-	*p_number4 = 77; // Writting into dynamically allocated memory
-	std::cout << std::endl;
-	std::cout << "Dynamically allocating memory : " << std::endl;
-	std::cout <<"*p_number4 : " << *p_number4 << std::endl;
-
-    //Return memory to the OS
-    delete p_number4;
-    p_number4 = nullptr;
-    //*/
-
-
-    //It is also possible to initialize the pointer with a valid
-	//address up on declaration. Not with a nullptr
-     int *p_number5{ new int}; // Memory location contains junk value
-     int *p_number6{ new int (22) }; // use direct initialization
-     int *p_number7{ new int { 23 } }; // use uniform initialization
-	 
-	 std::cout << std::endl;
-	 std::cout << "Initialize with valid memory address at declaration : " << std::endl;
-	 std::cout << "p_number5 : " << p_number5 << std::endl;
-	 std::cout << "*p_number5 : " << *p_number5 << std::endl; // Junk value
-	 
-	 std::cout << "p_number6 : " << p_number6 << std::endl;
-	 std::cout << "*p_number6 : " << *p_number6 << std::endl;
-	 
-	 std::cout << "p_number7 : " << p_number7 << std::endl;
-	 std::cout << "*p_number7 : " << *p_number7 << std::endl;
-	 
-	 //Remember to release the memory
-	  delete p_number5;
-	  p_number5 = nullptr;
-	  
-	  delete p_number6;
-	  p_number6 = nullptr;
-	  
-	  delete p_number7;
-	  p_number7 = nullptr;
-
-
-      //Can reuse pointers
-      p_number5 = new int(81);
-      std::cout << "*p_number : " << *p_number5 << std::endl;
-
-
-      delete p_number5;
-      p_number5 = nullptr;
-
-      //Calling delete twice on a pointer : BAD!
-      p_number5 = new int(99);
-      std::cout << "*p_number5 : " << *p_number5 << std::endl;
-
-
-      delete p_number5; 
-	  //p_number5=nullptr;
-      //delete p_number5;
-
-
-      //
-
-                                                            
-   std::cout << "Program is ending well" << std::endl;
+    int* dangerous_pointer;  // Содержит случайный адрес
+    std::cout << "Попытка записи в случайный адрес..." << std::endl;
+    *dangerous_pointer = 55;  // ЗАПИСЬ В СЛУЧАЙНЫЙ АДРЕС - ОПАСНО!
+    std::cout << "Адрес в указателе: " << dangerous_pointer << std::endl;
+    std::cout << "Значение по случайному адресу: " << *dangerous_pointer << std::endl;
+    */
+    
+    std::cout << "Этот код может вызвать краш программы или повреждение данных!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 4. УКАЗАТЕЛИ НА nullptr
+    // ==========================================
+    
+    std::cout << "=== Указатели на nullptr ===" << std::endl;
+    
+    int* null_pointer{};  // Инициализирован nullptr (эквивалент нуля для указателей)
+    // int* null_pointer{nullptr};  // Альтернативный способ инициализации
+    
+    std::cout << "Указатель инициализирован nullptr (указывает в никуда)" << std::endl;
+    
+    // ОПАСНЫЙ КОД - ЗАКОММЕНТИРОВАН ДЛЯ БЕЗОПАСНОСТИ:
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН:" << std::endl;
+    // *null_pointer = 33;  // ЗАПИСЬ В nullptr - КРАШ!
+    // std::cout << "Значение через nullptr: " << *null_pointer << std::endl;  // ЧТЕНИЕ ИЗ nullptr - КРАШ!
+    
+    std::cout << "Работа с nullptr может вызвать краш программы!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 5. ДИНАМИЧЕСКОЕ ВЫДЕЛЕНИЕ ПАМЯТИ (КУЧА)
+    // ==========================================
+    
+    std::cout << "=== Динамическое выделение памяти (куча) ===" << std::endl;
+    
+    int* heap_pointer{nullptr};
+    heap_pointer = new int;  // Динамически выделяем память для одного int в куче
+    
+    // Эта память теперь принадлежит нашей программе
+    // Система не может использовать её для других целей, пока мы её не освободим
+    // После выполнения этой строки у нас будет валидный адрес памяти
+    // Размер выделенной памяти достаточен для хранения типа, на который указывает указатель
+    
+    *heap_pointer = 77;  // Записываем значение в динамически выделенную память
+    
+    std::cout << "Динамически выделенная память:" << std::endl;
+    std::cout << "Адрес в куче: " << heap_pointer << std::endl;
+    std::cout << "Значение в куче: " << *heap_pointer << std::endl;
+    
+    // ВАЖНО: Освобождаем память обратно в систему
+    delete heap_pointer;
+    heap_pointer = nullptr;  // Устанавливаем указатель в nullptr для безопасности
+    std::cout << "Память освобождена, указатель установлен в nullptr" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 6. ИНИЦИАЛИЗАЦИЯ ПРИ ОБЪЯВЛЕНИИ
+    // ==========================================
+    
+    std::cout << "=== Инициализация указателей при объявлении ===" << std::endl;
+    
+    // Можно инициализировать указатель валидным адресом при объявлении
+    int* uninitialized_heap_pointer{new int};           // Память содержит случайное значение
+    int* initialized_heap_pointer1{new int(22)};         // Прямая инициализация
+    int* initialized_heap_pointer2{new int{23}};        // Унифицированная инициализация
+    
+    std::cout << "Указатели с динамически выделенной памятью:" << std::endl;
+    std::cout << "Неинициализированная память: " << *uninitialized_heap_pointer << " (случайное значение)" << std::endl;
+    std::cout << "Прямая инициализация: " << *initialized_heap_pointer1 << std::endl;
+    std::cout << "Унифицированная инициализация: " << *initialized_heap_pointer2 << std::endl;
+    std::cout << std::endl;
+    
+    // ВАЖНО: Не забываем освободить всю выделенную память
+    std::cout << "Освобождение всей выделенной памяти:" << std::endl;
+    delete uninitialized_heap_pointer;
+    uninitialized_heap_pointer = nullptr;
+    
+    delete initialized_heap_pointer1;
+    initialized_heap_pointer1 = nullptr;
+    
+    delete initialized_heap_pointer2;
+    initialized_heap_pointer2 = nullptr;
+    std::cout << "Вся память освобождена" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 7. ПОВТОРНОЕ ИСПОЛЬЗОВАНИЕ УКАЗАТЕЛЕЙ
+    // ==========================================
+    
+    std::cout << "=== Повторное использование указателей ===" << std::endl;
+    
+    // Можно повторно использовать указатель после освобождения памяти
+    uninitialized_heap_pointer = new int(81);
+    std::cout << "Новое значение в переиспользованном указателе: " << *uninitialized_heap_pointer << std::endl;
+    
+    delete uninitialized_heap_pointer;
+    uninitialized_heap_pointer = nullptr;
+    std::cout << "Память освобождена повторно" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 8. ОПАСНОСТЬ ДВОЙНОГО ОСВОБОЖДЕНИЯ ПАМЯТИ
+    // ==========================================
+    
+    std::cout << "=== ОПАСНОСТЬ: Двойное освобождение памяти ===" << std::endl;
+    
+    uninitialized_heap_pointer = new int(99);
+    std::cout << "Новое значение: " << *uninitialized_heap_pointer << std::endl;
+    
+    // Первое освобождение - корректно
+    delete uninitialized_heap_pointer;
+    std::cout << "Первое освобождение памяти выполнено" << std::endl;
+    
+    // ОПАСНОСТЬ: Второе освобождение - ОПАСНО!
+    std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН:" << std::endl;
+    // uninitialized_heap_pointer = nullptr;  // Без этого строка ниже вызовет краш
+    // delete uninitialized_heap_pointer;     // ДВОЙНОЕ ОСВОБОЖДЕНИЕ - КРАШ!
+    
+    std::cout << "Двойное освобождение памяти может вызвать краш программы!" << std::endl;
+    std::cout << "ВСЕГДА устанавливайте указатель в nullptr после delete!" << std::endl;
+    std::cout << std::endl;
+    
+    // ==========================================
+    // 9. ПРАВИЛА УПРАВЛЕНИЯ ПАМЯТЬЮ
+    // ==========================================
+    
+    std::cout << "=== Правила управления памятью ===" << std::endl;
+    std::cout << "1. ВСЕГДА освобождайте память с помощью delete" << std::endl;
+    std::cout << "2. ВСЕГДА устанавливайте указатель в nullptr после delete" << std::endl;
+    std::cout << "3. НИКОГДА не освобождайте память дважды" << std::endl;
+    std::cout << "4. НИКОГДА не работайте с неинициализированными указателями" << std::endl;
+    std::cout << "5. НИКОГДА не разыменовывайте nullptr" << std::endl;
+    std::cout << std::endl;
+    
+    std::cout << "Программа завершается корректно" << std::endl;
     return 0;
 }
