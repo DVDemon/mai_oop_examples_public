@@ -1,39 +1,74 @@
 #include <cstdlib>
 #include <iostream>
 
+// Демонстрация константных методов и константных объектов
+// Показывает использование const для обеспечения неизменяемости
+
 struct MyClass {
-    /*mutable*/ int counter{};
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    
+    // mutable int counter{};  // Раскомментируйте для демонстрации mutable
+    int counter{};            // Счетчик (обычное поле)
  
-    int get() const{
+    // === КОНСТАНТНЫЕ МЕТОДЫ ===
+    
+    // Константный геттер - не изменяет состояние объекта
+    int getValue() const {
         return counter;
     }
 
-     int foo(const int a) const {
-        //++counter;
-        return get()+a;
+    // Константный метод с константным параметром
+    int calculateSum(const int additionalValue) const {
+        // ++counter;  // ОШИБКА: нельзя изменять поля в константном методе
+        return getValue() + additionalValue;  // Можно вызывать другие константные методы
     }
 };
 
-
 int main(int argc, char** argv) {
-    //int a = 100;
-    //int b = 222;
-    //int *const P2 = &a; // constant pointer
-    //*P2 = 987; //changing value
-    //P2 = &b; //changing pointer - error
+    std::cout << "=== Демонстрация константных методов и объектов ===" << std::endl;
     
-    //const int *P1 = &a; //pointer to constant
-    //*P1 = 110; //changing value - not allowed
-    //P1 = &b; //changing pointer - allowed
-    //const int *const P3 = &a; //constant pointer to constant
-    //*P3 = 155; //changing value - not allowed
-    //P3 = &b; //changing pointer - not allowed
+    // === ПРИМЕРЫ С УКАЗАТЕЛЯМИ (закомментированы для простоты) ===
+    /*
+    int a = 100;
+    int b = 222;
+    
+    // Константный указатель (указатель нельзя изменить)
+    int *const constantPointer = &a;
+    *constantPointer = 987;  // Можно изменить значение
+    // constantPointer = &b;  // ОШИБКА: нельзя изменить указатель
+    
+    // Указатель на константу (значение нельзя изменить)
+    const int *pointerToConstant = &a;
+    // *pointerToConstant = 110;  // ОШИБКА: нельзя изменить значение
+    pointerToConstant = &b;      // Можно изменить указатель
+    
+    // Константный указатель на константу
+    const int *const constantPointerToConstant = &a;
+    // *constantPointerToConstant = 155;  // ОШИБКА: нельзя изменить значение
+    // constantPointerToConstant = &b;    // ОШИБКА: нельзя изменить указатель
+    */
 
-
-    const MyClass a;
-
-    int aa = a.get();
-    std::cout << a.foo(1) << std::endl;
-
+    // === РАБОТА С КОНСТАНТНЫМ ОБЪЕКТОМ ===
+    
+    const MyClass constantObject;  // Константный объект
+    
+    // Можно вызывать только константные методы
+    int currentValue = constantObject.getValue();
+    std::cout << "Текущее значение: " << currentValue << std::endl;
+    
+    // Вызов константного метода с параметром
+    int result = constantObject.calculateSum(10);
+    std::cout << "Результат вычисления (0 + 10): " << result << std::endl;
+    
+    // === ОБЪЯСНЕНИЕ ПРАВИЛ ===
+    
+    std::cout << "\n=== Правила константных методов ===" << std::endl;
+    std::cout << "- Константные методы НЕ МОГУТ изменять поля объекта" << std::endl;
+    std::cout << "- Константные методы МОГУТ вызывать другие константные методы" << std::endl;
+    std::cout << "- Константные объекты могут вызывать ТОЛЬКО константные методы" << std::endl;
+    std::cout << "- mutable поля можно изменять даже в константных методах" << std::endl;
+    
+    std::cout << "\n=== Программа завершена ===" << std::endl;
+    
     return 0;
 }

@@ -1,33 +1,78 @@
 #include <iostream>
 #include <string>
 
-class Kitty {
-    private:
-        std::string name;
-    public:
-        Kitty() : name {"Vasyka"} {
-            std::cout << name << " was born!" << std::endl;
-        };
+// Демонстрация Правила трех (Rule of Three) в C++
+// Показывает важность определения копирующего конструктора и деструктора
+// ВАЖНО: В данном примере отсутствует оператор присваивания!
 
-        Kitty(const std::string & n) : name {n} {
-            std::cout << name << " was born!" << std::endl;
-        };
+class Cat {
+private:
+    std::string name;  // Имя кота
 
-        Kitty(const Kitty& other) : name {other.name} {
-            std::cout << name << " was cloned!" << std::endl;
-        }
+public:
+    // === КОНСТРУКТОРЫ ===
+    
+    // Конструктор по умолчанию
+    Cat() : name{"Васька"} {
+        std::cout << name << " родился!" << std::endl;
+    }
 
-        ~Kitty() {
-            std::cout << name << " was missed" << std::endl;
-        }
+    // Параметризованный конструктор
+    Cat(const std::string& catName) : name{catName} {
+        std::cout << name << " родился!" << std::endl;
+    }
+
+    // === КОПИРУЮЩИЙ КОНСТРУКТОР ===
+    
+    // Копирующий конструктор - создает копию существующего объекта
+    Cat(const Cat& other) : name{other.name} {
+        std::cout << name << " был склонирован!" << std::endl;
+    }
+
+    // === ДЕСТРУКТОР ===
+    
+    // Деструктор - вызывается при уничтожении объекта
+    ~Cat() {
+        std::cout << name << " ушел..." << std::endl;
+    }
+
+    // === ОТСУТСТВУЮЩИЙ ОПЕРАТОР ПРИСВАИВАНИЯ ===
+    
+    // ВНИМАНИЕ: Оператор присваивания НЕ ОПРЕДЕЛЕН!
+    // Это нарушение Правила трех и может привести к проблемам
+    // Cat& operator=(const Cat& other) { ... }
 };
 
 int main() {
-    Kitty k1;
-    Kitty k2("Mashka");
-    Kitty k3(k2);
-    Kitty k4{k3};
-    Kitty k5=k4;
-
+    std::cout << "=== Демонстрация Правила трех ===" << std::endl;
+    
+    // === РАЗЛИЧНЫЕ СПОСОБЫ СОЗДАНИЯ ОБЪЕКТОВ ===
+    
+    std::cout << "\n--- Создание объектов ---" << std::endl;
+    
+    Cat firstCat;                    // Конструктор по умолчанию
+    Cat secondCat("Машка");          // Параметризованный конструктор
+    Cat thirdCat(secondCat);         // Копирующий конструктор (явный)
+    Cat fourthCat{thirdCat};         // Копирующий конструктор (uniform initialization)
+    Cat fifthCat = fourthCat;        // Копирующий конструктор (инициализация)
+    
+    std::cout << "\n--- Присваивание (может быть проблематичным!) ---" << std::endl;
+    
+    // Это может вызвать проблемы, так как оператор присваивания не определен
+    // Компилятор сгенерирует его автоматически, но это может быть небезопасно
+    firstCat = secondCat;  // Присваивание без определенного оператора
+    
+    std::cout << "\n--- Выход из main() - вызов деструкторов ---" << std::endl;
+    
+    // Деструкторы вызываются в обратном порядке создания:
+    // fifthCat → fourthCat → thirdCat → secondCat → firstCat
+    
+    std::cout << "\n=== Объяснение Правила трех ===" << std::endl;
+    std::cout << "Если класс управляет ресурсами, необходимо определить:" << std::endl;
+    std::cout << "1. Деструктор" << std::endl;
+    std::cout << "2. Копирующий конструктор" << std::endl;
+    std::cout << "3. Оператор присваивания" << std::endl;
+    std::cout << "\nВ данном примере оператор присваивания ОТСУТСТВУЕТ!" << std::endl;
+    
     return 0;
 }

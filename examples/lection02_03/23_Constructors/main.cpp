@@ -1,36 +1,51 @@
 #include <iostream>
 
+// Математическая константа π (пи)
 const double PI {3.1415926535897932384626433832795};
 
 class Cylinder {
-    public : 
-        //Constctors
-        Cylinder(){
-            base_radius = 2.0;
-            height = 2.0;
-        }
+public:
+    // === КОНСТРУКТОРЫ ===
+    
+    // Конструктор по умолчанию (без параметров)
+    Cylinder() {
+        baseRadius = 2.0;  // Устанавливаем радиус по умолчанию
+        height = 2.0;      // Устанавливаем высоту по умолчанию
+    }
 
-        Cylinder(double rad_param,double height_param){
-            base_radius = rad_param;
-            height = height_param;
-        }
+    // Параметризованный конструктор (с параметрами)
+    Cylinder(double radiusValue, double heightValue) {
+        baseRadius = radiusValue;   // Инициализируем радиус переданным значением
+        height = heightValue;       // Инициализируем высоту переданным значением
+    }
    
-        //Functions (methods)
-        double volume(){
-            return PI * base_radius * base_radius * height;
-        }
+    // === МЕТОДЫ ===
+    
+    // Метод для вычисления объема цилиндра
+    double calculateVolume() const {
+        // Формула объема: V = π × r² × h
+        return PI * baseRadius * baseRadius * height;
+    }
 
-    private : 
-        //Member variables
-        double base_radius{};
-        double height{};
+private:
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    
+    double baseRadius{};  // Радиус основания цилиндра
+    double height{};      // Высота цилиндра
 };
 
+int main() {
+    // Демонстрация различных способов создания объектов
+    
+    // Создание объекта с помощью конструктора по умолчанию
+    Cylinder defaultCylinder;
+    std::cout << "Объем цилиндра (конструктор по умолчанию): " 
+              << defaultCylinder.calculateVolume() << std::endl;
 
-int main(){
-    //Cylinder cylinder1(10,4); // Object
-    Cylinder cylinder1;
-    std::cout << "volume : " << cylinder1.volume() << std::endl;
+    // Создание объекта с помощью параметризованного конструктора
+    Cylinder customCylinder(10.0, 4.0);  // Раскомментируйте для демонстрации
+    std::cout << "Объем цилиндра (параметризованный конструктор): " 
+              << customCylinder.calculateVolume() << std::endl;
 
     return 0;
 }

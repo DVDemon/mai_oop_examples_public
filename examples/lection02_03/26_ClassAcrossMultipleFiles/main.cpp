@@ -1,9 +1,14 @@
 #include <iostream>
 #include "cylinder.h"
 
-int main(){
-    Cylinder cylinder1(10,10);
-    std::cout << "volume : " << cylinder1.volume() << std::endl;
+// Демонстрация использования класса Cylinder, разделенного на несколько файлов
+// Показывает, как работает компиляция с заголовочными файлами и файлами реализации
+int main() {
+    // Создание объекта Cylinder с параметрами (радиус = 10, высота = 10)
+    Cylinder myCylinder(10.0, 10.0);
+    
+    // Вызов метода для вычисления объема цилиндра
+    std::cout << "Объем цилиндра: " << myCylinder.calculateVolume() << std::endl;
     
     return 0;
 }

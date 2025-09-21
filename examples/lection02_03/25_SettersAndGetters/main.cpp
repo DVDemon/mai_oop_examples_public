@@ -1,60 +1,92 @@
 #include <iostream>
 
+// Математическая константа π (пи)
 const double PI {3.1415926535897932384626433832795};
 
 class Cylinder {
-    public : 
-        //Constctors
-        Cylinder() = default;
-        Cylinder(double rad_param,double height_param){
-            base_radius = rad_param;
-            height = height_param;
-        }
-        //Functions (methods)
-        double volume(){
-            return PI * base_radius * base_radius * height;
-        }
-        
-        //Setter and getter methods
-        double get_base_radius(){
-            return base_radius;
-        }
+public:
+    // === КОНСТРУКТОРЫ ===
+    
+    // Defaulted конструктор
+    Cylinder() = default;
+    
+    // Параметризованный конструктор
+    Cylinder(double radiusValue, double heightValue) {
+        baseRadius = radiusValue;
+        height = heightValue;
+    }
+    
+    // === ОСНОВНЫЕ МЕТОДЫ ===
+    
+    // Метод для вычисления объема цилиндра
+    double calculateVolume() const {
+        // Формула объема: V = π × r² × h
+        return PI * baseRadius * baseRadius * height;
+    }
+    
+    // === ГЕТТЕРЫ (GETTERS) ===
+    
+    // Геттер для радиуса - возвращает копию значения
+    double getRadius() const {
+        return baseRadius;
+    }
 
-        double& radius(){
-            return base_radius;
-        }
+    // Геттер для высоты - возвращает копию значения
+    double getHeight() const {
+        return height;
+    }
 
-        double get_height(){
-            return height;
-        }
+    // === ОПАСНЫЙ МЕТОД - ВОЗВРАТ ССЫЛКИ ===
+    
+    // ВНИМАНИЕ: Этот метод нарушает инкапсуляцию!
+    // Возвращает ссылку, позволяя напрямую изменять приватные данные
+    double& getRadiusReference() {
+        return baseRadius;  // Опасный подход!
+    }
 
-        void set_base_radius(double rad_param){
-            base_radius = rad_param;
+    // === СЕТТЕРЫ (SETTERS) ===
+    
+    // Сеттер для радиуса с проверкой (правильный подход)
+    void setRadius(double newRadius) {
+        if (newRadius >= 0) {  // Простая валидация
+            baseRadius = newRadius;
         }
+        // Можно добавить обработку ошибок для отрицательных значений
+    }
 
-        void set_height(double height_param){
-            height = height_param;
+    // Сеттер для высоты с проверкой
+    void setHeight(double newHeight) {
+        if (newHeight >= 0) {  // Простая валидация
+            height = newHeight;
         }
-    private : 
-        //Member variables
-        double base_radius{1};
-        double height{1};
+    }
+
+private:
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    
+    double baseRadius{1.0};  // Радиус основания (по умолчанию 1.0)
+    double height{1.0};      // Высота цилиндра (по умолчанию 1.0)
 };
 
+int main() {
+    // Создание объекта с параметрами
+    Cylinder myCylinder(10.0, 10.0);
+    std::cout << "Объем цилиндра (начальный): " << myCylinder.calculateVolume() << std::endl;
 
-
-int main(){
-    Cylinder cylinder1(10,10);
-    std::cout << "volume : " << cylinder1.volume() << std::endl;
-
-    //cylinder1.base_radius = 7;
-    //Modify our object
-    //cylinder1.set_base_radius(100);
-    cylinder1.radius() = 100;
-    cylinder1.set_height(10);
-
-    std::cout << "volume : " << cylinder1.volume() << std::endl;
-
+    // === ДЕМОНСТРАЦИЯ РАЗЛИЧНЫХ СПОСОБОВ ДОСТУПА ===
+    
+    // Способ 1: Использование сеттеров (рекомендуемый подход)
+    myCylinder.setRadius(100.0);
+    myCylinder.setHeight(10.0);
+    
+    // Способ 2: Опасный способ через ссылку (НЕ рекомендуется!)
+    // myCylinder.getRadiusReference() = 100.0;  // Нарушает инкапсуляцию
+    
+    std::cout << "Объем цилиндра (после изменения): " << myCylinder.calculateVolume() << std::endl;
+    
+    // Демонстрация геттеров
+    std::cout << "Текущий радиус: " << myCylinder.getRadius() << std::endl;
+    std::cout << "Текущая высота: " << myCylinder.getHeight() << std::endl;
 
     return 0;
 }

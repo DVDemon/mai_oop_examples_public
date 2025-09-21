@@ -1,32 +1,78 @@
 #include <iostream>
+#include <string>
 
-class Dog{
-    public : 
-     Dog() = default;
-     void prin_info(){
+// Демонстрация размеров объектов классов и выравнивания памяти
+// Показывает влияние типов данных на общий размер объекта
 
-     }
-     void do_something(){
+class Dog {
+public:
+    // === КОНСТРУКТОР ===
+    
+    // Конструктор по умолчанию (автоматически генерируется компилятором)
+    Dog() = default;
+    
+    // === МЕТОДЫ ===
+    
+    // Метод для вывода информации (пустая реализация для демонстрации)
+    void printInfo() {
+        // Методы не влияют на размер объекта - они хранятся отдельно
+    }
+    
+    // Метод для выполнения действий (пустая реализация для демонстрации)
+    void doSomething() {
+        // Методы не влияют на размер объекта
+    }
 
-     }
-
-     private :
-      size_t leg_count; //8
-      size_t arm_count; //8
-      int * p_age; // 8
+private:
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    // Размеры указаны для 64-битной системы
+    
+    size_t legCount;   // 8 байт - количество лап
+    size_t armCount;   // 8 байт - количество передних лап (для демонстрации)
+    int* agePointer;   // 8 байт - указатель на возраст
 };
 
-
-int main(){
-
-    Dog dog1;
-    std::cout << "sizeof(size_t) : " << sizeof(size_t) << std::endl;
-    std::cout << "sizeof(int*) : " << sizeof(int*) << std::endl;
-    std::cout << "sizeof(Dog) : " << sizeof(dog1) << std::endl;
-
-    std::string name{"I am the king of the universe!"};
-
-    std::cout << "sizeof(name) : " << sizeof(name) << std::endl;
-   
+int main() {
+    std::cout << "=== Демонстрация размеров объектов и выравнивания памяти ===" << std::endl;
+    
+    // === СОЗДАНИЕ ОБЪЕКТА ===
+    
+    Dog myDog;  // Создание объекта класса Dog
+    
+    // === АНАЛИЗ РАЗМЕРОВ ТИПОВ ===
+    
+    std::cout << "\n--- Размеры базовых типов ---" << std::endl;
+    std::cout << "sizeof(size_t): " << sizeof(size_t) << " байт" << std::endl;
+    std::cout << "sizeof(int*): " << sizeof(int*) << " байт" << std::endl;
+    
+    // === АНАЛИЗ РАЗМЕРА ОБЪЕКТА ===
+    
+    std::cout << "\n--- Размер объекта класса ---" << std::endl;
+    std::cout << "sizeof(Dog): " << sizeof(myDog) << " байт" << std::endl;
+    
+    // Объяснение размера объекта:
+    // size_t legCount  (8 байт)
+    // size_t armCount  (8 байт)  
+    // int* agePointer  (8 байт)
+    // Итого: 24 байта
+    
+    // === АНАЛИЗ РАЗМЕРА СТРОКИ ===
+    
+    std::cout << "\n--- Размер объекта std::string ---" << std::endl;
+    std::string message{"Я король вселенной!"};
+    
+    std::cout << "sizeof(std::string): " << sizeof(message) << " байт" << std::endl;
+    std::cout << "Содержимое строки: \"" << message << "\"" << std::endl;
+    std::cout << "Длина строки: " << message.length() << " символов" << std::endl;
+    
+    // Важно: sizeof(std::string) показывает размер объекта строки,
+    // а не размер содержимого строки!
+    
+    std::cout << "\n=== Объяснение размеров ===" << std::endl;
+    std::cout << "- Методы НЕ увеличивают размер объекта" << std::endl;
+    std::cout << "- Размер зависит только от данных-членов" << std::endl;
+    std::cout << "- Компилятор может добавлять выравнивание (padding)" << std::endl;
+    std::cout << "- std::string хранит указатель на данные, а не сами данные" << std::endl;
+    
     return 0;
 }

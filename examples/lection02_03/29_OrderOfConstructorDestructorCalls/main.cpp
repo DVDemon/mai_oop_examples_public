@@ -1,39 +1,72 @@
 #include <iostream>
-#include <string_view>
+#include <string>
 
+// Демонстрация порядка вызовов конструкторов и деструкторов
+// Показывает принцип LIFO (Last In, First Out) для объектов в стеке
 
-
-class Dog{
-    public : 
-        Dog() = default;
-        Dog(std::string_view name_param, std::string_view breed_param, int  age_param);
-        ~Dog();
-
-    private : 
-        std::string name;
-        std::string breed;
-        int * p_age{nullptr};
-};
-Dog::Dog(std::string_view name_param, std::string_view breed_param, int  age_param){
-    name = name_param;
-    breed = breed_param;
-    p_age = new int;
-    *p_age = age_param;
-    std::cout << "Dog constructor called for " << name << std::endl;
-}
-
-Dog::~Dog(){
-    delete p_age;
-    std::cout << "Dog destructor called for : " << name << std::endl;
-}
-
-
-int main(){
+class Dog {
+public:
+    // === КОНСТРУКТОРЫ ===
     
-    Dog dog1("Dogyy1","Shepherd",2);
-    Dog dog2("Dogyy2","Shepherd",3);
-    Dog dog3("Dogyy3","Shepherd",5);
-    Dog dog4("Dogyy4","Shepherd",1);
-   
+    // Конструктор по умолчанию (автоматически генерируется компилятором)
+    Dog() = default;
+    
+    // Параметризованный конструктор
+    // Выделяет память для возраста и инициализирует данные собаки
+    Dog(const std::string& dogName, const std::string& dogBreed, int dogAge);
+    
+    // === ДЕСТРУКТОР ===
+    
+    // Деструктор - вызывается автоматически при уничтожении объекта
+    // КРИТИЧЕСКИ ВАЖНО: освобождает динамически выделенную память
+    ~Dog();
+
+private:
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    
+    std::string name;        // Имя собаки
+    std::string breed;       // Порода собаки
+    int* agePointer{nullptr}; // Указатель на возраст (динамическая память)
+};
+
+// === РЕАЛИЗАЦИЯ КОНСТРУКТОРА ===
+
+// Реализация параметризованного конструктора
+// Демонстрирует выделение памяти и инициализацию данных
+Dog::Dog(const std::string& dogName, const std::string& dogBreed, int dogAge) {
+    name = dogName;                    // Инициализируем имя
+    breed = dogBreed;                  // Инициализируем породу
+    agePointer = new int;              // ВЫДЕЛЯЕМ память для возраста
+    *agePointer = dogAge;              // Записываем значение возраста
+    std::cout << "Конструктор вызван для собаки: " << name << std::endl;
+}
+
+// === РЕАЛИЗАЦИЯ ДЕСТРУКТОРА ===
+
+// Реализация деструктора
+// Демонстрирует правильное освобождение ресурсов
+Dog::~Dog() {
+    delete agePointer;                 // ОСВОБОЖДАЕМ динамическую память
+    std::cout << "Деструктор вызван для собаки: " << name << std::endl;
+}
+
+int main() {
+    std::cout << "=== Демонстрация порядка вызовов конструкторов и деструкторов ===" << std::endl;
+    std::cout << "Создание объектов в стеке..." << std::endl;
+    
+    // === СОЗДАНИЕ ОБЪЕКТОВ В СТЕКЕ ===
+    
+    // Конструкторы вызываются в порядке объявления (LIFO для деструкторов)
+    Dog firstDog("Рекс", "Овчарка", 2);     // 1-й объект
+    Dog secondDog("Бобик", "Лабрадор", 3);  // 2-й объект  
+    Dog thirdDog("Шарик", "Дворняжка", 5);  // 3-й объект
+    Dog fourthDog("Мухтар", "Ротвейлер", 1); // 4-й объект
+    
+    std::cout << "\nВсе объекты созданы. Выходим из main()..." << std::endl;
+    std::cout << "Деструкторы будут вызваны в ОБРАТНОМ порядке!" << std::endl;
+    
+    // При выходе из main() деструкторы вызываются в обратном порядке:
+    // 4-й объект (Мухтар) → 3-й объект (Шарик) → 2-й объект (Бобик) → 1-й объект (Рекс)
+    
     return 0;
 }

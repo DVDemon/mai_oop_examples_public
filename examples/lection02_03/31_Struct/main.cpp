@@ -1,49 +1,73 @@
 #include <iostream>
+#include <string>
 
-class Dog{
-    public : 
-        std::string m_name;
+// Демонстрация различий между class и struct в C++
+// Показывает основные концепции структур и их использование
+
+// === КЛАСС ===
+// По умолчанию все члены PRIVATE (требует явного public:)
+class Dog {
+public:
+    std::string name;  // Имя собаки (публичное поле)
 };
 
-struct Cat
-{
-    public : 
-        std::string m_name;
+// === СТРУКТУРА ===
+// По умолчанию все члены PUBLIC (не требует явного public:)
+struct Cat {
+    std::string name;  // Имя кота (публичное поле)
 };
 
-
-struct Point{
-    double x;
-    double y;
+// === СТРУКТУРА ДЛЯ ПРОСТЫХ ДАННЫХ ===
+// Идеально подходит для группировки связанных данных
+struct Point {
+    double x;  // Координата X
+    double y;  // Координата Y
 };
 
-void print_point(const Point& point){
-    std::cout << "Point [ x: " << point.x << ", y : " << point.y << "]" << std::endl;
+// === ФУНКЦИЯ ДЛЯ РАБОТЫ СО СТРУКТУРОЙ ===
+
+// Функция для вывода информации о точке
+// Принимает константную ссылку для эффективности
+void printPoint(const Point& point) {
+    std::cout << "Точка [ x: " << point.x << ", y: " << point.y << " ]" << std::endl;
 }
 
+int main() {
+    std::cout << "=== Демонстрация классов и структур ===" << std::endl;
+    
+    // === СОЗДАНИЕ ОБЪЕКТОВ КЛАССА И СТРУКТУРЫ ===
+    
+    Dog myDog;  // Создание объекта класса
+    Cat myCat;  // Создание объекта структуры
+    
+    // === ДОСТУП К ПОЛЯМ ===
+    
+    // Оба объекта имеют публичные поля, поэтому доступ одинаковый
+    myDog.name = "Бобик";   // Доступ к полю класса
+    myCat.name = "Мурка";   // Доступ к полю структуры
+    
+    std::cout << "Имя собаки: " << myDog.name << std::endl;
+    std::cout << "Имя кота: " << myCat.name << std::endl;
 
-int main(){
-    Dog dog1;
-    Cat cat1;
-
-    dog1.m_name = "Fluffy"; // Compiler error
-    cat1.m_name = "Juny";
-    std::cout << dog1.m_name << std::endl;
-    std::cout << cat1.m_name << std::endl;
-
-
-    Point point1;
-    point1.x = 10;
-    point1.y = 55.5;
-
-    print_point(point1);
-
+    // === РАБОТА СО СТРУКТУРОЙ POINT ===
+    
+    std::cout << "\n=== Работа со структурой Point ===" << std::endl;
+    
+    Point point1;           // Создание структуры
+    point1.x = 10.0;        // Установка координаты X
+    point1.y = 55.5;        // Установка координаты Y
+    
+    std::cout << "Первая точка:" << std::endl;
+    printPoint(point1);     // Вывод первой точки
+    
+    // Изменение координат
     point1.x = 40.4;
     point1.y = 2.7;
-    print_point(point1);
-
     
-
-   
+    std::cout << "Измененная точка:" << std::endl;
+    printPoint(point1);     // Вывод измененной точки
+    
+    std::cout << "\n=== Программа завершена ===" << std::endl;
+    
     return 0;
 }

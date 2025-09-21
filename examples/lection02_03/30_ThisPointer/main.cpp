@@ -1,92 +1,138 @@
 #include <iostream>
+#include <string>
 
+// Демонстрация указателя this и цепочечных вызовов методов
+// Показывает использование this для возврата ссылки на текущий объект
 
-class Dog{
-    public : 
-        Dog() = default;
-        Dog(std::string_view name_param, std::string_view breed_param, int  age_param);
-        ~Dog();
+class Dog {
+public:
+    // === КОНСТРУКТОРЫ ===
+    
+    // Конструктор по умолчанию (автоматически генерируется компилятором)
+    Dog() = default;
+    
+    // Параметризованный конструктор
+    // Выделяет память для возраста и инициализирует данные собаки
+    Dog(const std::string& dogName, const std::string& dogBreed, int dogAge);
+    
+    // === ДЕСТРУКТОР ===
+    
+    // Деструктор - вызывается автоматически при уничтожении объекта
+    ~Dog();
 
-        void print_info(){
-            std::cout << "Dog (" << this << ") : [ name : " << name 
-                << " breed : " << breed << " age : " << *p_age << "]" << std::endl;
-        }
+    // === МЕТОДЫ ДЛЯ ВЫВОДА ИНФОРМАЦИИ ===
+    
+    // Метод для вывода информации о собаке
+    // Демонстрирует использование this для доступа к адресу объекта
+    void printInfo() {
+        std::cout << "Собака (" << this << ") : [ имя: " << name 
+                  << ", порода: " << breed << ", возраст: " << *agePointer << " ]" << std::endl;
+    }
 
-        //Setters
-        //Chained calls using pointers
-        /*
-        Dog* set_dog_name(std::string_view name){
-            //name = name; // This does nothing
-            this->name = name;
-            return this;
-        }
-        Dog* set_dog_breed(std::string_view breed){
-            this->breed = breed;
-            return this;
-        }
-
-        Dog* set_dog_age(int age){
-            *(this->p_age) = age;
-            return this;
-        }
-        */
-
-       //Chained calls using references
-        Dog& set_dog_name(std::string_view name){
-            //name = name; // This does nothing
-            this->name = name;
-            return *this;
-        }
-        Dog& set_dog_breed(std::string_view breed){
-            this->breed = breed;
-            return *this;
-        }
-
-        Dog& set_dog_age(int age){
-            *(this->p_age) = age;
-            return *this;
-        }
-
-    private : 
-        std::string name;
-        std::string breed;
-        int * p_age{nullptr};
-};
-Dog::Dog(std::string_view name_param, std::string_view breed_param, int  age_param){
-    name = name_param;
-    breed = breed_param;
-    p_age = new int;
-    *p_age = age_param;
-    std::cout << "Dog constructor called for " << name << " at " << this << std::endl;
-}
-
-Dog::~Dog(){
-    delete p_age;
-    std::cout << "Dog destructor called for " << name << " at " << this <<  std::endl;
-}
-
-int main(){
-
-    Dog dog1("Fluffy","Shepherd",2); //Constructor
-    dog1.print_info();
-
+    // === СЕТТЕРЫ С ЦЕПОЧЕЧНЫМИ ВЫЗОВАМИ ===
+    
+    // ВАРИАНТ 1: Цепочечные вызовы через указатели (закомментирован)
     /*
-    dog1.set_dog_name("Pumba");
-    dog1.set_dog_breed("Wire Fox Terrier");
-    dog1.set_dog_age(4);
+    Dog* setName(const std::string& newName) {
+        // name = newName;  // Это ничего не делает (конфликт имен)
+        this->name = newName;  // Используем this для доступа к полю объекта
+        return this;  // Возвращаем указатель на текущий объект
+    }
+    
+    Dog* setBreed(const std::string& newBreed) {
+        this->breed = newBreed;
+        return this;
+    }
+
+    Dog* setAge(int newAge) {
+        *(this->agePointer) = newAge;  // Разыменовываем указатель на возраст
+        return this;
+    }
     */
 
-    //Chained calls using pointers
-    //dog1.set_dog_name("Pumba")->set_dog_breed("Wire Fox Terrier")->set_dog_age(4);
+    // ВАРИАНТ 2: Цепочечные вызовы через ссылки (рекомендуемый подход)
+    
+    // Сеттер имени с возвратом ссылки на объект
+    Dog& setName(const std::string& newName) {
+        // name = newName;  // Это ничего не делает (конфликт имен)
+        this->name = newName;  // Используем this для доступа к полю объекта
+        return *this;  // Возвращаем ссылку на текущий объект
+    }
+    
+    // Сеттер породы с возвратом ссылки на объект
+    Dog& setBreed(const std::string& newBreed) {
+        this->breed = newBreed;
+        return *this;  // Возвращаем ссылку на текущий объект
+    }
 
-    //Chained calls using references
-    dog1.set_dog_name("Pumba").set_dog_breed("Wire Fox Terrier").set_dog_age(4);
+    // Сеттер возраста с возвратом ссылки на объект
+    Dog& setAge(int newAge) {
+        *(this->agePointer) = newAge;  // Разыменовываем указатель на возраст
+        return *this;  // Возвращаем ссылку на текущий объект
+    }
 
+private:
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    
+    std::string name;        // Имя собаки
+    std::string breed;       // Порода собаки
+    int* agePointer{nullptr}; // Указатель на возраст (динамическая память)
+};
 
-    dog1.print_info();
-   
+// === РЕАЛИЗАЦИЯ КОНСТРУКТОРА ===
 
-    std::cout << "Done!" << std::endl;
-   //Destructor
-    return 0;
+// Реализация параметризованного конструктора
+// Демонстрирует выделение памяти и инициализацию данных
+Dog::Dog(const std::string& dogName, const std::string& dogBreed, int dogAge) {
+    name = dogName;                    // Инициализируем имя
+    breed = dogBreed;                  // Инициализируем породу
+    agePointer = new int;              // ВЫДЕЛЯЕМ память для возраста
+    *agePointer = dogAge;              // Записываем значение возраста
+    std::cout << "Конструктор вызван для собаки " << name << " по адресу " << this << std::endl;
+}
+
+// === РЕАЛИЗАЦИЯ ДЕСТРУКТОРА ===
+
+// Реализация деструктора
+// Демонстрирует правильное освобождение ресурсов
+Dog::~Dog() {
+    delete agePointer;                 // ОСВОБОЖДАЕМ динамическую память
+    std::cout << "Деструктор вызван для собаки " << name << " по адресу " << this << std::endl;
+}
+
+int main() {
+    std::cout << "=== Демонстрация указателя this и цепочечных вызовов ===" << std::endl;
+    
+    // === СОЗДАНИЕ ОБЪЕКТА ===
+    
+    Dog myDog("Бобик", "Овчарка", 2);  // Создание объекта
+    std::cout << "Информация о собаке после создания:" << std::endl;
+    myDog.printInfo();
+
+    // === ОБЫЧНЫЕ ВЫЗОВЫ МЕТОДОВ ===
+    
+    // Традиционный способ (пошаговый):
+    /*
+    myDog.setName("Мухтар");
+    myDog.setBreed("Ротвейлер");
+    myDog.setAge(4);
+    */
+
+    // === ЦЕПОЧЕЧНЫЕ ВЫЗОВЫ ===
+    
+    // ВАРИАНТ 1: Через указатели (если бы использовали указатели)
+    // myDog.setName("Мухтар")->setBreed("Ротвейлер")->setAge(4);
+
+    // ВАРИАНТ 2: Через ссылки (рекомендуемый подход)
+    std::cout << "\nВыполняем цепочечный вызов методов..." << std::endl;
+    myDog.setName("Мухтар").setBreed("Ротвейлер").setAge(4);
+
+    // === РЕЗУЛЬТАТ ===
+    
+    std::cout << "Информация о собаке после изменения:" << std::endl;
+    myDog.printInfo();
+
+    std::cout << "\n=== Программа завершена ===" << std::endl;
+    
+    return 0;  // Деструктор вызовется автоматически
 }

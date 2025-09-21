@@ -2,38 +2,42 @@
 #include <iostream>
 #include <exception>
 
-void PrintCheck(int money)
-{
-    if (money < 0)
-        throw std::exception(); // непонятное исключение
-    std::cout << "Total:" << money << std::endl;
-};
+// Демонстрация проблемы: исключения, возникающие в catch-блоках
+// Показывает, что исключения в catch не перехватываются автоматически
 
-// Пример очень плохого стиля программирования
-int main(int argc, char **argv)
-{
-
-    int money = 0;
-    try
-    {
-
-        std::cin >> money;
-        if (money < 0)
-            throw std::exception(); // непонятное исключение
-        if (money == 0)
-            throw 0;
+void printReceipt(int amount) {
+    if (amount < 0) {
+        throw std::exception(); // Исключение при отрицательной сумме
     }
-    catch (std::exception ex)
-    {
-        std::cout << "Да у тебя кредит!?" << std::endl;
-        PrintCheck(money); // А вот тут исключение уже не ловится
-    }
-    catch (int)
-    {
-        std::cout << "Голытьба!" << std::endl;
+    std::cout << "Receipt total: " << amount << std::endl;
+}
+
+// Демонстрация проблемного кода - исключения в catch-блоках
+int main(int argc, char **argv) {
+    int userAmount = 0;
+    
+    try {
+        std::cout << "Enter amount: ";
+        std::cin >> userAmount;
+        
+        if (userAmount < 0) {
+            throw std::exception(); // Отрицательная сумма - ошибка
+        }
+        if (userAmount == 0) {
+            throw 0; // Нулевая сумма - особый случай
+        }
+        
+    } catch (std::exception& exceptionObject) {
+        // ПРОБЛЕМА: здесь может возникнуть новое исключение!
+        std::cout << "Error: Negative amount entered!" << std::endl;
+        printReceipt(userAmount); // Если userAmount < 0, здесь будет исключение
+        
+    } catch (int zeroAmount) {
+        std::cout << "Warning: Zero amount entered!" << std::endl;
     }
 
-    std::cout << "Thank you for your money:" << money << std::endl;
+    // Этот код выполнится, даже если в catch-блоке произошло исключение
+    std::cout << "Final amount processed: " << userAmount << std::endl;
 
     return 0;
 }

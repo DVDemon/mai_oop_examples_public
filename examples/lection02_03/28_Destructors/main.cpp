@@ -1,43 +1,73 @@
 #include <iostream>
-#include <string_view>
+#include <string>
 
-class Dog{
-    public : 
-        Dog() = default;
-        Dog(std::string_view name_param, std::string_view breed_param, int  age_param);
-        ~Dog();
+// Демонстрация деструкторов и управления динамической памятью
+// Показывает важность правильного освобождения ресурсов в деструкторе
 
-    private : 
-        std::string name;
-        std::string breed;
-        int * p_age{nullptr};
-};
-Dog::Dog(std::string_view name_param, std::string_view breed_param, int  age_param){
-    name = name_param;
-    breed = breed_param;
-    p_age = new int;
-    *p_age = age_param;
-    std::cout << "Dog constructor called for " << name << std::endl;
-}
-
-Dog::~Dog(){
-    delete p_age;
-    std::cout << "Dog destructor called for : " << name << std::endl;
-}
-
-void some_func(){
-    Dog* p_dog = new Dog("Fluffy","Shepherd",2);
-
-    delete p_dog;// Causes for the destructor of Dog to be called
-}
-
-
-
-int main(){ 
-
-    some_func();
+class Dog {
+public:
+    // === КОНСТРУКТОРЫ ===
     
+    // Конструктор по умолчанию (автоматически генерируется компилятором)
+    Dog() = default;
+    
+    // Параметризованный конструктор
+    // Выделяет память для возраста и инициализирует данные собаки
+    Dog(const std::string& dogName, const std::string& dogBreed, int dogAge);
+    
+    // === ДЕСТРУКТОР ===
+    
+    // Деструктор - вызывается автоматически при уничтожении объекта
+    // КРИТИЧЕСКИ ВАЖНО: освобождает динамически выделенную память
+    ~Dog();
 
-    std::cout << "Done!" << std::endl;
+private:
+    // === ДАННЫЕ-ЧЛЕНЫ ===
+    
+    std::string name;        // Имя собаки
+    std::string breed;       // Порода собаки
+    int* agePointer{nullptr}; // Указатель на возраст (динамическая память)
+};
+
+// === РЕАЛИЗАЦИЯ КОНСТРУКТОРА ===
+
+// Реализация параметризованного конструктора
+// Демонстрирует выделение памяти и инициализацию данных
+Dog::Dog(const std::string& dogName, const std::string& dogBreed, int dogAge) {
+    name = dogName;                    // Инициализируем имя
+    breed = dogBreed;                  // Инициализируем породу
+    agePointer = new int;              // ВЫДЕЛЯЕМ память для возраста
+    *agePointer = dogAge;              // Записываем значение возраста
+    std::cout << "Конструктор вызван для собаки: " << name << std::endl;
+}
+
+// === РЕАЛИЗАЦИЯ ДЕСТРУКТОРА ===
+
+// Реализация деструктора
+// Демонстрирует правильное освобождение ресурсов
+Dog::~Dog() {
+    delete agePointer;                 // ОСВОБОЖДАЕМ динамическую память
+    std::cout << "Деструктор вызван для собаки: " << name << std::endl;
+}
+
+// === ФУНКЦИЯ ДЕМОНСТРАЦИИ ===
+
+// Функция демонстрирует создание и уничтожение объекта
+void demonstrateDogLifecycle() {
+    // Создание объекта Dog в куче с динамическим выделением памяти
+    Dog* dogPointer = new Dog("Бобик", "Овчарка", 3);
+    
+    // ВНИМАНИЕ: Здесь должен быть delete для освобождения памяти!
+    // Без delete будет утечка памяти, но деструктор не вызовется
+    delete dogPointer;  // Вызывает деструктор Dog и освобождает память
+}
+
+int main() {
+    std::cout << "=== Демонстрация работы деструкторов ===" << std::endl;
+    
+    // Вызов функции, демонстрирующей жизненный цикл объекта
+    demonstrateDogLifecycle();
+    
+    std::cout << "=== Программа завершена ===" << std::endl;
     return 0;
 }
