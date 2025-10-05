@@ -4,18 +4,28 @@
 #include <string>
 #include <string_view>
 #include <iostream>
+
+// Базовый абстрактный класс Shape (Фигура) - демонстрирует полиморфизм
 class Shape
 {
 public:
+    // Конструктор по умолчанию
     Shape() = default;
+    
+    // Конструктор с параметрами
     Shape(std::string_view description);
+    
+    // ВАЖНО: виртуальный деструктор для корректного полиморфизма
     virtual ~Shape();
     
-     virtual void draw() const{
+    // ВИРТУАЛЬНАЯ функция - основа полиморфизма
+    // virtual означает, что эта функция может быть переопределена в производных классах
+    virtual void draw() const {
         std::cout << "Shape::draw() called. Drawing " << m_description << std::endl;
     }
     
-protected : 
+protected:
+    // PROTECTED поле - доступно для наследующих классов
     std::string m_description{""};
 };
 

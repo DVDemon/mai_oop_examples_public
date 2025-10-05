@@ -39,6 +39,7 @@ int main() {
     
     // Создание объекта с помощью конструктора по умолчанию
     Cylinder defaultCylinder;
+
     std::cout << "Объем цилиндра (конструктор по умолчанию): " 
               << defaultCylinder.calculateVolume() << std::endl;
 

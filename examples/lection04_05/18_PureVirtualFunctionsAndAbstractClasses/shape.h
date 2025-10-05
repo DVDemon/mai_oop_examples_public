@@ -2,20 +2,29 @@
 #define SHAPE_H
 
 #include <string>
+#include <string_view>
 
+// АБСТРАКТНЫЙ класс Shape - демонстрирует чистые виртуальные функции
+// ВАЖНО: абстрактный класс не может быть инстанцирован напрямую!
 class Shape
 {
 protected:
+    // PROTECTED конструкторы - предотвращают прямое создание объектов Shape
     Shape() = default;
     Shape(std::string_view description);
-public :    
+
+public:
+    // ВИРТУАЛЬНЫЙ деструктор - ОБЯЗАТЕЛЕН для полиморфных классов!
+    // ВАЖНО: если деструктор не public, нельзя удалять объекты через указатели на базовый класс
+    virtual ~Shape() = default;
     
-    virtual ~Shape() = default; // If destructor is not public, you won't be
-                            // able to delete base_ptrs. SHOW THIS TO STUDENTS
-    //Pure virtual functions
-    virtual double perimeter() const = 0;
-    virtual double surface() const = 0;
-private : 
+    // ЧИСТЫЕ ВИРТУАЛЬНЫЕ ФУНКЦИИ - делают класс абстрактным
+    // = 0 означает, что функция ДОЛЖНА быть переопределена в производных классах
+    virtual double perimeter() const = 0;  // Чистая виртуальная функция
+    virtual double surface() const = 0;    // Чистая виртуальная функция
+
+private:
+    // Приватное поле для описания фигуры
     std::string m_description;
 };
 

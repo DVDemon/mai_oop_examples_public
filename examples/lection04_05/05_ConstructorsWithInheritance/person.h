@@ -3,45 +3,59 @@
 
 #include <string>
 #include <string_view>
+
+// Базовый класс Person (Персона) - представляет человека с полным именем, возрастом и адресом
 class Person
 {
-    friend std::ostream& operator<<(std::ostream& , const Person& person);
+    friend std::ostream& operator<<(std::ostream&, const Person& person);
+
 public:
-    Person() ;
-    Person(std::string_view fullname,int age,
-    std::string_view address);
+    // Конструктор по умолчанию
+    Person();
+    
+    // Конструктор с параметрами
+    Person(std::string_view fullname, int age,
+           std::string_view address);
+    
+    // Деструктор
     ~Person();
     
-    //Getters
-    std::string get_full_name()const{
+    // Геттеры (const-методы для получения значений полей)
+    std::string get_full_name() const {
         return m_full_name;
     }
     
-    int get_age()const{
+    int get_age() const {
         return m_age;
     }
     
-    std::string get_address()const{
+    std::string get_address() const {
         return m_address;
     }
 
-
-    int add(int a, int b) const{
-        return a + b ;
+    // Перегруженные методы add
+    int add(int a, int b) const {
+        return a + b;
     }
 
-    int add(int a, int b, int  c) const{
+    int add(int a, int b, int c) const {
         return a + b + c;
     }
 
+    // Константный метод
     void do_something() const;
+
 public:
+    // PUBLIC поле - доступно везде
     std::string m_full_name{"None"};
-protected: 
+
+protected:
+    // PROTECTED поле - доступно в классе и его наследниках
     int m_age{0};
-private : 
+
+private:
+    // PRIVATE поле - доступно только в самом классе Person
     std::string m_address{"None"};
 };
-
 
 #endif // PERSON_H

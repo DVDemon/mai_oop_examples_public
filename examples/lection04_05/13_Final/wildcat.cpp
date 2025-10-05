@@ -1,10 +1,10 @@
 #include "wildcat.h"
 
-WildCat::WildCat()
-{
+// Конструктор по умолчанию
+WildCat::WildCat() {
 }
 
-WildCat::~WildCat()
-{
+// Деструктор
+WildCat::~WildCat() {
 }
 

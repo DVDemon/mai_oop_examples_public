@@ -4,34 +4,44 @@
 #include <string>
 #include <iostream>
 
+// Базовый класс Person (Персона) - представляет любого человека с именем и фамилией
 class Person
 {
 public:
+    // Конструктор по умолчанию
     Person();
+    
+    // Конструктор с параметрами для инициализации имени и фамилии
     Person(std::string& first_name_param, std::string& last_name_param);
+    
+    // Деструктор
     ~Person();
     
-    //Getters
-    std::string get_first_name() const{
+    // Геттеры (методы для получения значений приватных полей)
+    std::string get_first_name() const {
         return first_name;
     }
     
-    std::string get_last_name() const{
+    std::string get_last_name() const {
         return last_name;
     }
-	
-    //Setters
-    void set_first_name(std::string_view fn){
+    
+    // Сеттеры (методы для установки значений приватных полей)
+    void set_first_name(std::string_view fn) {
         first_name = fn;
     }
-    void set_last_name(std::string_view ln){
+    
+    void set_last_name(std::string_view ln) {
         last_name = ln;
     }
+    
+    // Метод для вывода информации о персоне
     std::ostream& print(std::ostream& out);
-private : 
-    std::string first_name{"Mysterious"};
-    std::string last_name{"Person"};
+    
+private:
+    // Приватные поля класса
+    std::string first_name{"Mysterious"};  // Имя по умолчанию
+    std::string last_name{"Person"};       // Фамилия по умолчанию
 };
-
 
 #endif // PERSON_H

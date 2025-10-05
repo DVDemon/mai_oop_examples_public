@@ -2,12 +2,10 @@
 #include "engineer.h"
 #include <iostream>
 
-Engineer::Engineer()
-{
+// Конструктор по умолчанию
+Engineer::Engineer() {
 }
 
-Engineer::~Engineer()
-{
+// Деструктор
+Engineer::~Engineer() {
 }
-
-

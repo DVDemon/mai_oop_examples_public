@@ -7,7 +7,7 @@ int main() {
     // ==========================================
     
     // Указатель на константную строку - содержимое нельзя изменить
-    const char* constant_string_pointer{"Hello World!"};
+    const char* constant_string_pointer = "Hello World!";
     
     std::cout << "=== Работа с указателем на константную строку ===" << std::endl;
     std::cout << "Строка через указатель: " << constant_string_pointer << std::endl;

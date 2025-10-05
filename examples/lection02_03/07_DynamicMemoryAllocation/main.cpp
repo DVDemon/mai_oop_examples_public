@@ -45,7 +45,7 @@ int main() {
     *dangerous_pointer = 55;  // ЗАПИСЬ В СЛУЧАЙНЫЙ АДРЕС - ОПАСНО!
     std::cout << "Адрес в указателе: " << dangerous_pointer << std::endl;
     std::cout << "Значение по случайному адресу: " << *dangerous_pointer << std::endl;
-    */
+    //*/
     
     std::cout << "Этот код может вызвать краш программы или повреждение данных!" << std::endl;
     std::cout << std::endl;
@@ -155,8 +155,8 @@ int main() {
     
     // ОПАСНОСТЬ: Второе освобождение - ОПАСНО!
     std::cout << "Следующий код ЗАКОММЕНТИРОВАН, так как он ОПАСЕН:" << std::endl;
-    // uninitialized_heap_pointer = nullptr;  // Без этого строка ниже вызовет краш
-    // delete uninitialized_heap_pointer;     // ДВОЙНОЕ ОСВОБОЖДЕНИЕ - КРАШ!
+    //uninitialized_heap_pointer = nullptr;  // Без этого строка ниже вызовет краш
+    //delete uninitialized_heap_pointer;     // ДВОЙНОЕ ОСВОБОЖДЕНИЕ - КРАШ!
     
     std::cout << "Двойное освобождение памяти может вызвать краш программы!" << std::endl;
     std::cout << "ВСЕГДА устанавливайте указатель в nullptr после delete!" << std::endl;

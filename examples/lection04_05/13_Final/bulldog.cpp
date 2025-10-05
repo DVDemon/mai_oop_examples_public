@@ -1,10 +1,10 @@
 #include "bulldog.h"
 
-BullDog::BullDog()
-{
+// Конструктор по умолчанию
+BullDog::BullDog() {
 }
 
-BullDog::~BullDog()
-{
+// Виртуальный деструктор
+BullDog::~BullDog() {
 }
 

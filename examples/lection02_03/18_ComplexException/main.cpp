@@ -19,7 +19,8 @@ void functionWithExceptions() {
         // Перехватываем пользовательское исключение типа int
         std::cout << "Caught integer exception in FunctionWithExceptions: " << errorCode << std::endl;
 
-    } catch (const std::exception& standardException) {
+    } 
+    catch (const std::exception& standardException) {
         // Перехватываем стандартные исключения (включая std::out_of_range)
         std::cout << "Caught standard exception: " << standardException.what() << std::endl;
         

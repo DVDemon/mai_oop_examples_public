@@ -2,20 +2,29 @@
 #define PARENT_H
 
 #include <iostream>
+
+// Базовый класс Parent (Родитель) - демонстрирует переиспользование символов в наследовании
 class Parent
 {
 public:
+    // Конструктор по умолчанию
     Parent() = default;
-    Parent(int member_var) : m_member_var(member_var){   
+    
+    // Конструктор с параметром
+    Parent(int member_var) : m_member_var(member_var) {
     }
+    
+    // Деструктор
     ~Parent() = default;
     
-    void print_var()const{
-        std::cout << "The value in parent is : " << m_member_var << std::endl;
+    // Метод для вывода значения поля m_member_var
+    void print_var() const {
+        std::cout << "The value in parent is: " << m_member_var << std::endl;
     }
-protected: 
-    int m_member_var{100};
-};
 
+protected:
+    // PROTECTED поле - будет "скрыто" полем с тем же именем в производном классе
+    int m_member_var{100};  // Значение по умолчанию: 100
+};
 
 #endif // PARENT_H

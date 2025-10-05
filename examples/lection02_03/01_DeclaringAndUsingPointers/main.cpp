@@ -60,7 +60,7 @@ int main() {
     // ==========================================
     
     int source_integer{43};
-    int* pointer_to_source{&source_integer};  // Оператор взятия адреса (&)
+    int* pointer_to_source = &source_integer;  // Оператор взятия адреса (&)
     
     std::cout << "=== Работа с адресами переменных ===" << std::endl;
     std::cout << "Значение переменной source_integer: " << source_integer << std::endl;

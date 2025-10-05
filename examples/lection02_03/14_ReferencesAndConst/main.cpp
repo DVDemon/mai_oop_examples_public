@@ -63,7 +63,7 @@ int main() {
     std::cout << "const_reference_to_value = " << const_reference_to_value << std::endl;
     std::cout << std::endl;
     
-    // Попытка изменить через const-ссылку
+    // Попытка изменить через const-
     std::cout << "Попытка изменить через const-ссылку:" << std::endl;
     std::cout << "// const_reference_to_value++;  // ОШИБКА КОМПИЛЯЦИИ!" << std::endl;
     std::cout << "const_reference_to_value = " << const_reference_to_value << std::endl;

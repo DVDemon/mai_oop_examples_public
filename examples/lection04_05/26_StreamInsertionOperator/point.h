@@ -2,39 +2,63 @@
 #define POINT_H
 #include <iostream>
 
-
+// Класс Point (Точка) - демонстрирует перегрузку оператора потокового вывода
 class Point
 {
-	friend std::ostream& operator<<(std::ostream& os, const Point& p);
+    // FRIEND ФУНКЦИЯ для перегрузки оператора <<
+    // ПЕРЕГРУЗКА ОПЕРАТОРА ПОТОКОВОГО ВЫВОДА как friend функции
+    // Синтаксис: friend std::ostream& operator<<(std::ostream& os, const ClassType& obj)
+    friend std::ostream& operator<<(std::ostream& os, const Point& p);
+
 public:
-	Point() = default;
-	Point(double x, double y) : 
-		m_x(x), m_y(y){
-	}
-	~Point() = default;
+    // Конструктор по умолчанию
+    Point() = default;
+    
+    // Конструктор с параметрами - использует список инициализации
+    Point(double x, double y)
+        : m_x(x), m_y(y) {
+    }
+    
+    // Деструктор
+    ~Point() = default;
 
-	void print_info(){
-		std::cout << "Point [ x : " << m_x << ", y : " << m_y << "]" << std::endl;
-	}
+    // Метод для вывода информации о точке (альтернатива оператору <<)
+    void print_info() {
+        std::cout << "Point [ x: " << m_x << ", y: " << m_y << "]" << std::endl;
+    }
 
-	/*
-	std::ostream& operator<< (std::ostream& os){
-		os << "Point [ x : " << m_x << ", y : " << m_y << "]";
-		return os;			
-	}
-	//*/
+    // ПРИМЕР ЗАКОММЕНТИРОВАННОГО КОДА - неправильный подход:
+    // Оператор << как метод класса (НЕ РЕКОМЕНДУЕТСЯ)
+    /*
+    std::ostream& operator<<(std::ostream& os) {
+        os << "Point [ x: " << m_x << ", y: " << m_y << "]";
+        return os;
+    }
+    // Проблемы этого подхода:
+    // 1. Неестественный синтаксис: point << cout (вместо cout << point)
+    // 2. Невозможность цепочки операторов
+    // 3. Несовместимость с идиомами C++
+    */
 
-private: 
-	double length() const;   // Function to calculate distance from the point(0,0)
+private:
+    // Приватный метод для вычисления расстояния от начала координат
+    double length() const;  // Функция для вычисления расстояния от точки (0,0)
 
-private : 
-	double m_x{}; 
-	double m_y{}; 
+private:
+    // Приватные поля для координат точки
+    double m_x{};  // Координата X
+    double m_y{};  // Координата Y
 };
 
-inline std::ostream& operator<<(std::ostream& os, const Point& p){
-	os << "Point [ x : " << p.m_x << ", y : " << p.m_y << "]";	
-	return os;
+// РЕАЛИЗАЦИЯ ПЕРЕГРУЖЕННОГО ОПЕРАТОРА ПОТОКОВОГО ВЫВОДА
+// ВАЖНО: это friend функция - имеет доступ к приватным членам класса
+// inline для оптимизации - функция определена в заголовочном файле
+inline std::ostream& operator<<(std::ostream& os, const Point& p) {
+    // FRIEND функция имеет прямой доступ к приватным полям p.m_x и p.m_y
+    os << "Point [ x: " << p.m_x << ", y: " << p.m_y << "]";
+    
+    // ВАЖНО: возвращаем ссылку на поток для возможности цепочки операторов
+    return os;
 }
 
 #endif // POINT_H

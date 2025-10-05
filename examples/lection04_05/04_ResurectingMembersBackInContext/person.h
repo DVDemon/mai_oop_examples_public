@@ -3,49 +3,55 @@
 
 #include <string>
 #include <string_view>
+
+// Базовый класс Person (Персона) - представляет человека с полным именем, возрастом и адресом
 class Person
 {
 public:
+    // Конструктор по умолчанию
     Person() = default;
+    
+    // Конструктор с параметрами
     Person(std::string_view fullname, int age,
            const std::string address);
+    
+    // Деструктор
     ~Person();
 
-    // Getters
-    std::string get_full_name() const
-    {
+    // Геттеры (const-методы для получения значений полей)
+    std::string get_full_name() const {
         return m_full_name;
     }
 
-    int get_age() const
-    {
+    int get_age() const {
         return m_age;
     }
 
-    std::string get_address() const
-    {
+    std::string get_address() const {
         return m_address;
     }
 
-    int add(int a, int b)
-    {
+    // Перегруженный метод add (неконстантная версия - может изменять объект)
+    int add(int a, int b) {
         m_address = "Not none";
         return a + b;
     }
 
-    int add(int a, int b, int c) const
-    {
+    // Перегруженный метод add (константная версия - не может изменять объект)
+    int add(int a, int b, int c) const {
         return a + b + c;
     }
 
+    // Константный метод
     void do_something() const;
 
 public:
+    // PUBLIC поле - доступно везде
     std::string m_full_name{"None"};
 
 protected:
+    // PROTECTED поля - доступны в классе и его наследниках
     int m_age{0};
-    // private :
     std::string m_address{"None"};
 };
 

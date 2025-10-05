@@ -1,11 +1,13 @@
 #include "circle.h"
 
-Circle::Circle(double radius , std::string_view description) 
-    : Oval(radius,radius,description)
+// Конструктор Circle с параметром радиуса
+// ВАЖНО: Circle наследуется от Oval, поэтому передаем radius как x_radius и y_radius
+Circle::Circle(double radius, std::string_view description)
+    : Oval(radius, radius, description)  // Круг = овал с равными радиусами
 {
 }
 
-Circle::~Circle()
-{
+// Деструктор
+Circle::~Circle() {
 }
 
