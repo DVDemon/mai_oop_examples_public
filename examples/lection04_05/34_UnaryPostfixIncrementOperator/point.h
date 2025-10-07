@@ -4,51 +4,51 @@
 
 class Number;
 
-
 class Point
 {
-	friend std::ostream& operator<<(std::ostream& os, const Point& p);
-	friend void operator++(Point& operand);
-	
+    // Дружественная функция вывода в поток
+    friend std::ostream& operator<<(std::ostream& os, const Point& point);
+    
 public:
-	Point() = default;
-	Point(double x, double y) : 
-		m_x(x), m_y(y){
-	}
-	/*
-	//Prefix
-	void operator++() {
-		++m_x;
-		++m_y;
-	}
+    // Конструктор по умолчанию
+    Point() = default;
+    
+    // Конструктор с параметрами для инициализации координат
+    Point(double x, double y) : m_x(x), m_y(y)
+    {
+    }
 
 
-	//Postfix
-	Point operator++(int){
-		Point local_point(*this);
-		++(*this);
-		return local_point;
-	}
-	*/
 
-	
+    // Постфиксный оператор (p++)
+    // ВАЖНО: Параметр int - это фиктивный параметр для различения
+    // префиксного и постфиксного операторов. Значение параметра не используется.
+    Point operator++(int) {
+        Point local_point(*this);  // Сохраняем текущее состояние
+        m_x++;
+		m_y++;                 // Инкрементируем объект (вызываем префиксный оператор)
+        return local_point;        // Возвращаем старое значение
+    }
+    
 
-	~Point() = default;
+    // Деструктор по умолчанию
+    ~Point() = default;
 
-private: 
-	double length() const;   // Function to calculate distance from the point(0,0)
+private:
+    // Метод для вычисления расстояния от начала координат (0,0) до точки
+    double length() const;
 
-private : 
-	double m_x{}; 
-	double m_y{}; 
+private:
+    double m_x{};  // Координата x точки
+    double m_y{};  // Координата y точки
 };
-Point operator++(Point& operand,int);
 
 
-inline std::ostream& operator<<(std::ostream& os, const Point& p){
-	os << "Point [ x : " << p.m_x << ", y : " << p.m_y << "]";	
-	return os;
+// Inline реализация оператора вывода в поток
+inline std::ostream& operator<<(std::ostream& os, const Point& point)
+{
+    os << "Point [ x : " << point.m_x << ", y : " << point.m_y << "]";
+    return os;
 }
-
 
 #endif // POINT_H

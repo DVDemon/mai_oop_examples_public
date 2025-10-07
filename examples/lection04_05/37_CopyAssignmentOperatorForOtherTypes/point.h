@@ -6,49 +6,66 @@ class Car; // Forward declaration
 
 class Point
 {
-	friend std::ostream& operator<<(std::ostream& os, const Point& p);
-	
+    // Дружественная функция вывода в поток
+    friend std::ostream& operator<<(std::ostream& os, const Point& point);
+
 public:
-	Point() = default;
-	Point(double x, double y, int data) : 
-		m_x(x), m_y(y),p_data(new int(data)){
-	}
-	Point(const Point& p); // Copy constructor
+    // Конструктор по умолчанию
+    Point() = default;
+    
+    // Конструктор с параметрами для инициализации координат и данных
+    Point(double x, double y, int data) : 
+        m_x(x), m_y(y), p_data(new int(data))
+    {
+    }
+    
+    // Конструктор копирования
+    Point(const Point& point);
 
-	Point& operator= (const Point& right_operand){
-		std::cout << "Copy assignment operator called" << std::endl;
-		if(this != & right_operand){
-			delete p_data;
-			p_data = new int(*(right_operand.p_data));
-			m_x =  right_operand.m_x;
-			m_y = right_operand.m_y;
-		}
-		return *this;
-	}
+    // Оператор присваивания копированием (Copy Assignment Operator)
+    // Стандартный оператор присваивания для объектов того же типа
+    Point& operator=(const Point& right_operand)
+    {
+        std::cout << "Copy assignment operator called" << std::endl;
+        if (this != &right_operand) {
+            delete p_data;
+            p_data = new int(*(right_operand.p_data));
+            m_x = right_operand.m_x;
+            m_y = right_operand.m_y;
+        }
+        return *this;
+    }
 
-	void operator= (const Car& c);
+    // Оператор присваивания для другого типа (Car)
+    // ВАЖНО: Это НЕ стандартный оператор присваивания
+    // Позволяет присваивать объект Car объекту Point
+    void operator=(const Car& car);
 
-	void set_data (int data) {
-		*p_data = data;
-	}
-	~Point() = default;
+    // Метод для изменения данных
+    void set_data(int data)
+    {
+        *p_data = data;
+    }
 
-private: 
-	double length() const;   // Function to calculate distance from the point(0,0)
+    // Деструктор по умолчанию
+    ~Point() = default;
 
-private : 
-	double m_x{}; 
-	double m_y{}; 
-	int * p_data;
+private:
+    // Метод для вычисления расстояния от начала координат (0,0) до точки
+    double length() const;
+
+private:
+    double m_x{};      // Координата x точки
+    double m_y{};      // Координата y точки
+    int* p_data;        // Указатель на данные в куче
 };
 
-
-
-inline std::ostream& operator<<(std::ostream& os, const Point& p){
-	os << "Point [ x : " << p.m_x << ", y : " << p.m_y 
-		<< " data : " << *(p.p_data) << "]";	
-	return os;
+// Inline реализация оператора вывода в поток
+inline std::ostream& operator<<(std::ostream& os, const Point& point)
+{
+    os << "Point [ x : " << point.m_x << ", y : " << point.m_y 
+       << " data : " << *(point.p_data) << "]";
+    return os;
 }
-
 
 #endif // POINT_H

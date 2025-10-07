@@ -1,34 +1,48 @@
 #include <cmath>
+#include <utility>
 #include "point.h"
 
-
-double Point::length() const{
-    return sqrt(pow(m_x - 0, 2) +  pow(m_y - 0, 2) * 1.0); 
+// Вычисление расстояния от начала координат (0, 0) до точки
+// Используется формула Евклидова расстояния: d = sqrt((x - 0)² + (y - 0)²)
+double Point::length() const
+{
+    return sqrt(pow(m_x - 0, 2) + pow(m_y - 0, 2) * 1.0);
 }
 
-
-void operator++(Point& operand){
-	++(operand.m_x);
-	++(operand.m_y);
+// Реализация префиксного оператора инкремента (++p)
+// Увеличивает координаты точки на 1
+Point& operator++(Point& operand)
+{
+    ++(operand.m_x);  // Увеличиваем координату x на 1
+    ++(operand.m_y); // Увеличиваем координату y на 1
+	return std::ref(operand); 
 }
 
-Point operator++(Point& operand,int){
-	Point local_point(operand);
-	++operand;
-	return local_point;
+// Реализация постфиксного оператора инкремента (p++)
+// ВАЖНО: Параметр int - это фиктивный параметр для различения
+// префиксного (без параметров) и постфиксного (с int параметром) операторов
+Point operator++(Point& operand, int)
+{
+    Point local_point(operand);  // Сохраняем копию текущего состояния
+    ++operand;                   // Инкрементируем объект (вызываем префиксный оператор)
+    return local_point;          // Возвращаем старое значение
 }
 
-void operator--(Point& operand){
-	--(operand.m_x);
-	--(operand.m_y);
+// Реализация префиксного оператора декремента (--p)
+// Уменьшает координаты точки на 1
+Point&  operator--(Point& operand)
+{
+    --(operand.m_x);  // Уменьшаем координату x на 1
+    --(operand.m_y);  // Уменьшаем координату y на 1
+	return std::ref(operand); 
 }
 
-Point operator--(Point& operand,int){
-	Point local_point(operand);
-	--operand;
-	return local_point;
+// Реализация постфиксного оператора декремента (p--)
+// ВАЖНО: Параметр int - это фиктивный параметр для различения
+// префиксного (без параметров) и постфиксного (с int параметром) операторов
+Point operator--(Point& operand, int)
+{
+    Point local_point(operand);  // Сохраняем копию текущего состояния
+    --operand;                   // Декрементируем объект (вызываем префиксный оператор)
+    return local_point;          // Возвращаем старое значение
 }
-
-
-
-

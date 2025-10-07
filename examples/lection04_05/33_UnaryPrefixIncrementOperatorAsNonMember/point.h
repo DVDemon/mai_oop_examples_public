@@ -4,46 +4,66 @@
 
 class Number;
 
-
 class Point
 {
-	friend std::ostream& operator<<(std::ostream& os, const Point& p);
-	friend void operator++(Point& operand);
-	
+    // Дружественная функция вывода в поток
+    friend std::ostream& operator<<(std::ostream& os, const Point& point);
+    
+    // Дружественная функция для префиксного оператора инкремента
+    // ВАЖНО: Объявление как friend позволяет функции-оператору
+    // обращаться к приватным членам класса
+    friend void operator++(Point& operand);
+
 public:
-	Point() = default;
-	Point(double x, double y) : 
-		m_x(x), m_y(y){
-	}
+    // Конструктор по умолчанию
+    Point() = default;
+    
+    // Конструктор с параметрами для инициализации координат
+    Point(double x, double y) : m_x(x), m_y(y)
+    {
+    }
 
-	/*
-	void operator++() {
-		++m_x;
-		++m_y;
-	}
-	*/
+    /*
+    АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ - оператор как метод класса:
+    
+    void operator++() {
+        ++m_x;
+        ++m_y;
+    }
+    
+    В данном примере используется friend-функция для демонстрации
+    различий между методами класса и внешними функциями-операторами
+    */
 
-	~Point() = default;
+    // Деструктор по умолчанию
+    ~Point() = default;
 
-private: 
-	double length() const;   // Function to calculate distance from the point(0,0)
+private:
+    // Метод для вычисления расстояния от начала координат (0,0) до точки
+    double length() const;
 
-private : 
-	double m_x{}; 
-	double m_y{}; 
+private:
+    double m_x{};  // Координата x точки
+    double m_y{};  // Координата y точки
 };
 
 /*
-inline void operator++(Point& operand){
-	++(operand.m_x);
-	++(operand.m_y);
+АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ - inline friend-функция в заголовке:
+
+inline void operator++(Point& operand) {
+    ++(operand.m_x);
+    ++(operand.m_y);
 }
+
+В данном примере реализация вынесена в .cpp файл для демонстрации
+различных подходов к организации кода
 */
 
-inline std::ostream& operator<<(std::ostream& os, const Point& p){
-	os << "Point [ x : " << p.m_x << ", y : " << p.m_y << "]";	
-	return os;
+// Inline реализация оператора вывода в поток
+inline std::ostream& operator<<(std::ostream& os, const Point& point)
+{
+    os << "Point [ x : " << point.m_x << ", y : " << point.m_y << "]";
+    return os;
 }
-
 
 #endif // POINT_H
