@@ -2,73 +2,122 @@
 #include <concepts>
 #include "boxcontainer.h"
 
+// ============================================================================
+// ДЕМОНСТРАЦИЯ ВСТРОЕННЫХ КОНЦЕПЦИЙ C++20
+// ============================================================================
+
+// ============================================================================
+// КЛАСС ТОЧКИ С ОГРАНИЧЕНИЯМИ НА ТИП
+// ============================================================================
+
+// Класс точки с ограничением на арифметические типы
 template <typename T>
 requires std::is_arithmetic_v<T>
 class Point{
 public : 
+	// Конструктор по умолчанию
 	Point() = default;
-	Point(T x, T y)  
-	: m_x(x), m_y(y)
+	
+	// Конструктор с параметрами
+	Point(T x_coordinate, T y_coordinate)  
+	: m_x(x_coordinate), m_y(y_coordinate)
 	{
 	}
-	friend std::ostream& operator<< ( std::ostream& out, const Point<T> operand){
-		out << "Point [ x : " << operand.m_x
-			<< ", y : " << operand.m_y << "]";
-		return out;
+	
+	// Оператор вывода
+	friend std::ostream& operator<< ( std::ostream& output_stream, const Point<T> point){
+		output_stream << "Point [ x : " << point.m_x
+			<< ", y : " << point.m_y << "]";
+		return output_stream;
 	}
+	
+	// Оператор трехстороннего сравнения (C++20)
 	std::weak_ordering operator<=>(const Point& other) const = default;
+	
 private : 
-	T m_x;
-	T m_y;
+	T m_x;  // Координата X
+	T m_y;  // Координата Y
 };
 
-struct  Dog
+// ============================================================================
+// ТЕСТОВЫЕ СТРУКТУРЫ ДЛЯ ДЕМОНСТРАЦИИ КОНЦЕПЦИЙ
+// ============================================================================
+
+// Структура с удаленным деструктором (не может быть разрушена)
+struct Dog
 {
 	~Dog() = delete;
 };
 
-struct  Cat
+// Обычная структура
+struct Cat
 {
 };
 
-
-
+// ============================================================================
+// ОСНОВНАЯ ФУНКЦИЯ - ДЕМОНСТРАЦИЯ ВСТРОЕННЫХ КОНЦЕПЦИЙ
+// ============================================================================
 
 int main(){
-
-	BoxContainer<Point<int>> box;
-	//Numbers
-	//std::floating_point<T>
-	// static_assert(std::floating_point<int>);//Fails
-	// static_assert(std::floating_point<double>);
-
-	//equality and order
-	//https://en.cppreference.com/w/cpp/concepts/equality_comparable
-	//static_assert(std::equality_comparable<int>); // == , !=
-	//static_assert(std::equality_comparable_with<double,std::string>);
-
-	//static_assert(std::totally_ordered<int>);
-	//static_assert(std::totally_ordered<Point<int>>); // Needs all comparison operators
-
-
-
-	//Others
-	//std::same_as
-	// static_assert(std::same_as<int,int>); // Success
-	// static_assert(std::same_as<int,double>);// Fail
-	// static_assert(std::same_as<Dog,Cat>); //Fail
-	// static_assert(std::same_as<BoxContainer<int>, BoxContainer<int>>); // Success
-	// static_assert(std::same_as<BoxContainer<int>, BoxContainer<double>>); // Fail
-	// static_assert(std::same_as<Point<int>,Point<int>>); // Success
-	// static_assert(std::same_as<Point<int>,Point<float>>); // Fail
-	
-
-	//std::destructible
-	//static_assert(std::destructible<Dog>);
-	//std::derived_from : See official example  : https://en.cppreference.com/w/cpp/concepts/derived_from
-
-	//std::copyable : needs a copy constructor
-	//And much more
+    std::cout << "=== ДЕМОНСТРАЦИЯ ВСТРОЕННЫХ КОНЦЕПЦИЙ C++20 ===" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 1: ИСПОЛЬЗОВАНИЕ КОНТЕЙНЕРА С КОНЦЕПЦИЯМИ
+    // ========================================================================
+    std::cout << "1. Использование BoxContainer с концепциями:" << std::endl;
+    BoxContainer<Point<int>> point_container;
+    
+    // Добавление точек в контейнер
+    point_container.add(Point<int>(1, 2));
+    point_container.add(Point<int>(3, 4));
+    point_container.add(Point<int>(5, 6));
+    
+    std::cout << "   Контейнер точек: " << point_container << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 2: ОБЪЯСНЕНИЕ РАЗЛИЧНЫХ КОНЦЕПЦИЙ
+    // ========================================================================
+    std::cout << "2. Различные встроенные концепции C++20:" << std::endl;
+    
+    // Числовые концепции
+    std::cout << "   Числовые концепции:" << std::endl;
+    std::cout << "   - std::is_arithmetic_v<T> - арифметические типы" << std::endl;
+    std::cout << "   - std::floating_point<T> - типы с плавающей точкой" << std::endl;
+    std::cout << "   - std::integral<T> - целочисленные типы" << std::endl;
+    
+    // Концепции равенства и порядка
+    std::cout << "   Концепции равенства и порядка:" << std::endl;
+    std::cout << "   - std::equality_comparable<T> - поддерживает == и !=" << std::endl;
+    std::cout << "   - std::totally_ordered<T> - поддерживает все операторы сравнения" << std::endl;
+    
+    // Другие концепции
+    std::cout << "   Другие концепции:" << std::endl;
+    std::cout << "   - std::same_as<T, U> - типы одинаковы" << std::endl;
+    std::cout << "   - std::destructible<T> - тип может быть разрушен" << std::endl;
+    std::cout << "   - std::copyable<T> - тип может быть скопирован" << std::endl;
+    std::cout << "   - std::default_constructible<T> - тип может быть создан по умолчанию" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 3: ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ (ЗАКОММЕНТИРОВАНЫ)
+    // ========================================================================
+    std::cout << "3. Примеры использования концепций (закомментированы):" << std::endl;
+    std::cout << "   // static_assert(std::floating_point<int>);     // Ошибка компиляции" << std::endl;
+    std::cout << "   // static_assert(std::floating_point<double>);  // Успех" << std::endl;
+    std::cout << "   // static_assert(std::equality_comparable<int>); // Успех" << std::endl;
+    std::cout << "   // static_assert(std::same_as<int, int>);       // Успех" << std::endl;
+    std::cout << "   // static_assert(std::same_as<int, double>);    // Ошибка компиляции" << std::endl;
+    std::cout << "   // static_assert(std::destructible<Dog>);       // Ошибка компиляции" << std::endl;
+    std::cout << "   // static_assert(std::destructible<Cat>);       // Успех" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 4: ПРАКТИЧЕСКОЕ ПРИМЕНЕНИЕ
+    // ========================================================================
+    std::cout << "4. Практическое применение концепций:" << std::endl;
+    std::cout << "   - Ограничение типов в шаблонах" << std::endl;
+    std::cout << "   - Улучшение сообщений об ошибках" << std::endl;
+    std::cout << "   - Более читаемый код" << std::endl;
+    std::cout << "   - Замена SFINAE и std::enable_if" << std::endl;
+    std::cout << "   - Современный подход к метапрограммированию" << std::endl;
 
     return 0;
 }

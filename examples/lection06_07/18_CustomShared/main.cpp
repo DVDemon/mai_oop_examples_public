@@ -1,48 +1,141 @@
 #include <iostream>
 
+// ============================================================================
+// ДЕМОНСТРАЦИЯ СОЗДАНИЯ ПОЛЬЗОВАТЕЛЬСКОГО SHARED_PTR
+// ============================================================================
+
+// ============================================================================
+// ПРОСТАЯ РЕАЛИЗАЦИЯ SHARED_PTR (АНАЛОГ STD::SHARED_PTR)
+// ============================================================================
+
+// Пользовательский умный указатель с разделяемым владением
 template<class T>
 struct smart_ptr {
-    smart_ptr(T* ptr) 
-        : m_counter{new std::size_t{1}},
-          m_ptr{ptr} {
+    // ========================================================================
+    // КОНСТРУКТОРЫ
+    // ========================================================================
+    
+    // Конструктор с сырым указателем - создает новый счетчик ссылок
+    smart_ptr(T* raw_pointer) 
+        : m_counter{new std::size_t{1}},  // Создание нового счетчика
+          m_ptr{raw_pointer} {           // Сохранение указателя
     }
+    
+    // Копирующий конструктор - увеличивает счетчик ссылок
     smart_ptr(const smart_ptr& other) 
-        : m_counter{ other.m_counter },
-          m_ptr{ other.m_ptr } {
-        ++(*m_counter); 
-        std::cout << *m_counter << std::endl;
+        : m_counter{other.m_counter},    // Разделение счетчика
+          m_ptr{other.m_ptr} {           // Разделение указателя
+        ++(*m_counter);                  // Увеличение счетчика
+        std::cout << "Reference count increased to: " << *m_counter << std::endl;
     }
+    
+    // ========================================================================
+    // ДЕСТРУКТОР
+    // ========================================================================
+    
+    // Деструктор - уменьшает счетчик и освобождает ресурсы при необходимости
     ~smart_ptr() {
-        std::cout << "dtor:" << *m_counter << std::endl;
-        if (--(*m_counter) == 0) {
-            delete(m_ptr);
-            delete(m_counter);
-        }
+        std::cout << "Destructor called, reference count: " << *m_counter << std::endl;
         
+        // Уменьшение счетчика ссылок
+        if (--(*m_counter) == 0) {
+            // Последний владелец - освобождение ресурсов
+            delete m_ptr;        // Освобождение объекта
+            delete m_counter;    // Освобождение счетчика
+        }
     }
+    
+    // ========================================================================
+    // МЕТОДЫ ДОСТУПА
+    // ========================================================================
+    
+    // Получение сырого указателя
+    T* get() const {
+        return m_ptr;
+    }
+    
+    // Получение счетчика ссылок
+    std::size_t use_count() const {
+        return *m_counter;
+    }
+    
+    // Проверка валидности
+    bool is_valid() const {
+        return m_ptr != nullptr;
+    }
+    
 private:
-    T* m_ptr;
-    std::size_t* m_counter;
+    // ========================================================================
+    // ЧЛЕНЫ ДАННЫХ
+    // ========================================================================
+    
+    T* m_ptr;                    // Сырой указатель на управляемый объект
+    std::size_t* m_counter;      // Счетчик ссылок (разделяется между копиями)
 };
 
+// ============================================================================
+// ТЕСТОВЫЙ КЛАСС ДЛЯ ДЕМОНСТРАЦИИ
+// ============================================================================
+
+// Простой класс для демонстрации работы пользовательского shared_ptr
 struct SomeStruct {
     SomeStruct() {
-        std::cout << "ctor" << std::endl;
+        std::cout << "SomeStruct constructor called" << std::endl;
     }
     ~SomeStruct() {
-        std::cout << "dtor" << std::endl;
+        std::cout << "SomeStruct destructor called" << std::endl;
     }
 };
 
-int main() {
-    {
-        smart_ptr<SomeStruct> ptr1{new SomeStruct}; // *ptr1.m_counter == 1
-        {
-            auto ptr2 = ptr1; // *ptr2.m_counter == 2 , *ptr1.m_counter == 2 
-            auto ptr3 = ptr2; // *ptr3.m_counter == 3 , *ptr2.m_counter == 3 , *ptr1.m_counter == 3
-        }
-    }
-    std::cout << "after scope" << std::endl << std::endl;
+// ============================================================================
+// ОСНОВНАЯ ФУНКЦИЯ - ДЕМОНСТРАЦИЯ ПОЛЬЗОВАТЕЛЬСКОГО SHARED_PTR
+// ============================================================================
 
+int main() {
+    std::cout << "=== ДЕМОНСТРАЦИЯ ПОЛЬЗОВАТЕЛЬСКОГО SHARED_PTR ===" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ: РАЗДЕЛЯЕМОЕ ВЛАДЕНИЕ И СЧЕТЧИК ССЫЛОК
+    // ========================================================================
+    std::cout << "Демонстрация разделяемого владения:" << std::endl;
+    std::cout << "start" << std::endl;
+    
+    {
+        // Создание первого shared_ptr - счетчик = 1
+        smart_ptr<SomeStruct> shared_pointer_1{new SomeStruct};
+        std::cout << "   shared_pointer_1 created, reference count: " << shared_pointer_1.use_count() << std::endl;
+        
+        {
+            // Копирование shared_ptr - счетчик = 2
+            auto shared_pointer_2 = shared_pointer_1;
+            std::cout << "   shared_pointer_2 created, reference count: " << shared_pointer_2.use_count() << std::endl;
+            
+            // Копирование shared_ptr - счетчик = 3
+            auto shared_pointer_3 = shared_pointer_2;
+            std::cout << "   shared_pointer_3 created, reference count: " << shared_pointer_3.use_count() << std::endl;
+            
+            // Проверка, что все указатели разделяют один объект
+            std::cout << "   All pointers point to the same object: " 
+                      << (shared_pointer_1.get() == shared_pointer_2.get() && 
+                          shared_pointer_2.get() == shared_pointer_3.get()) << std::endl;
+        }
+        // shared_pointer_3 уничтожен - счетчик = 2
+        std::cout << "   shared_pointer_3 destroyed, reference count: " << shared_pointer_1.use_count() << std::endl;
+    }
+    // shared_pointer_2 и shared_pointer_1 уничтожены - счетчик = 0, объект освобожден
+    std::cout << "   All shared_ptrs destroyed, object should be deallocated" << std::endl;
+    std::cout << "end" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ: ПРИНЦИПЫ РАБОТЫ ПОЛЬЗОВАТЕЛЬСКОГО SHARED_PTR
+    // ========================================================================
+    std::cout << "Принципы работы пользовательского shared_ptr:" << std::endl;
+    std::cout << "   - Разделяемое владение ресурсом" << std::endl;
+    std::cout << "   - Счетчик ссылок (reference counting)" << std::endl;
+    std::cout << "   - Автоматическое освобождение при последнем владельце" << std::endl;
+    std::cout << "   - Копирование увеличивает счетчик" << std::endl;
+    std::cout << "   - Уничтожение уменьшает счетчик" << std::endl;
+    std::cout << "   - Объект освобождается только при счетчике = 0" << std::endl;
+    
     return 0;
 }

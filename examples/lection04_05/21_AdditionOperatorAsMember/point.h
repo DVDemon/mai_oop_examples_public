@@ -25,8 +25,8 @@ public:
     // ПРИМЕР ЗАКОММЕНТИРОВАННОГО КОДА - inline реализация:
     /*
     Point operator+(const Point& right_operand) {
-        return Point(this->m_x + right_operand.m_x,
-                     this->m_y + right_operand.m_y);
+        return Point(m_x + right_operand.m_x,
+                     m_y + right_operand.m_y);
     }
     */
 

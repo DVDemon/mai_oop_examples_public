@@ -1,61 +1,93 @@
 #include <iostream>
 
-// class template:
+// Базовый шаблон класса (Primary Template)
+// ВАЖНО: Это общая реализация для всех типов T
+template <class T>
+class MyContainer
+{
+    T element;  // Элемент типа T
 
-template <class T> class MyContainer {
-    T element;
 public:
-
-    MyContainer(T arg) {
-        element = arg;
+    // Конструктор, принимающий значение типа T
+    MyContainer(T argument) : element(argument)
+    {
     }
 
-    T increase() {
+    // Метод увеличения значения (работает для числовых типов)
+    T increase()
+    {
         return ++element;
     }
 
-    T decrease() {
+    // Метод уменьшения значения (работает для числовых типов)
+    T decrease()
+    {
         return --element;
     }
 };
 
-// class template specialization:
-//*
-template <> class MyContainer <char> {
-    char element;
+// Специализация шаблона для типа char (Template Specialization)
+// ВАЖНО: Это специальная реализация только для типа char
+// template <> означает полную специализацию шаблона
+template <>
+class MyContainer<char>
+{
+    char element;  // Элемент типа char
+
 public:
-
-    MyContainer(char arg) {
-        element = arg;
+    // Конструктор для char
+    MyContainer(char argument) : element(argument)
+    {
     }
 
-    char uppercase() {
-        if ((element >= 'a') && (element <= 'z'))
-            element += 'A' - 'a';
+    // Специальный метод для char - преобразование в верхний регистр
+    char uppercase()
+    {
+        if ((element >= 'a') && (element <= 'z')) {
+            element += 'A' - 'a';  // Преобразование в верхний регистр
+        }
         return element;
     }
 
-    char increase() {
-        if ((element >= 'a') && (element <= 'z'))
-        element += 'A' - 'a';
+    // Переопределение метода increase для char
+    // ВАЖНО: Для char "увеличение" означает преобразование в верхний регистр
+    char increase()
+    {
+        if ((element >= 'a') && (element <= 'z')) {
+            element += 'A' - 'a';  // Преобразование в верхний регистр
+        }
         return element;
     }
 
-    char decrease() {
-        if ((element >= 'A') && (element <= 'Z'))
-        element -= 'A' - 'a';
+    // Переопределение метода decrease для char
+    // ВАЖНО: Для char "уменьшение" означает преобразование в нижний регистр
+    char decrease()
+    {
+        if ((element >= 'A') && (element <= 'Z')) {
+            element -= 'A' - 'a';  // Преобразование в нижний регистр
+        }
         return element;
     }
-};//*/
+};
 
-int main(int argc, char** argv) {
-    MyContainer<int> myint(7);
-    MyContainer<char> mychar('j');
-    std::cout << myint.increase() << std::endl;
-    std::cout << mychar.uppercase() << std::endl;
-    std::cout << mychar.increase() << std::endl;
-    std::cout << mychar.decrease() << std::endl;
+int main(int argc, char** argv)
+{
+    // Демонстрация базового шаблона для типа int
+    MyContainer<int> int_container(7);
+    std::cout << "int increase(): " << int_container.increase() << std::endl;
+
+    // Демонстрация специализации шаблона для типа char
+    MyContainer<char> char_container('j');
     
+    // Использование специального метода uppercase (только для char)
+    std::cout << "char uppercase(): " << char_container.uppercase() << std::endl;
+    
+    // Использование переопределенного метода increase (для char = uppercase)
+    std::cout << "char increase(): " << char_container.increase() << std::endl;
+    
+    // Использование переопределенного метода decrease (для char = lowercase)
+    std::cout << "char decrease(): " << char_container.decrease() << std::endl;
+
     return 0;
 }
 

@@ -25,7 +25,7 @@ int main() {
     
     // ДЕМОНСТРАЦИЯ 2: Вывод нескольких точек в одной строке
     std::cout << "Outputting both points:" << std::endl;
-    std::cout << "Point 1: " << first_point << ", Point 2: " << second_point << std::endl;
+    ((std::cout << "Point 1: ") << first_point) << ", Point 2: " << second_point << std::endl;
     
     // ДЕМОНСТРАЦИЯ 3: Цепочка операторов << (chaining)
     // ВАЖНО: оператор возвращает ссылку на поток, что позволяет цепочку

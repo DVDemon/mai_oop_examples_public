@@ -20,5 +20,6 @@ Engineer::Engineer(std::string_view fullname, int age,
 
 // Деструктор
 Engineer::~Engineer() {
+     std::cout << "Engineer has died" << std::endl;
 }
 

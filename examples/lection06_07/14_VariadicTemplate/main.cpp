@@ -1,42 +1,123 @@
 #include <iostream>
 #include <typeinfo>
 
-/**
- * Шаблон для печати
- */
-template <class T> void print(const T& t) {
-    std::cout << t << std::endl;
+// ============================================================================
+// ДЕМОНСТРАЦИЯ VARIADIC TEMPLATES (ВАРИАТИВНЫЕ ШАБЛОНЫ) C++11
+// ============================================================================
+
+// ============================================================================
+// ВАРИАТИВНЫЙ ШАБЛОН ДЛЯ ПЕЧАТИ
+// ============================================================================
+
+// Базовый случай рекурсии - печать одного элемента
+template <class T> 
+void print(const T& single_element) {
+    std::cout << single_element << std::endl;
 }
 
+// Рекурсивный случай - печать первого элемента и остальных
+// First - первый элемент, Rest... - пакет параметров (остальные элементы)
 template <class First, class... Rest> 
-   void print(const First& first, const Rest&... rest) {
-    std::cout << first << ", ";
-    print(rest...); // хвостовая рекурсия на стадии компиляции!
+void print(const First& first_element, const Rest&... remaining_elements) {
+    std::cout << first_element << ", ";
+    print(remaining_elements...); // Рекурсивный вызов с распаковкой пакета
 }
 
-/**
- * Шаблон для сложения
- */
-template <class T> T add(const T t) {
-    return t;
+// ============================================================================
+// ВАРИАТИВНЫЙ ШАБЛОН ДЛЯ СЛОЖЕНИЯ
+// ============================================================================
+
+// Базовый случай рекурсии - сложение одного элемента
+template <class T> 
+T add(const T single_value) {
+    return single_value;
 }
 
+// Рекурсивный случай - сложение первого элемента с суммой остальных
+// First - первый элемент, T... - пакет параметров (остальные элементы)
 template <class First, class... T> 
-First add(const First first, const T... v) {
-    return first + (First) add(v...); // хвостовая рекурсия на стадии компиляции!
+First add(const First first_value, const T... remaining_values) {
+    return first_value + static_cast<First>(add(remaining_values...)); // Рекурсивный вызов с приведением типа
 }
+
+// ============================================================================
+// ДОПОЛНИТЕЛЬНЫЕ ВАРИАТИВНЫЕ ШАБЛОНЫ ДЛЯ ДЕМОНСТРАЦИИ
+// ============================================================================
+
+// Вариативный шаблон для подсчета количества аргументов
+template <class... Args>
+constexpr size_t count_arguments() {
+    return sizeof...(Args);
+}
+
+// Вариативный шаблон для создания кортежа
+template <class... Args>
+auto make_tuple_like(Args... arguments) {
+    return std::make_tuple(arguments...);
+}
+
+// ============================================================================
+// ОСНОВНАЯ ФУНКЦИЯ - ДЕМОНСТРАЦИЯ VARIADIC TEMPLATES
+// ============================================================================
 
 int main(int argc, char** argv) {
-    //double value = add<double,double,int>(1.1, 2.0, 21);
-    auto value = add(1.1, 2.0, 21);
-    std::cout << typeid(value).name() <<  " " << value << std::endl;
-
-   
-    print(10, 20);
-    print(100, 200, 300);
-    print<int, double, int>(1, 2.0, 3);
-    print("first", 2, "third", 3.14159);
+    std::cout << "=== ДЕМОНСТРАЦИЯ VARIADIC TEMPLATES C++11 ===" << std::endl << std::endl;
     
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 1: ВАРИАТИВНОЕ СЛОЖЕНИЕ
+    // ========================================================================
+    std::cout << "1. Вариативное сложение:" << std::endl;
+    auto sum_result = add(1.1, 2.0, 21);
+    std::cout << "   add(1.1, 2.0, 21) = " << sum_result << std::endl;
+    std::cout << "   Тип результата: " << typeid(sum_result).name() << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 2: ВАРИАТИВНАЯ ПЕЧАТЬ
+    // ========================================================================
+    std::cout << "2. Вариативная печать:" << std::endl;
+    std::cout << "   print(10, 20): ";
+    print(10, 20);
+    
+    std::cout << "   print(100, 200, 300): ";
+    print(100, 200, 300);
+    
+    std::cout << "   print<int, double, int>(1, 2.0, 3): ";
+    print<int, double, int>(1, 2.0, 3);
+    
+    std::cout << "   print(\"first\", 2, \"third\", 3.14159): ";
+    print("first", 2, "third", 3.14159);
+    std::cout << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 3: ПОДСЧЕТ АРГУМЕНТОВ
+    // ========================================================================
+    std::cout << "3. Подсчет аргументов:" << std::endl;
+    std::cout << "   count_arguments<int, double, char>() = " << count_arguments<int, double, char>() << std::endl;
+    std::cout << "   count_arguments<int, int, int, int>() = " << count_arguments<int, int, int, int>() << std::endl << std::endl;
+    
+
+    auto tuple = make_tuple_like(10,"AAAA",2.3);
+
+    std::cout << std::get<1>(tuple) << std::endl;
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 4: ОБЪЯСНЕНИЕ ПРИНЦИПА РАБОТЫ
+    // ========================================================================
+    std::cout << "4. Принцип работы variadic templates:" << std::endl;
+    std::cout << "   - class... Rest - пакет параметров (parameter pack)" << std::endl;
+    std::cout << "   - Rest... - распаковка пакета (pack expansion)" << std::endl;
+    std::cout << "   - Рекурсивная обработка - один элемент + остальные" << std::endl;
+    std::cout << "   - Базовый случай - остановка рекурсии" << std::endl;
+    std::cout << "   - sizeof...(Args) - количество аргументов в пакете" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 5: ПРЕИМУЩЕСТВА VARIADIC TEMPLATES
+    // ========================================================================
+    std::cout << "5. Преимущества variadic templates:" << std::endl;
+    std::cout << "   - Переменное количество аргументов" << std::endl;
+    std::cout << "   - Типобезопасность на этапе компиляции" << std::endl;
+    std::cout << "   - Эффективность - нет накладных расходов" << std::endl;
+    std::cout << "   - Гибкость - работа с любыми типами" << std::endl;
+    std::cout << "   - Использование в стандартной библиотеке (std::tuple, std::function)" << std::endl;
     
     return 0;
 }

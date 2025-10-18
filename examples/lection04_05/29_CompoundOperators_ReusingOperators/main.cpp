@@ -57,7 +57,8 @@ int main() {
     Point chain_point(100, 100);
     std::cout << "Исходная chain_point: " << chain_point << std::endl; // Point(100, 100)
     
-    chain_point += (Point(10, 20) -= Point(5, 5));  // Цепочка составных операторов
+    chain_point += (Point(10, 20) 
+                -= Point(5, 5));  // Цепочка составных операторов
     std::cout << "После цепочки: " << chain_point << std::endl; // Point(105, 115)
     
     // ДЕМОНСТРАЦИЯ 4: Сравнение арифметических и составных операторов

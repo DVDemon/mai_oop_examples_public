@@ -23,5 +23,6 @@ void Person::do_something() const {
 // Деструктор
 // ВАЖНО: деструкторы вызываются в обратном порядке (от производного к базовому)
 Person::~Person() {
+     std::cout << "Person has died" << std::endl;
 }
 

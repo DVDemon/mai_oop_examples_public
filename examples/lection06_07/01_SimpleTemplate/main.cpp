@@ -1,47 +1,75 @@
 #include <iostream>
 #include <string>
 
-// шаблон класса с параметром - типом
-template <class T>  struct Container{
-	 T payload;
-     Container(const T& value) : payload(value){};
+// Шаблон класса с параметром-типом
+// ВАЖНО: template <class T> - это устаревший синтаксис, современный: template <typename T>
+// Но оба варианта эквивалентны и работают одинаково
+template <class T>
+struct Container
+{
+    T payload;  // Поле типа T для хранения данных
+    
+    // Конструктор, принимающий значение типа T
+    Container(const T& value) : payload(value) {}
 };
 
-// шаблон функции с параметром типом
-template <class T> T print(T value){
-    std::cout << "Value:" << value << " size:" << sizeof(T) << std::endl;
+// Шаблон функции с параметром-типом
+// ВАЖНО: Компилятор может автоматически вывести тип T из аргумента
+template <class T>
+T print(T value)
+{
+    std::cout << "Value: " << value << " size: " << sizeof(T) << std::endl;
     return value;
 }
 
-// шаблон класса с параметром - константой
-template<int V> struct foo{
-    static const int value = V;
+// Шаблон класса с параметром-константой (non-type template parameter)
+// ВАЖНО: Параметр V должен быть константой времени компиляции
+template <int V>
+struct foo
+{
+    static const int value = V;  // Статическая константа
 };
 
-int main(int argc, char** argv) {
-    // компилятор сам догадается какой параметр шаблона мы хотели подставить
-    // print<int>(10); 
-    // print(10); 
+int main(int argc, char** argv)
+{
+    // Демонстрация шаблонов функций
+    
+    // Явное указание типа шаблона
     print<const char*>("Hello world!");
     print<std::string>("Hello world!");
+    
+    // Автоматический вывод типа (type deduction)
+    // Компилятор сам определит тип из аргумента
     print(std::string("Hello world!"));
 
-    // // или можем указать явно
-    // print<double>(0.5);
-    // print<char>(48);
+    /*
+    ДОПОЛНИТЕЛЬНЫЕ ПРИМЕРЫ (закомментированы для краткости):
     
-    // // простое создание шаблона
-    // Container<int> a(10);
-
-    // // // параметром шаблона может быть тип сгененерированный на основе шаблона
-    // Container<Container<const char*> > 
-    //     b(Container<const char*>("Hi there!"));
-    // std::cout << b.payload.payload << std::endl;
-
-    // // так странно можно обратится к 10
-    constexpr int A =10;
-    std::cout << foo<A>::value << std::endl;
+    // Явное указание типов
+    print<int>(10);
+    print<double>(0.5);
+    print<char>(48);
     
+    // Автоматический вывод типов
+    print(10);        // int
+    print(0.5);       // double
+    print('A');       // char
+    
+    // Создание объектов шаблонного класса
+    Container<int> container_int(10);
+    Container<std::string> container_string("Hello");
+    
+    // Вложенные шаблоны (template nesting)
+    Container<Container<const char*>> nested_container(
+        Container<const char*>("Hi there!")
+    );
+    std::cout << nested_container.payload.payload << std::endl;
+    */
+
+    // Демонстрация шаблона с параметром-константой
+    constexpr int A = 10;  // constexpr необходимо для параметра шаблона
+    std::cout << "foo<" << A << ">::value = " << foo<A>::value << std::endl;
+
     return 0;
 }
 

@@ -1,60 +1,114 @@
 #include <iostream>
 #include <chrono>
 
-// факториал с помощью функций
-template <uint64_t value> uint64_t Factorial(){
-  return Factorial<value-1>()*value;    
+// ============================================================================
+// СПОСОБ 1: ФАКТОРИАЛ С ПОМОЩЬЮ ФУНКЦИЙ-ШАБЛОНОВ
+// ============================================================================
+
+// Рекурсивная функция-шаблон для вычисления факториала
+// Использует рекурсию на уровне компиляции
+template <uint64_t value> 
+uint64_t Factorial() {
+    return Factorial<value-1>() * value;    
 }
 
-template <> uint64_t Factorial<1>(){
-  return 1ull;    
+// Специализация для базового случая (остановка рекурсии)
+template <> 
+uint64_t Factorial<1>() {
+    return 1ull;    
 }
 
-// факториал с помощью классов
+// ============================================================================
+// СПОСОБ 2: ФАКТОРИАЛ С ПОМОЩЬЮ КЛАССОВ-ШАБЛОНОВ (МЕТАФУНКЦИИ)
+// ============================================================================
+
+// Класс-шаблон для вычисления факториала на этапе компиляции
 template<uint64_t n>
-struct fact{
+struct fact {
+    // Статическое константное поле, вычисляемое на этапе компиляции
     static const uint64_t value = fact<n-1>::value * n;
 };
  
+// Специализация для базового случая
 template<>
-struct fact<1>{
-   static const uint64_t value = 1ull;
+struct fact<1> {
+    static const uint64_t value = 1ull;
 };
- 
 
+// ============================================================================
+// СПОСОБ 3: ФАКТОРИАЛ С ПОМОЩЬЮ IF CONSTEXPR
+// ============================================================================
+
+// Функция-шаблон с использованием if constexpr для условной компиляции
 template<uint64_t n>
-uint64_t cool_factorial(){
-  if constexpr (n>1) return cool_factorial<n-1>()*n;
-                else return 1ull;
-};
+uint64_t cool_factorial() {
+    // if constexpr - условие проверяется на этапе компиляции
+    if constexpr (n > 1) {
+        return cool_factorial<n-1>() * n;
+    } else {
+        return 1ull;
+    }
+}
 
-// замереем скорость работы 
+// ============================================================================
+// ОСНОВНАЯ ФУНКЦИЯ - СРАВНЕНИЕ ПРОИЗВОДИТЕЛЬНОСТИ
+// ============================================================================
+
 int main() {
-  // факториал - функция - 1
+    std::cout << "=== СРАВНЕНИЕ ПРОИЗВОДИТЕЛЬНОСТИ РАЗЛИЧНЫХ СПОСОБОВ ВЫЧИСЛЕНИЯ ФАКТОРИАЛА ===" << std::endl;
+    std::cout << "Вычисляем факториал числа 50" << std::endl << std::endl;
+    
+    // ========================================================================
+    // СПОСОБ 1: Функция-шаблон с рекурсией
+    // ========================================================================
+    std::cout << "1. Функция-шаблон с рекурсией:" << std::endl;
     auto begin = std::chrono::high_resolution_clock::now();
-    std::cout << "Factorial: " << Factorial<50>() << std::endl;
+    std::cout << "   Результат: " << Factorial<50>() << std::endl;
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << std::chrono::duration_cast <std::chrono::microseconds>( end - begin ).count()<< std::endl;
+    auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+    std::cout << "   Время выполнения: " << duration1 << " микросекунд" << std::endl << std::endl;
  
-  // факториал - мета-функция - 2
+    // ========================================================================
+    // СПОСОБ 2: Метафункция (класс-шаблон)
+    // ========================================================================
+    std::cout << "2. Метафункция (класс-шаблон):" << std::endl;
     begin = std::chrono::high_resolution_clock::now();
-    std::cout << "fact: " <<fact<50>::value << std::endl;
+    std::cout << "   Результат: " << fact<50>::value << std::endl;
     end = std::chrono::high_resolution_clock::now();
-    std::cout << std::chrono::duration_cast <std::chrono::microseconds>( end - begin ).count()<< std::endl;
+    auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+    std::cout << "   Время выполнения: " << duration2 << " микросекунд" << std::endl << std::endl;
  
-   // факториал - мета-функция - 3
+    // ========================================================================
+    // СПОСОБ 3: Функция с if constexpr
+    // ========================================================================
+    std::cout << "3. Функция с if constexpr:" << std::endl;
     begin = std::chrono::high_resolution_clock::now();
-    std::cout << "cool_factorial: " << cool_factorial<50>() << std::endl;
+    std::cout << "   Результат: " << cool_factorial<50>() << std::endl;
     end = std::chrono::high_resolution_clock::now();
-    std::cout << std::chrono::duration_cast <std::chrono::microseconds>( end - begin ).count()<< std::endl;
+    auto duration3 = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+    std::cout << "   Время выполнения: " << duration3 << " микросекунд" << std::endl << std::endl;
  
-  // факториал - обычный цикл - 4
+    // ========================================================================
+    // СПОСОБ 4: Обычный цикл (для сравнения)
+    // ========================================================================
+    std::cout << "4. Обычный цикл (для сравнения):" << std::endl;
     begin = std::chrono::high_resolution_clock::now();
-    uint64_t value=1;
-    for(int i=1;i<=50;i++) value*=i;
-    std::cout << "simple: " << value << std::endl;
+    uint64_t factorial_result = 1;
+    for(int i = 1; i <= 50; i++) {
+        factorial_result *= i;
+    }
+    std::cout << "   Результат: " << factorial_result << std::endl;
     end = std::chrono::high_resolution_clock::now();
-    std::cout << std::chrono::duration_cast <std::chrono::microseconds>( end - begin ).count()<< std::endl;
+    auto duration4 = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+    std::cout << "   Время выполнения: " << duration4 << " микросекунд" << std::endl << std::endl;
+    
+    // ========================================================================
+    // АНАЛИЗ РЕЗУЛЬТАТОВ
+    // ========================================================================
+    std::cout << "=== АНАЛИЗ РЕЗУЛЬТАТОВ ===" << std::endl;
+    std::cout << "Метафункция (способ 2) должна быть самой быстрой," << std::endl;
+    std::cout << "так как вычисления происходят на этапе компиляции!" << std::endl;
+    std::cout << "Остальные способы выполняются во время выполнения программы." << std::endl;
     
     return 0;
 }

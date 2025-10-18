@@ -2,68 +2,118 @@
 #include <exception>
 #include <string>
 
-class BadIndexException : public std::exception {
+// Пользовательское исключение для обработки ошибок индексации массива
+class BadIndexException : public std::exception
+{
 private:
-    std::string msg;
+    std::string error_message;  // Сообщение об ошибке
+
 public:
-
-    BadIndexException(int index, int size) {
-        msg = "Index:" + std::to_string(index) + " is out of bound for array[0.." + std::to_string(size-1) + "]";
+    // Конструктор, создающий информативное сообщение об ошибке
+    BadIndexException(int index, int size)
+    {
+        error_message = "Index:" + std::to_string(index) + 
+                       " is out of bound for array[0.." + 
+                       std::to_string(size - 1) + "]";
     }
 
-    const char* what() const noexcept override {
-        return msg.c_str();
+    // Переопределение виртуальной функции what() для возврата сообщения об ошибке
+    const char* what() const noexcept override
+    {
+        return error_message.c_str();
     }
-
 };
 
-template <class TYPE, TYPE def_value, size_t SIZE = 10 > class Array {
+// Шаблон класса Array с тремя параметрами:
+// 1. TYPE - тип элементов массива
+// 2. def_value - значение по умолчанию (должно быть того же типа, что и TYPE)
+// 3. SIZE - размер массива (параметр по умолчанию = 10)
+template <class TYPE, TYPE default_value, size_t SIZE = 10>
+class Array
+{
 protected:
-    TYPE _array[SIZE];
+    TYPE array_data[SIZE];  // Массив фиксированного размера
+
 public:
-    Array() {
-        for (auto &a : _array) a = def_value;
+    // Конструктор, инициализирующий все элементы значением по умолчанию
+    Array()
+    {
+        for (auto& element : array_data) {
+            element = default_value;
+        }
     }
 
-    const size_t size() {
+    // Метод для получения размера массива
+    const size_t size() const
+    {
         return SIZE;
     }
 
-    TYPE* begin() {
-        return &_array[0];
+    // Итераторы для поддержки range-based for
+    TYPE* begin()
+    {
+        return &array_data[0];
     }
 
-    TYPE* end() {
-        return &_array[SIZE]; // элемент, следующий за концом массива
+    TYPE* end()
+    {
+        return &array_data[SIZE];  // Элемент, следующий за концом массива
     }
 
-    TYPE& operator[](size_t index) {
-        if ((index >= 0) && (index < SIZE)) return _array[index];
-        else throw BadIndexException(index, SIZE);
+    // Оператор доступа к элементам с проверкой границ
+    TYPE& operator[](size_t index)
+    {
+        if ((index >= 0) && (index < SIZE)) {
+            return array_data[index];
+        } else {
+            throw BadIndexException(index, SIZE);
+        }
     }
 };
 
-int main() {
-
+int main()
+{
     try {
+        // Демонстрация сложных параметров шаблона:
+        // Array<int, 0, my_size> означает:
+        // - TYPE = int (тип элементов)
+        // - default_value = 0 (значение по умолчанию)
+        // - SIZE = my_size (размер массива)
         const int my_size = 10;
         Array<int, 0, my_size> array;
 
-        for (int i = 0; i < array.size(); i++)
+        // Инициализация массива значениями 0, 1, 2, ..., 9
+        for (int i = 0; i < array.size(); i++) {
             array[i] = i;
+        }
 
-        for(auto a: array)  std::cout << a << " ";
-        std::cout << std::endl;
-        
-        for(auto & a: array)  a*=a;
-        
-        for(auto a: array)  std::cout << a << " ";
+        // Вывод исходного массива
+        std::cout << "Original array: ";
+        for (auto element : array) {
+            std::cout << element << " ";
+        }
         std::cout << std::endl;
 
-        std::cout << array[255] << std::endl;
-        
-    } catch (const std::exception &ex) {
-        std::cout << "Exception in runtime" << std::endl << ex.what() << std::endl;
+        // Возведение каждого элемента в квадрат (изменение по ссылке)
+        for (auto& element : array) {
+            element *= element;
+        }
+
+        // Вывод измененного массива
+        std::cout << "Squared array: ";
+        for (auto element : array) {
+            std::cout << element << " ";
+        }
+        std::cout << std::endl;
+
+        // Демонстрация обработки исключений - попытка доступа к несуществующему индексу
+        std::cout << "Trying to access array[255]: ";
+        std::cout << array[255] << std::endl;  // Это вызовет исключение
+
+    } catch (const std::exception& exception) {
+        // Обработка исключения с выводом информативного сообщения
+        std::cout << "Exception in runtime" << std::endl;
+        std::cout << exception.what() << std::endl;
     }
 
     return 0;

@@ -54,4 +54,5 @@ CivilEngineer::CivilEngineer(std::string_view fullname, int age,
 // Деструктор
 // Вызываются в обратном порядке: ~CivilEngineer() → ~Engineer() → ~Person()
 CivilEngineer::~CivilEngineer() {
+    std::cout << "CivilEngineer has died" << std::endl;
 }

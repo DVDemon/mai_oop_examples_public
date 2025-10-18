@@ -3,25 +3,84 @@
 #include <vector>
 #include <typeinfo>
 
+// ============================================================================
+// ДЕМОНСТРАЦИЯ DEDUCTION GUIDES (РУКОВОДСТВА ПО ВЫВОДУ ТИПОВ) C++17
+// ============================================================================
+
+// ============================================================================
+// КЛАСС-ШАБЛОН ДЛЯ ДЕМОНСТРАЦИИ DEDUCTION GUIDES
+// ============================================================================
+
+// Класс-шаблон для демонстрации автоматического вывода типов
 template <class T>
 struct MyStruct{
     T value;
-     MyStruct(T other) {
+    
+    // Конструктор, который позволяет автоматический вывод типа
+    MyStruct(T other) {
         value = other;
     }
 };
 
+// ============================================================================
+// DEDUCTION GUIDE - РУКОВОДСТВО ПО ВЫВОДУ ТИПОВ
+// ============================================================================
 
-MyStruct(const char*) -> MyStruct<std::string>; // help to deduct type
+// Deduction guide для const char* -> std::string
+// Указывает компилятору, что const char* должен быть преобразован в std::string
+MyStruct(const char*) -> MyStruct<std::string>;
 
+// ============================================================================
+// ОСНОВНАЯ ФУНКЦИЯ - ДЕМОНСТРАЦИЯ DEDUCTION GUIDES
+// ============================================================================
 
-int main ()
-{
-    MyStruct m(1); // template type deduction by constructor
-    MyStruct m2("Hello world");
-
-    std::cout << "int:" << m.value << std::endl; 
-    std::cout << "type:" << m2.value.size() << std::endl;
+int main() {
+    std::cout << "=== ДЕМОНСТРАЦИЯ DEDUCTION GUIDES C++17 ===" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 1: АВТОМАТИЧЕСКИЙ ВЫВОД ТИПОВ БЕЗ DEDUCTION GUIDE
+    // ========================================================================
+    std::cout << "1. Автоматический вывод типов без deduction guide:" << std::endl;
+    MyStruct integer_struct(1);  // T выводится как int
+    std::cout << "   MyStruct(1) - тип: " << typeid(integer_struct.value).name() << std::endl;
+    std::cout << "   Значение: " << integer_struct.value << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 2: ИСПОЛЬЗОВАНИЕ DEDUCTION GUIDE
+    // ========================================================================
+    std::cout << "2. Использование deduction guide:" << std::endl;
+    MyStruct string_struct("Hello world");  // T выводится как std::string благодаря deduction guide
+    std::cout << "   MyStruct(\"Hello world\") - тип: " << typeid(string_struct.value).name() << std::endl;
+    std::cout << "   Длина строки: " << string_struct.value.size() << std::endl;
+    std::cout << "   Содержимое: " << string_struct.value << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 3: СРАВНЕНИЕ С ЯВНЫМ УКАЗАНИЕМ ТИПА
+    // ========================================================================
+    std::cout << "3. Сравнение с явным указанием типа:" << std::endl;
+    MyStruct<std::string> explicit_string_struct("Explicit type");
+    std::cout << "   MyStruct<std::string>(\"Explicit type\") - явное указание типа" << std::endl;
+    std::cout << "   Длина строки: " << explicit_string_struct.value.size() << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 4: ОБЪЯСНЕНИЕ ПРИНЦИПА РАБОТЫ
+    // ========================================================================
+    std::cout << "4. Принцип работы deduction guides:" << std::endl;
+    std::cout << "   - Компилятор анализирует аргументы конструктора" << std::endl;
+    std::cout << "   - Deduction guide указывает, как преобразовать тип" << std::endl;
+    std::cout << "   - const char* -> std::string (благодаря deduction guide)" << std::endl;
+    std::cout << "   - int остается int (автоматический вывод)" << std::endl;
+    std::cout << "   - Упрощает использование шаблонов" << std::endl << std::endl;
+    
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 5: ПРЕИМУЩЕСТВА DEDUCTION GUIDES
+    // ========================================================================
+    std::cout << "5. Преимущества deduction guides:" << std::endl;
+    std::cout << "   - Упрощение синтаксиса (не нужно указывать тип явно)" << std::endl;
+    std::cout << "   - Автоматическое преобразование типов" << std::endl;
+    std::cout << "   - Более читаемый код" << std::endl;
+    std::cout << "   - Использование в стандартной библиотеке (std::pair, std::tuple)" << std::endl;
+    std::cout << "   - Современный подход к работе с шаблонами" << std::endl;
 
     return 0;
 }
