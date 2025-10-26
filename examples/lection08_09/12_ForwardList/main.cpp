@@ -1,83 +1,145 @@
 #include <forward_list>
 #include <iostream>
 
-void testPlacing() {
-    std::cout << "\ntestPlacing\n";
+/**
+ * Демонстрация размещения элементов std::forward_list в памяти
+ * Показывает, что элементы могут быть разбросаны по памяти
+ * и отслеживает разности адресов между соседними элементами
+ */
+void testMemoryPlacement() {
+    std::cout << "\n=== ТЕСТ РАЗМЕЩЕНИЯ STD::FORWARD_LIST В ПАМЯТИ ===" << std::endl;
 
-    int stackVariable = 0;
-    std::forward_list<int> values;
+    int stack_variable = 0;
+    std::forward_list<int> forward_list_data;
     
-    for(int i=0;i<100;++i)
-     values.push_front(i);
+    // ========================================================================
+    // ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ В НАЧАЛО СПИСКА
+    // ========================================================================
+    std::cout << "1. Добавление 100 элементов в начало списка:" << std::endl;
+    for (int element_index = 0; element_index < 100; ++element_index) {
+        forward_list_data.push_front(element_index);
+    }
 
-
-    std::cout << "&stackVariable = " << &stackVariable << std::endl;
-    std::cout << "&values        = " << &values << std::endl;
-    int *ptr = nullptr;
-    size_t index{0};
-    for (auto& v : values) {
-        //std::cout << "&value         = " << &v << std::endl;
-        ++index;
-        if (ptr) {
-            //if((&v - ptr)>4)
-                std::cout << "diff = " << reinterpret_cast<unsigned long>(ptr)-reinterpret_cast<unsigned long>(&v) << ":" << index << std::endl;
+    std::cout << "2. Анализ размещения элементов в памяти:" << std::endl;
+    std::cout << "   Адрес переменной на стеке: " << &stack_variable << std::endl;
+    std::cout << "   Адрес объекта forward_list: " << &forward_list_data << std::endl;
+    
+    // ========================================================================
+    // ОТСЛЕЖИВАНИЕ РАЗНОСТЕЙ АДРЕСОВ МЕЖДУ ЭЛЕМЕНТАМИ
+    // ========================================================================
+    int* previous_element_pointer = nullptr;
+    size_t element_index{0};
+    
+    for (auto& current_element : forward_list_data) {
+        ++element_index;
+        if (previous_element_pointer) {
+            // Вычисление разности адресов между соседними элементами
+            long address_difference = reinterpret_cast<unsigned long>(previous_element_pointer) - 
+                                     reinterpret_cast<unsigned long>(&current_element);
+            std::cout << "   Разность адресов: " << address_difference 
+                      << " (элемент " << element_index << ")" << std::endl;
         }
-        ptr = &v;        
+        previous_element_pointer = &current_element;        
     }
 }
 
-void testIterator() {
-    std::cout << "\ntestIterator\n";
+/**
+ * Демонстрация работы с итераторами std::forward_list
+ * Показывает особенности однонаправленных итераторов и операции вставки
+ */
+void testIteratorOperations() {
+    std::cout << "\n=== ТЕСТ ОПЕРАЦИЙ С ИТЕРАТОРАМИ STD::FORWARD_LIST ===" << std::endl;
 
-    std::forward_list<int> values = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    std::forward_list<int> forward_list_data = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
-    auto iter = std::next(values.cbegin(), 3);
-    std::cout << *iter << std::endl;
+    // ========================================================================
+    // ОСНОВНЫЕ ОПЕРАЦИИ С ИТЕРАТОРАМИ
+    // ========================================================================
+    std::cout << "1. Базовые операции с итераторами:" << std::endl;
+    auto current_iterator = std::next(forward_list_data.cbegin(), 3);
+    std::cout << "   Элемент на позиции 3: " << *current_iterator << std::endl;
 
-    ++iter;
-    std::cout << *iter << std::endl;
+    // Перемещение вперед
+    ++current_iterator;
+    std::cout << "   Следующий элемент: " << *current_iterator << std::endl;
 
-    // Only forward iterators
-    // --iter;
-    // --iter;
-    // std::cout << *iter << std::endl;
+    // ========================================================================
+    // ОГРАНИЧЕНИЯ ОДНОНАПРАВЛЕННЫХ ИТЕРАТОРОВ
+    // ========================================================================
+    std::cout << "2. Ограничения однонаправленных итераторов:" << std::endl;
+    std::cout << "   - НЕТ оператора -- (движение назад)" << std::endl;
+    std::cout << "   - НЕТ оператора += (прямое перемещение)" << std::endl;
+    std::cout << "   - ТОЛЬКО оператор ++ (движение вперед)" << std::endl;
+    
+    // Закомментированные операции, которые НЕ РАБОТАЮТ:
+    // --current_iterator;  // ОШИБКА КОМПИЛЯЦИИ!
+    // current_iterator += 3;  // ОШИБКА КОМПИЛЯЦИИ!
+    
+    // Альтернатива для перемещения на несколько позиций
+    std::advance(current_iterator, 3);
+    std::cout << "   Элемент через 3 позиции (std::advance): " << *current_iterator << std::endl;
 
-    // No operator+=
-    // iter += 3;
-    std::advance(iter, 3);
-    std::cout << *iter << std::endl;
+    // ========================================================================
+    // РАБОТА С ПОЗИЦИЯМИ ИТЕРАТОРОВ
+    // ========================================================================
+    auto iterator_position = std::distance(forward_list_data.cbegin(), current_iterator);
+    std::cout << "   Позиция итератора: " << iterator_position << std::endl;
 
-    auto iterPos = std::distance(values.cbegin(), iter);
-    std::cout << "iterPos = " << iterPos << std::endl;
+    // ========================================================================
+    // ОПЕРАЦИИ ВСТАВКИ И ИХ ВЛИЯНИЕ НА ИТЕРАТОРЫ
+    // ========================================================================
+    std::cout << "3. Операции вставки и влияние на итераторы:" << std::endl;
+    
+    // ВАЖНО: forward_list НЕ ИМЕЕТ push_back!
+    // values.push_back(42);  // ОШИБКА КОМПИЛЯЦИИ!
+    forward_list_data.push_front(42);
+    std::cout << "   Добавлен элемент в начало списка" << std::endl;
 
-    std::cout << "one more" << std::endl;
-    // No operator push_back
-    // values.push_back(42);
-    values.push_front(42);
+    std::cout << "   Адрес первого элемента: " << &*forward_list_data.cbegin() << std::endl;
+    std::cout << "   Адрес элемента на позиции " << iterator_position << ": " 
+              << &*(std::next(forward_list_data.cbegin(), iterator_position)) << std::endl;
+    
+    // Итератор остается валидным после push_front
+    std::cout << "   Адрес элемента через итератор: " << &*current_iterator << std::endl;
 
-    std::cout << "&values[0]       = " << &*values.cbegin() << std::endl;
-    std::cout << "&values[iterPos] = " << &*(std::next(values.cbegin(), iterPos)) << std::endl;
-    // Iterator is still valid
-    std::cout << "&*iter           = " << &*iter << std::endl;
+    // ========================================================================
+    // ВСТАВКА ПОСЛЕ ЭЛЕМЕНТА
+    // ========================================================================
+    auto new_iterator = std::next(forward_list_data.cbegin(), 3);
+    std::cout << "   Элемент на позиции 3: " << *new_iterator << std::endl;
+    
+    std::cout << "   Вставка элемента после позиции 3..." << std::endl;
+    forward_list_data.insert_after(forward_list_data.cbegin(), 42);
+    std::cout << "   Элемент на позиции 3 после вставки: " << *new_iterator << std::endl;
 
-    auto iter2 = std::next(values.cbegin(), 3);
-    std::cout << "*iter2 = " << *iter2 << std::endl;
-    std::cout << "one more at the begining" << std::endl;
-    values.insert_after(values.cbegin(), 42);
-    std::cout << "*iter2 = " << *iter2 << std::endl;
+    // ========================================================================
+    // ВСТАВКА В НАЧАЛО СПИСКА
+    // ========================================================================
+    forward_list_data.insert_after(forward_list_data.before_begin(), 9999);
+    std::cout << "   Первый элемент после вставки в начало: " << *forward_list_data.cbegin() << std::endl;
 
-    values.insert_after(values.before_begin(), 9999);
-    std::cout << "values[0]       = " << *values.cbegin() << std::endl;
-    //values.before_begin();
-    //values.cbefore_begin();
-
-    for (auto& v : values) std::cout << v << std::endl;
+    // ========================================================================
+    // ВЫВОД ВСЕХ ЭЛЕМЕНТОВ
+    // ========================================================================
+    std::cout << "4. Все элементы списка:" << std::endl;
+    for (auto& element : forward_list_data) {
+        std::cout << "   " << element << std::endl;
+    }
 }
 
+/**
+ * Основная функция - демонстрация std::forward_list
+ * Показывает особенности односвязного списка и однонаправленных итераторов
+ */
 int main() {
-    testPlacing();
+    std::cout << "=== ДЕМОНСТРАЦИЯ STD::FORWARD_LIST ===" << std::endl;
 
-    testIterator();
+    // Тест 1: Размещение элементов в памяти
+    testMemoryPlacement();
 
+    // Тест 2: Операции с итераторами
+    testIteratorOperations();
+
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА ===" << std::endl;
     return 0;
 }

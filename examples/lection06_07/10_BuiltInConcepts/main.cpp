@@ -1,5 +1,6 @@
 #include <iostream>
 #include <concepts>
+#include <type_traits>
 #include "boxcontainer.h"
 
 // ============================================================================
@@ -12,7 +13,7 @@
 
 // Класс точки с ограничением на арифметические типы
 template <typename T>
-requires std::is_arithmetic_v<T>
+requires std::is_arithmetic_v<T> //&& std::is_integral_v<T>
 class Point{
 public : 
 	// Конструктор по умолчанию

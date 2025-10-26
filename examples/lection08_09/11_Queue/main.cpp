@@ -1,25 +1,52 @@
 #include <iostream>
 #include <queue>
 
-void baseTest() {
-    std::cout << "\nbaseTest\n";
-    
-    // No initialization constructor
-    // std::queue<int> values = {0, 1, 2, 3, 4, 5, 6};
-    std::queue<int> values;
+/**
+ * Демонстрация базовых операций с очередью
+ * Показывает принцип FIFO (First In, First Out) и основные операции
+ */
+void demonstrateBasicQueueOperations() {
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ БАЗОВЫХ ОПЕРАЦИЙ С ОЧЕРЕДЬЮ ===" << std::endl;
 
-    for (int i=0; i<10; ++i)
-        values.push(i);
+    // ========================================================================
+    // ВАЖНО: std::queue НЕ ИМЕЕТ КОНСТРУКТОРА ИНИЦИАЛИЗАЦИИ
+    // ========================================================================
+    // std::queue<int> values = {0, 1, 2, 3, 4, 5, 6};  // ОШИБКА КОМПИЛЯЦИИ!
+    std::queue<int> integer_queue;
 
-    while(!values.empty()) {
-        std::cout << "size = " << values.size() << " back = " << values.back() << " front = " << values.front() << std::endl;
-        values.pop();
+    // ========================================================================
+    // ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ В ОЧЕРЕДЬ
+    // ========================================================================
+    std::cout << "1. Добавление элементов в очередь:" << std::endl;
+    for (int element_index = 0; element_index < 10; ++element_index) {
+        integer_queue.push(element_index);
+        std::cout << "   Добавлен элемент: " << element_index 
+                  << " (размер очереди: " << integer_queue.size() << ")" << std::endl;
     }
-    std::cout << std::endl;
+
+    // ========================================================================
+    // ИЗВЛЕЧЕНИЕ ЭЛЕМЕНТОВ ИЗ ОЧЕРЕДИ (ПРИНЦИП FIFO)
+    // ========================================================================
+    std::cout << "2. Извлечение элементов из очереди (FIFO - First In, First Out):" << std::endl;
+    while (!integer_queue.empty()) {
+        std::cout << "   Размер очереди: " << integer_queue.size() 
+                  << ", Первый элемент: " << integer_queue.front() 
+                  << ", Последний элемент: " << integer_queue.back() << std::endl;
+        integer_queue.pop();
+    }
+    std::cout << "   Очередь пуста!" << std::endl;
 }
 
+/**
+ * Основная функция - демонстрация std::queue
+ * Показывает принцип работы очереди и основные операции
+ */
 int main() {
-    baseTest();
+    std::cout << "=== ДЕМОНСТРАЦИЯ STD::QUEUE ===" << std::endl;
 
+    // Демонстрация базовых операций
+    demonstrateBasicQueueOperations();
+
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА ===" << std::endl;
     return 0;
 }

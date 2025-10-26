@@ -4,66 +4,161 @@
 #include <ranges>
 #include <concepts>
 
+/**
+ * Пользовательский контейнер с поддержкой обычных и константных итераторов
+ * Демонстрирует создание полнофункционального контейнера с STL-совместимыми итераторами
+ * 
+ * @tparam T - тип элементов контейнера (должен иметь конструктор по умолчанию)
+ */
 template <typename T>
 requires std::is_default_constructible_v<T>
-class BoxContainer
-{
-	static_assert(std::is_default_constructible_v<T>,"Types stored in BoxContainer must have a default constructor");
-		
-	static const size_t DEFAULT_CAPACITY = 5;  
-	static const size_t EXPAND_STEPS = 5;
+class BoxContainer {
+    static_assert(std::is_default_constructible_v<T>, 
+                  "Types stored in BoxContainer must have a default constructor");
+        
+    static const size_t DEFAULT_CAPACITY = 5;  
+    static const size_t EXPAND_STEPS = 5;
 public:
-	BoxContainer(size_t capacity = DEFAULT_CAPACITY);
-	BoxContainer(const BoxContainer& source) requires std::copyable<T>;
-	~BoxContainer();
-	
-	
-	friend std::ostream& operator<<(std::ostream& out, const BoxContainer<T>& operand)
-	{
-		out << "BoxContainer : [ size :  " << operand.m_size
-			<< ", capacity : " << operand.m_capacity << ", items : " ;
-				
-		for(size_t i{0}; i < operand.m_size; ++i){
-			out << operand.m_items[i] << " " ;
-		}
-		out << "]";
-		
-		return out;
-	}
+    /**
+     * Конструктор с заданной емкостью
+     * @param capacity - начальная емкость контейнера
+     */
+    BoxContainer(size_t capacity = DEFAULT_CAPACITY);
+    
+    /**
+     * Конструктор копирования
+     * @param source - контейнер для копирования
+     */
+    BoxContainer(const BoxContainer& source) requires std::copyable<T>;
+    
+    /**
+     * Деструктор
+     */
+    ~BoxContainer();
+    
+    /**
+     * Оператор вывода в поток
+     * @param out - поток вывода
+     * @param operand - контейнер для вывода
+     * @return ссылка на поток
+     */
+    friend std::ostream& operator<<(std::ostream& out, const BoxContainer<T>& operand) {
+        out << "BoxContainer : [ size :  " << operand.m_size
+            << ", capacity : " << operand.m_capacity << ", items : " ;
+                
+        for (size_t element_index{0}; element_index < operand.m_size; ++element_index) {
+            out << operand.m_items[element_index] << " " ;
+        }
+        out << "]";
+        
+        return out;
+    }
 
-	// Helper getter methods
-	size_t size( ) const { return m_size; }
-	size_t capacity() const{return m_capacity;};
-	
-	T get_item(size_t index) const{
-		return m_items[index];
-	}
-	
-	//Method to add items to the box
-	void add(const T& item);
-	bool remove_item(const T& item);
-	size_t remove_all(const T& item);
-	//In class operators
-	void operator +=(const BoxContainer<T>& operand);
-	void operator =(const BoxContainer<T>& source);
+    // ========================================================================
+    // МЕТОДЫ ДОСТУПА К ДАННЫМ
+    // ========================================================================
+    
+    /**
+     * Получение размера контейнера
+     * @return количество элементов в контейнере
+     */
+    size_t size() const { return m_size; }
+    
+    /**
+     * Получение емкости контейнера
+     * @return максимальное количество элементов
+     */
+    size_t capacity() const { return m_capacity; }
+    
+    /**
+     * Получение элемента по индексу
+     * @param index - индекс элемента
+     * @return копия элемента
+     */
+    T get_item(size_t index) const {
+        return m_items[index];
+    }
+    
+    // ========================================================================
+    // МЕТОДЫ МОДИФИКАЦИИ КОНТЕЙНЕРА
+    // ========================================================================
+    
+    /**
+     * Добавление элемента в контейнер
+     * @param item - элемент для добавления
+     */
+    void add(const T& item);
+    
+    /**
+     * Удаление одного элемента
+     * @param item - элемент для удаления
+     * @return true если элемент был найден и удален
+     */
+    bool remove_item(const T& item);
+    
+    /**
+     * Удаление всех вхождений элемента
+     * @param item - элемент для удаления
+     * @return количество удаленных элементов
+     */
+    size_t remove_all(const T& item);
+    
+    // ========================================================================
+    // ОПЕРАТОРЫ
+    // ========================================================================
+    
+    /**
+     * Оператор добавления контейнера
+     * @param operand - контейнер для добавления
+     */
+    void operator+=(const BoxContainer<T>& operand);
+    
+    /**
+     * Оператор присваивания
+     * @param source - контейнер для копирования
+     */
+    void operator=(const BoxContainer<T>& source);
 
-	public : 
-	class Iterator{
-		public : 
-		        using iterator_category = std::random_access_iterator_tag;
-				using difference_type   = std::ptrdiff_t;
-				using value_type        = T;
-				using pointer_type      = T*;
-				using reference_type    = T&;
+    // ========================================================================
+    // ОБЫЧНЫЙ ИТЕРАТОР (MUTABLE)
+    // ========================================================================
+    
+    /**
+     * Обычный итератор для модификации элементов
+     * Поддерживает все операции random access iterator
+     */
+    class Iterator {
+    public: 
+        using iterator_category = std::random_access_iterator_tag;
+        using difference_type   = std::ptrdiff_t;
+        using value_type        = T;
+        using pointer_type      = T*;
+        using reference_type    = T&;
 
-		Iterator() = default;
+        /**
+         * Конструктор по умолчанию
+         */
+        Iterator() = default;
+        
+        /**
+         * Конструктор с указателем
+         * @param ptr - указатель на элемент
+         */
         Iterator(pointer_type ptr) : m_ptr(ptr) {}
     
-    	reference_type operator*() const {
+        /**
+         * Оператор разыменования
+         * @return ссылка на элемент
+         */
+        reference_type operator*() const {
             return *m_ptr;
         }
 
-		pointer_type operator->() {
+        /**
+         * Оператор доступа к членам
+         * @return указатель на элемент
+         */
+        pointer_type operator->() {
             return m_ptr;
         }
 
@@ -455,32 +550,59 @@ void print(const BoxContainer<T>&  c){
     std::cout << std::endl;
 }
 
-int main(){
+/**
+ * Основная функция - демонстрация константных итераторов
+ * Показывает различие между обычными и константными итераторами
+ */
+int main() {
+    std::cout << "=== ДЕМОНСТРАЦИЯ КОНСТАНТНЫХ ИТЕРАТОРОВ ===" << std::endl;
 
-    BoxContainer<int> vi;
-    vi.add(5);
-    vi.add(1);
-    vi.add(7);
-    vi.add(2);
-    vi.add(5);
-    vi.add(3);
-    vi.add(7);
-    vi.add(9);
-    vi.add(6);
+    // ========================================================================
+    // СОЗДАНИЕ И ЗАПОЛНЕНИЕ КОНТЕЙНЕРА
+    // ========================================================================
+    std::cout << "1. Создание и заполнение контейнера:" << std::endl;
+    BoxContainer<int> integer_container;
+    
+    // Добавление элементов
+    integer_container.add(5);
+    integer_container.add(1);
+    integer_container.add(7);
+    integer_container.add(2);
+    integer_container.add(5);
+    integer_container.add(3);
+    integer_container.add(7);
+    integer_container.add(9);
+    integer_container.add(6);
 
-    const BoxContainer<int> copy(vi);
+    std::cout << "   Исходный контейнер: " << integer_container << std::endl;
 
-    std::cout << "data : ";
-    for (auto it = copy.begin(); it!=copy.end(); ++it){
-        std::cout << (*it) << " ";
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ: РАБОТА С КОНСТАНТНЫМ КОНТЕЙНЕРОМ
+    // ========================================================================
+    std::cout << "2. Создание константной копии контейнера:" << std::endl;
+    const BoxContainer<int> const_copy(integer_container);
+
+    std::cout << "3. Итерация по константному контейнеру (только чтение):" << std::endl;
+    std::cout << "   Элементы константного контейнера: ";
+    for (auto const_iterator = const_copy.begin(); const_iterator != const_copy.end(); ++const_iterator) {
+        std::cout << (*const_iterator) << " ";
     }
     std::cout << std::endl;
 
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ: РАЗЛИЧИЯ МЕЖДУ ОБЫЧНЫМИ И КОНСТАНТНЫМИ ИТЕРАТОРАМИ
+    // ========================================================================
+    std::cout << "4. Различия между типами итераторов:" << std::endl;
+    std::cout << "   - Обычные итераторы: позволяют модифицировать элементы" << std::endl;
+    std::cout << "   - Константные итераторы: только чтение элементов" << std::endl;
+    std::cout << "   - Константный контейнер автоматически использует константные итераторы" << std::endl;
 
-    //print(copy);
+    // ========================================================================
+    // АЛЬТЕРНАТИВНЫЕ СПОСОБЫ ИТЕРАЦИИ (ЗАКОММЕНТИРОВАНЫ)
+    // ========================================================================
+    // Использование функции print с range-based for loop
+    // print(const_copy);
 
-
-   
- 
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА ===" << std::endl;
     return 0;
 }

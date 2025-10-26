@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     // Демонстрация шаблонов функций
     
     // Явное указание типа шаблона
-    print<const char*>("Hello world!");
+    print("Hello world!");
     print<std::string>("Hello world!");
     
     // Автоматический вывод типа (type deduction)

@@ -2,60 +2,136 @@
 #include <set>
 #include <string>
 
-void testUnique() {
-	std::cout << "\ntestUnique\n";
+/**
+ * Демонстрация уникальности элементов в std::set
+ * Показывает, что set не позволяет дубликаты и возвращает информацию о вставке
+ */
+void testElementUniqueness() {
+    std::cout << "\n=== ТЕСТ УНИКАЛЬНОСТИ ЭЛЕМЕНТОВ В STD::SET ===" << std::endl;
 
-	std::set<int> values;
+    std::set<int> integer_set;
 
-	auto result = values.insert(42);
-	std::cout << *result.first << " inserted: " << result.second << std::endl;
+    // ========================================================================
+    // ПЕРВАЯ ПОПЫТКА ВСТАВКИ ЭЛЕМЕНТА
+    // ========================================================================
+    std::cout << "1. Первая попытка вставки элемента 42:" << std::endl;
+    auto insertion_result = integer_set.insert(42);
+    std::cout << "   Элемент: " << *insertion_result.first 
+              << ", Вставлен: " << (insertion_result.second ? "ДА" : "НЕТ") << std::endl;
 
-	result = values.insert(42);
-	std::cout << *result.first << " inserted: " << result.second << std::endl;
+    // ========================================================================
+    // ВТОРАЯ ПОПЫТКА ВСТАВКИ ТОГО ЖЕ ЭЛЕМЕНТА
+    // ========================================================================
+    std::cout << "2. Вторая попытка вставки элемента 42:" << std::endl;
+    insertion_result = integer_set.insert(42);
+    std::cout << "   Элемент: " << *insertion_result.first 
+              << ", Вставлен: " << (insertion_result.second ? "ДА" : "НЕТ") << std::endl;
+    
+    std::cout << "   ВЫВОД: std::set не позволяет дубликаты!" << std::endl;
 }
 
-void testOrder() {
-	std::cout << "\ntestOrder\n";
+/**
+ * Демонстрация автоматической сортировки в std::set
+ * Показывает, что элементы автоматически упорядочиваются при вставке
+ */
+void testAutomaticSorting() {
+    std::cout << "\n=== ТЕСТ АВТОМАТИЧЕСКОЙ СОРТИРОВКИ В STD::SET ===" << std::endl;
 
-	std::set<int> values;
-	for (int i = 10; i >= 0; --i)
-		values.insert(i);
+    std::set<int> integer_set;
+    
+    // ========================================================================
+    // ВСТАВКА ЭЛЕМЕНТОВ В ОБРАТНОМ ПОРЯДКЕ
+    // ========================================================================
+    std::cout << "1. Вставка элементов в обратном порядке (10, 9, 8, ..., 0):" << std::endl;
+    for (int element_value = 10; element_value >= 0; --element_value) {
+        integer_set.insert(element_value);
+        std::cout << "   Вставлен элемент: " << element_value << std::endl;
+    }
 
-	for (auto& v : values) 
-		std::cout << v << ' ';
-	std::cout << std::endl;
+    // ========================================================================
+    // ВЫВОД ЭЛЕМЕНТОВ В ОТСОРТИРОВАННОМ ПОРЯДКЕ
+    // ========================================================================
+    std::cout << "2. Элементы в отсортированном порядке:" << std::endl;
+    std::cout << "   ";
+    for (auto& element : integer_set) {
+        std::cout << element << ' ';
+    }
+    std::cout << std::endl;
+    std::cout << "   ВЫВОД: std::set автоматически сортирует элементы!" << std::endl;
 }
 
 
-void testIterator() {
-	std::cout << "\ntestIterator\n";
+/**
+ * Демонстрация работы с итераторами std::set
+ * Показывает двунаправленные итераторы и их ограничения
+ */
+void testIteratorOperations() {
+    std::cout << "\n=== ТЕСТ ОПЕРАЦИЙ С ИТЕРАТОРАМИ STD::SET ===" << std::endl;
 
-	std::set<std::string> values = {
-		{"Alpha"},
-		{"Bravo"},
-		{"Charlie"},
-		{"Delta"},
-		{"Echo"}
-	};
+    std::set<std::string> string_set = {
+        {"Alpha"},
+        {"Bravo"},
+        {"Charlie"},
+        {"Delta"},
+        {"Echo"}
+    };
 
-	auto iter = values.begin();
-	std::cout << *iter << std::endl;
+    // ========================================================================
+    // ОСНОВНЫЕ ОПЕРАЦИИ С ДВУНАПРАВЛЕННЫМИ ИТЕРАТОРАМИ
+    // ========================================================================
+    std::cout << "1. Базовые операции с двунаправленными итераторами:" << std::endl;
+    auto current_iterator = string_set.begin();
+    std::cout << "   Первый элемент: " << *current_iterator << std::endl;
 
-	// Bidirectional
-	++iter; 
-	--iter;
+    // Перемещение вперед
+    ++current_iterator;
+    std::cout << "   Следующий элемент: " << *current_iterator << std::endl;
 
-	// But not random-access
-	// iter += 3;
+    // Перемещение назад (двунаправленные итераторы)
+    --current_iterator;
+    std::cout << "   Предыдущий элемент: " << *current_iterator << std::endl;
 
-	std::advance(iter, 2);
-	std::cout << *iter << std::endl;
+    // ========================================================================
+    // ОГРАНИЧЕНИЯ ДВУНАПРАВЛЕННЫХ ИТЕРАТОРОВ
+    // ========================================================================
+    std::cout << "2. Ограничения двунаправленных итераторов:" << std::endl;
+    std::cout << "   - НЕТ оператора += (прямое перемещение)" << std::endl;
+    std::cout << "   - ЕСТЬ операторы ++ и -- (пошаговое перемещение)" << std::endl;
+    
+    // Закомментированная операция, которая НЕ РАБОТАЕТ:
+    // current_iterator += 3;  // ОШИБКА КОМПИЛЯЦИИ!
+    
+    // Альтернатива для перемещения на несколько позиций
+    std::advance(current_iterator, 2);
+    std::cout << "   Элемент через 2 позиции (std::advance): " << *current_iterator << std::endl;
+
+    // ========================================================================
+    // ВЫВОД ВСЕХ ЭЛЕМЕНТОВ В ОТСОРТИРОВАННОМ ПОРЯДКЕ
+    // ========================================================================
+    std::cout << "3. Все элементы в отсортированном порядке:" << std::endl;
+    std::cout << "   ";
+    for (auto& element : string_set) {
+        std::cout << element << ' ';
+    }
+    std::cout << std::endl;
 }
 
+/**
+ * Основная функция - демонстрация std::set
+ * Показывает уникальность элементов, автоматическую сортировку и работу с итераторами
+ */
 int main() {
-	testUnique();
-	testOrder();
-	testIterator();
+    std::cout << "=== ДЕМОНСТРАЦИЯ STD::SET ===" << std::endl;
 
-	return 0;
+    // Тест 1: Уникальность элементов
+    testElementUniqueness();
+    
+    // Тест 2: Автоматическая сортировка
+    testAutomaticSorting();
+    
+    // Тест 3: Операции с итераторами
+    testIteratorOperations();
+
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА ===" << std::endl;
+    return 0;
 }

@@ -1,74 +1,131 @@
 #include <list>
 #include <iostream>
 
-void testPlacing() {
-	std::cout << "\ntestPlacing\n";
+/**
+ * Демонстрация размещения элементов std::list в памяти
+ * Показывает, что элементы могут быть разбросаны по памяти
+ * и анализирует размеры указателей и значений
+ */
+void testMemoryPlacement() {
+    std::cout << "\n=== ТЕСТ РАЗМЕЩЕНИЯ STD::LIST В ПАМЯТИ ===" << std::endl;
 
-	int stackVariable = 0;
-	std::list<int> values = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int stack_variable = 0;
+    std::list<int> list_data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-	std::cout << "&stackVariable = " << &stackVariable << std::endl;
-	std::cout << "&values        = " << &values << std::endl;
-	int *ptr = nullptr;
-	for (auto& v : values) {
-		std::cout << "&value         = " << &v << std::endl;
-		std::cout << "sizeof(ptr)	 = " << sizeof(&v) << std::endl;
-		std::cout << "sizeof(value)	 = " << sizeof(v) << std::endl;
-		if (ptr) {
-			std::cout << "diff = " << &v - ptr << std::endl;
-		}
-		ptr = &v;		
-	}
+    std::cout << "1. Анализ адресов и размеров:" << std::endl;
+    std::cout << "   Адрес переменной на стеке: " << &stack_variable << std::endl;
+    std::cout << "   Адрес объекта list:        " << &list_data << std::endl;
+    
+    // ========================================================================
+    // АНАЛИЗ РАЗМЕЩЕНИЯ ЭЛЕМЕНТОВ В ПАМЯТИ
+    // ========================================================================
+    std::cout << "2. Анализ размещения элементов:" << std::endl;
+    int* previous_element_pointer = nullptr;
+    
+    for (auto& current_element : list_data) {
+        std::cout << "   Адрес элемента: " << &current_element << std::endl;
+        std::cout << "   Размер указателя: " << sizeof(&current_element) << " байт" << std::endl;
+        std::cout << "   Размер значения:  " << sizeof(current_element) << " байт" << std::endl;
+        
+        if (previous_element_pointer) {
+            // Вычисление разности адресов между соседними элементами
+            long address_difference = &current_element - previous_element_pointer;
+            std::cout << "   Разность адресов: " << address_difference << std::endl;
+        }
+        previous_element_pointer = &current_element;        
+    }
 }
 
-void testIterator() {
-	std::cout << "\ntestIterator\n";
+/**
+ * Демонстрация работы с итераторами std::list
+ * Показывает двунаправленные итераторы и их инвалидацию при модификации
+ */
+void testIteratorOperations() {
+    std::cout << "\n=== ТЕСТ ОПЕРАЦИЙ С ИТЕРАТОРАМИ STD::LIST ===" << std::endl;
 
-	std::list<int> values = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    std::list<int> list_data = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
-	auto iter = std::next(values.cbegin(), 3);
-	std::cout << *iter << std::endl;
+    // ========================================================================
+    // ОСНОВНЫЕ ОПЕРАЦИИ С ДВУНАПРАВЛЕННЫМИ ИТЕРАТОРАМИ
+    // ========================================================================
+    std::cout << "1. Базовые операции с двунаправленными итераторами:" << std::endl;
+    auto current_iterator = std::next(list_data.cbegin(), 3);
+    std::cout << "   Элемент на позиции 3: " << *current_iterator << std::endl;
 
-	++iter;
-	std::cout << *iter << std::endl;
+    // Перемещение вперед
+    ++current_iterator;
+    std::cout << "   Следующий элемент: " << *current_iterator << std::endl;
 
-	// Bidirectional iterators
-	--iter;
-	--iter;
-	std::cout << *iter << std::endl;
+    // Перемещение назад (двунаправленные итераторы)
+    --current_iterator;
+    --current_iterator;
+    std::cout << "   Предыдущий элемент: " << *current_iterator << std::endl;
 
-	// No operator+=
-	// iter += 3;
-	std::advance(iter, 3);
-	std::cout << *iter << std::endl;
+    // ========================================================================
+    // ОГРАНИЧЕНИЯ ДВУНАПРАВЛЕННЫХ ИТЕРАТОРОВ
+    // ========================================================================
+    std::cout << "2. Ограничения двунаправленных итераторов:" << std::endl;
+    std::cout << "   - НЕТ оператора += (прямое перемещение)" << std::endl;
+    std::cout << "   - ЕСТЬ операторы ++ и -- (пошаговое перемещение)" << std::endl;
+    
+    // Закомментированная операция, которая НЕ РАБОТАЕТ:
+    // current_iterator += 3;  // ОШИБКА КОМПИЛЯЦИИ!
+    
+    // Альтернатива для перемещения на несколько позиций
+    std::advance(current_iterator, 3);
+    std::cout << "   Элемент через 3 позиции (std::advance): " << *current_iterator << std::endl;
 
-	auto iterPos = std::distance(values.cbegin(), iter);
-	std::cout << "iterPos = " << iterPos << std::endl;
+    // ========================================================================
+    // РАБОТА С ПОЗИЦИЯМИ ИТЕРАТОРОВ
+    // ========================================================================
+    auto iterator_position = std::distance(list_data.cbegin(), current_iterator);
+    std::cout << "   Позиция итератора: " << iterator_position << std::endl;
 
-	std::cout << "one more" << std::endl;
-	// operator push_back and push_front
-	values.push_back(42);
-	values.push_front(42);
+    // ========================================================================
+    // ОПЕРАЦИИ ВСТАВКИ И ИХ ВЛИЯНИЕ НА ИТЕРАТОРЫ
+    // ========================================================================
+    std::cout << "3. Операции вставки и влияние на итераторы:" << std::endl;
+    
+    // Добавление элементов в конец и начало
+    list_data.push_back(42);
+    list_data.push_front(42);
+    std::cout << "   Добавлены элементы в конец и начало списка" << std::endl;
 
-	std::cout << "&values[0]       = " << &*values.cbegin() << std::endl;
-	std::cout << "&values[iterPos] = " << &*(std::next(values.cbegin(), iterPos)) << std::endl;
-	std::cout << "&*iter           = " << &*iter << std::endl;
+    std::cout << "   Адрес первого элемента: " << &*list_data.cbegin() << std::endl;
+    std::cout << "   Адрес элемента на позиции " << iterator_position << ": " 
+              << &*(std::next(list_data.cbegin(), iterator_position)) << std::endl;
+    
+    // ========================================================================
+    // ВАЖНО: ИТЕРАТОРЫ МОГУТ СТАТЬ НЕВАЛИДНЫМИ ПРИ МОДИФИКАЦИИ
+    // ========================================================================
+    std::cout << "   Адрес элемента через итератор: " << &*current_iterator << std::endl;
+    std::cout << "   ВНИМАНИЕ: Итератор может стать невалидным после модификации!" << std::endl;
+    // std::cout << *current_iterator << std::endl;  // ОПАСНО!
 
-	// Ooops. Iterator invalid.
-	// std::cout << *iter << std::endl;
-
-	auto iter2 = std::next(values.cbegin(), 3);
-	std::cout << "*iter2 = " << *iter2 << std::endl;
-	std::cout << "one more at the begining" << std::endl;
-	values.insert(values.cbegin(), 42);
-	std::cout << "*iter2 = " << *iter2 << std::endl;
-
+    // ========================================================================
+    // ВСТАВКА В НАЧАЛО СПИСКА
+    // ========================================================================
+    auto new_iterator = std::next(list_data.cbegin(), 3);
+    std::cout << "   Элемент на позиции 3: " << *new_iterator << std::endl;
+    
+    std::cout << "   Вставка элемента в начало списка..." << std::endl;
+    list_data.insert(list_data.cbegin(), 42);
+    std::cout << "   Элемент на позиции 3 после вставки: " << *new_iterator << std::endl;
 }
 
+/**
+ * Основная функция - демонстрация std::list
+ * Показывает особенности двусвязного списка и двунаправленных итераторов
+ */
 int main() {
-	testPlacing();
+    std::cout << "=== ДЕМОНСТРАЦИЯ STD::LIST ===" << std::endl;
 
-	testIterator();
+    // Тест 1: Размещение элементов в памяти
+    testMemoryPlacement();
+    
+    // Тест 2: Операции с итераторами
+    testIteratorOperations();
 
-	return 0;
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА ===" << std::endl;
+    return 0;
 }

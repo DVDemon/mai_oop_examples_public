@@ -1,36 +1,83 @@
 #include <iostream>
 #include <set>
 
-void testUnique() {
-	std::cout << "\ntestUnique\n";
+/**
+ * Демонстрация множественных элементов в std::multiset
+ * Показывает, что multiset позволяет дубликаты и различные операции с ними
+ */
+void testMultipleElements() {
+    std::cout << "\n=== ТЕСТ МНОЖЕСТВЕННЫХ ЭЛЕМЕНТОВ В STD::MULTISET ===" << std::endl;
 
-	std::multiset<int> values;
+    std::multiset<int> integer_multiset;
 
-	auto result = values.insert(42);
-	std::cout << *result << std::endl;
+    // ========================================================================
+    // ВСТАВКА ОДИНАКОВЫХ ЭЛЕМЕНТОВ
+    // ========================================================================
+    std::cout << "1. Вставка одинаковых элементов:" << std::endl;
+    auto insertion_result = integer_multiset.insert(42);
+    std::cout << "   Первая вставка 42: " << *insertion_result << std::endl;
 
-	result = values.insert(42);
-	std::cout << *result << std::endl;
+    insertion_result = integer_multiset.insert(42);
+    std::cout << "   Вторая вставка 42: " << *insertion_result << std::endl;
 
-	std::cout << "values.count(42) = " << values.count(42) << std::endl;
+    // ========================================================================
+    // ПОДСЧЕТ КОЛИЧЕСТВА ВХОЖДЕНИЙ
+    // ========================================================================
+    std::cout << "2. Подсчет количества вхождений:" << std::endl;
+    std::cout << "   Количество элементов 42: " << integer_multiset.count(42) << std::endl;
 
-	for(int i=0;i<10;++i){
-		auto result = values.insert(42);
-		std::cout << &(*result) << std::endl;
-	}
+    // ========================================================================
+    // МАССОВАЯ ВСТАВКА ОДИНАКОВЫХ ЭЛЕМЕНТОВ
+    // ========================================================================
+    std::cout << "3. Массовая вставка одинаковых элементов:" << std::endl;
+    for (int insertion_index = 0; insertion_index < 10; ++insertion_index) {
+        auto insertion_result = integer_multiset.insert(42);
+        std::cout << "   Вставка " << (insertion_index + 1) << ": адрес = " << &(*insertion_result) << std::endl;
+    }
 
-    std::cout << "values:" << std::endl;
+    // ========================================================================
+    // ВЫВОД ВСЕХ ЭЛЕМЕНТОВ
+    // ========================================================================
+    std::cout << "4. Все элементы в multiset:" << std::endl;
+    for (const auto& element : integer_multiset) {
+        std::cout << "   " << element << std::endl;
+    }
 
-    for(const auto &v:values)
-        std::cout << v << std::endl;
+    // ========================================================================
+    // ПОИСК ЭЛЕМЕНТОВ
+    // ========================================================================
+    std::cout << "5. Поиск элементов:" << std::endl;
+    if (integer_multiset.find(41) != std::end(integer_multiset)) {
+        std::cout << "   Элемент 41 найден" << std::endl;
+    } else {
+        std::cout << "   Элемент 41 не найден" << std::endl;
+    }
 
-    if(values.find(41)!=std::end(values)){
-        std::cout << "Value founded" << std::endl;
-    } else  std::cout << "Value not founded" << std::endl;
+    if (integer_multiset.find(42) != std::end(integer_multiset)) {
+        std::cout << "   Элемент 42 найден" << std::endl;
+    } else {
+        std::cout << "   Элемент 42 не найден" << std::endl;
+    }
+
+    // ========================================================================
+    // ИТОГОВАЯ СТАТИСТИКА
+    // ========================================================================
+    std::cout << "6. Итоговая статистика:" << std::endl;
+    std::cout << "   Общее количество элементов: " << integer_multiset.size() << std::endl;
+    std::cout << "   Количество элементов 42: " << integer_multiset.count(42) << std::endl;
+    std::cout << "   ВЫВОД: std::multiset позволяет множественные вхождения!" << std::endl;
 }
 
+/**
+ * Основная функция - демонстрация std::multiset
+ * Показывает множественные элементы, подсчет вхождений и поиск
+ */
 int main() {
-	testUnique();
+    std::cout << "=== ДЕМОНСТРАЦИЯ STD::MULTISET ===" << std::endl;
 
-	return 0;
+    // Демонстрация множественных элементов
+    testMultipleElements();
+
+    std::cout << "\n=== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА ===" << std::endl;
+    return 0;
 }

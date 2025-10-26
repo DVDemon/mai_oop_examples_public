@@ -3,104 +3,167 @@
 #include <iostream>
 #include <memory>
 
-namespace mai
-{
+/**
+ * Пространство имен для демонстрации кастомного аллокатора
+ * Содержит реализацию аллокатора с фиксированным размером блока
+ */
+namespace mai {
+    /**
+     * Кастомный аллокатор с фиксированным размером блока
+     * Демонстрирует создание аллокатора для STL контейнеров
+     * 
+     * @tparam T - тип элементов для выделения
+     * @tparam BLOCK_SIZE - размер блока памяти
+     */
     template <class T, size_t BLOCK_SIZE>
-    class allocator
-    {
+    class allocator {
     private:
-        std::shared_ptr<T[]>     _buffer;
-        std::shared_ptr<size_t>  _free_index;
+        std::shared_ptr<T[]> memory_buffer;      // Буфер для хранения элементов
+        std::shared_ptr<size_t> free_index;      // Индекс следующего свободного элемента
 
     public:
+        // ========================================================================
+        // ТИПЫ ДЛЯ СОВМЕСТИМОСТИ СО STL
+        // ========================================================================
         using value_type = T;
-        using pointer = T *;
-        using const_pointer = const T *;
+        using pointer = T*;
+        using const_pointer = const T*;
         using size_type = std::size_t;
 
-        allocator() : _buffer{}
-        {
-            std::cout << "constructor" << std::endl;
-            static_assert(BLOCK_SIZE > 0);
-             _free_index = std::make_shared<size_t>(0);
+        /**
+         * Конструктор аллокатора
+         * Инициализирует буфер и индекс свободного места
+         */
+        allocator() : memory_buffer{} {
+            std::cout << "   Конструктор аллокатора вызван" << std::endl;
+            static_assert(BLOCK_SIZE > 0, "Размер блока должен быть больше 0");
+            free_index = std::make_shared<size_t>(0);
         }
 
-        ~allocator()
-        {
-            std::cout << "destructor" << std::endl;
+        /**
+         * Деструктор аллокатора
+         * Выводит информацию о разрушении
+         */
+        ~allocator() {
+            std::cout << "   Деструктор аллокатора вызван" << std::endl;
         }
 
-        allocator<T,BLOCK_SIZE> operator=(const allocator<T,BLOCK_SIZE> &other){
-            std::cout << "copy" << std::endl;
-            this->_buffer = other._buffer;
-            this->_free_index = other._free_index;
+        /**
+         * Оператор присваивания
+         * Копирует состояние другого аллокатора
+         */
+        allocator<T, BLOCK_SIZE>& operator=(const allocator<T, BLOCK_SIZE>& other) {
+            std::cout << "   Оператор присваивания аллокатора" << std::endl;
+            this->memory_buffer = other.memory_buffer;
+            this->free_index = other.free_index;
             return *this;
         }
 
+        /**
+         * Структура rebind для совместимости с STL
+         * Позволяет STL контейнерам создавать аллокаторы для других типов
+         */
         template <typename U>
-        struct rebind
-        {
+        struct rebind {
             using other = allocator<U, BLOCK_SIZE>;
         };
 
-        T *allocate(size_t n)
-        {
-            std::cout << "allocate" << std::endl;
-            if (!_buffer)
-                _buffer = std::shared_ptr<T[]>(new T[BLOCK_SIZE]);//(T *)malloc(sizeof(T) * BLOCK_SIZE);
+        /**
+         * Выделение памяти для n элементов
+         * @param n - количество элементов для выделения
+         * @return указатель на выделенную память
+         */
+        T* allocate(size_t n) {
+            std::cout << "   Выделение памяти для " << n << " элементов" << std::endl;
+            
+            // Создание буфера при первом обращении
+            if (!memory_buffer) {
+                memory_buffer = std::shared_ptr<T[]>(new T[BLOCK_SIZE]);
+            }
 
-            if ((BLOCK_SIZE - *_free_index) < n)
+            // Проверка доступности места в буфере
+            if ((BLOCK_SIZE - *free_index) < n) {
                 throw std::bad_alloc();
-            T *pointer = &(_buffer[* _free_index]);
-            *_free_index += n;
+            }
+            
+            T* allocated_pointer = &(memory_buffer[*free_index]);
+            *free_index += n;
 
-            return pointer;
+            return allocated_pointer;
         }
 
-        void deallocate(T *, size_t)
-        {
-            // тут надо бы удалить память
-            std::cout << "deallocate" << std::endl;
+        /**
+         * Освобождение памяти
+         * В данной реализации не выполняет реального освобождения
+         * @param pointer - указатель на освобождаемую память
+         * @param n - количество элементов
+         */
+        void deallocate(T* pointer, size_t n) {
+            std::cout << "   Освобождение памяти для " << n << " элементов" << std::endl;
+            // В данной реализации память не освобождается
+            // Это упрощенная демонстрация
         }
 
+        /**
+         * Конструирование объекта в выделенной памяти
+         * @param p - указатель на память для конструирования
+         * @param args - аргументы конструктора
+         */
         template <typename U, typename... Args>
-        void construct(U *p, Args &&...args)
-        {
-            std::cout << "construct" << std::endl;
+        void construct(U* p, Args&&... args) {
+            std::cout << "   Конструирование объекта" << std::endl;
             new (p) U(std::forward<Args>(args)...);
         }
 
-        void destroy(pointer p)
-        {
-            std::cout << "destory" << std::endl;
+        /**
+         * Разрушение объекта
+         * @param p - указатель на объект для разрушения
+         */
+        void destroy(pointer p) {
+            std::cout << "   Разрушение объекта" << std::endl;
             p->~T();
         }
     };
 }
 
 
-using map_type_with_allocator =
+/**
+ * Псевдоним типа для map с кастомным аллокатором
+ * Демонстрирует использование аллокатора с ассоциативными контейнерами
+ */
+using map_type_with_allocator = 
     std::map<int, int, std::less<int>, mai::allocator<std::pair<const int, int>, 10>>;
 
-auto main() -> int
-{
-    // mai::allocator<int,10> a;
-    // mai::allocator<int,10> b=a;
+/**
+ * Основная функция - демонстрация кастомного аллокатора
+ * Показывает использование аллокатора с различными STL контейнерами
+ */
+int main() {
+    std::cout << "=== ДЕМОНСТРАЦИЯ КАСТОМНОГО АЛЛОКАТОРА ===" << std::endl;
 
-    // // заполняем значением факториала
-    // map_type_with_allocator my_map_with_allocator;
-    // my_map_with_allocator[1]=2;
-    // my_map_with_allocator[2]=4;
-    // my_map_with_allocator[3]=6;
-    // my_map_with_allocator[4]=7;
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 1: СОЗДАНИЕ И КОПИРОВАНИЕ АЛЛОКАТОРОВ
+    // ========================================================================
+    std::cout << "\n1. Создание и копирование аллокаторов:" << std::endl;
+    mai::allocator<int, 10> first_allocator;
+    mai::allocator<int, 10> second_allocator = first_allocator;
 
-    // for (auto p : my_map_with_allocator)
-    //     std::cout << p.first << " " << p.second << std::endl;
+    // ========================================================================
+    // ДЕМОНСТРАЦИЯ 2: ИСПОЛЬЗОВАНИЕ С VECTOR
+    // ========================================================================
+    std::cout << "\n2. Использование с std::vector:" << std::endl;
+    std::vector<int, mai::allocator<int, 100>> integer_vector;
+    
+    std::cout << "   Заполнение вектора значениями:" << std::endl;
+    for (size_t element_index = 0; element_index < 10; ++element_index) {
+        integer_vector.push_back(element_index);
+    }
+
+    std::cout << "   Содержимое вектора:" << std::endl;
+    for (size_t element_index = 0; element_index < 10; ++element_index) {
+        std::cout << "   " << integer_vector[element_index] << std::endl;
+    }
 
 
-    std::vector<int,mai::allocator<int,100>> my_vector;
-    for(size_t i=0;i<10;++i) my_vector.push_back(i);
-
-    for(size_t i=0;i<10;++i) std::cout << my_vector[i] << std::endl;
     return 0;
 }
