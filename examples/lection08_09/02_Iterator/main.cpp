@@ -106,7 +106,9 @@ public:
      */
     DynamicArray(std::initializer_list<T> initialization_list) 
         : array_size(initialization_list.size()), data_pointer(new T[initialization_list.size()]) {
-        std::copy(initialization_list.begin(), initialization_list.end(), data_pointer.get());
+        std::copy(initialization_list.begin(), 
+                  initialization_list.end(),
+                  data_pointer.get());
     }
 
     /**

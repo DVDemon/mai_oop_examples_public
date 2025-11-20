@@ -60,7 +60,8 @@ int main() {
     // }
     
     // Способ 3: Конструктор вектора с итераторами (используется)
-    std::vector<double> numbers_vector(input_stream_iterator, end_of_stream_iterator);
+    std::vector<double> numbers_vector(input_stream_iterator, 
+                                        end_of_stream_iterator);
 
     // ========================================================================
     // ДЕМОНСТРАЦИЯ 3: ВЫВОД С ПОМОЩЬЮ OSTREAM_ITERATOR
@@ -72,7 +73,10 @@ int main() {
     std::ostream_iterator<double> output_stream_iterator(std::cout, " ");
     
     // Копирование элементов вектора в поток вывода
-    std::copy(numbers_vector.begin(), numbers_vector.end(), output_stream_iterator);
+    std::copy(numbers_vector.begin(), 
+    numbers_vector.end(), 
+    output_stream_iterator);
+    
     std::cout << std::endl;
     
     // ========================================================================
