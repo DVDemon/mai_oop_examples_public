@@ -46,7 +46,7 @@ public:
     }
 
     bool isCookie() override {
-        return true;
+        return false;
     }
 };
 //*/
@@ -90,7 +90,7 @@ public:
 auto main() -> int {
 
     Menu m;
-    //m.add(std::make_shared<ItemBulka>());
+    m.add(std::make_shared<ItemBulka>());
     m.add(std::make_shared<ItemBublik>());
     m.add(std::make_shared<ItemCoffe>());
 

@@ -109,7 +109,8 @@ public:
 };
 
 // вспомогательные функции
-bool Connect(IConnection *connection,std::shared_ptr<IAddress> address) {
+bool Connect(IConnection *connection,
+    std::shared_ptr<IAddress> address) {
     connection->Deal(address);
     if (!connection->Connected()) {
         std::cout << "Error: not connected" << std::endl;
@@ -118,7 +119,9 @@ bool Connect(IConnection *connection,std::shared_ptr<IAddress> address) {
     return true;
 }
 
-void Test(IModem<char> *modem, Channel<char> &input_channel, Channel<char> &output_channel) {
+void Test(IModem<char> *modem, 
+    Channel<char> &input_channel, 
+    Channel<char> &output_channel) {
     char test_message[] = {'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'};
     std::vector<char> test_answer;
 
@@ -147,7 +150,8 @@ auto main() -> int {
     Modem modem;
     Channel<char> channel;
     
-    if (Connect(&modem,std::make_shared<AddressPhone>(AddressPhone("8-800-8888888")))) {
+    if (Connect(&modem,
+        std::make_shared<AddressPhone>(AddressPhone("8-800-8888888")))) {
     //if (Connect(&modem,std::make_shared<AddressIP>(AddressIP{127,0,0,1}))){
         Test(&modem, channel, channel);
         Disconnect(&modem);

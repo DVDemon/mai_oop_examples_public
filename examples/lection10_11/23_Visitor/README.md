@@ -48,7 +48,7 @@ Client: element->accept(visitor)
 ┌─────────┐                    ┌──────────┐
 │ElementA │                    │Visitor1  │
 │         │                    │          │
-│accept() │───2. visitor.visit(*this)───►│
+│accept() │───2. visitor.visit(*this)─-──►│
 │         │                    │          │
 └─────────┘                    │          │
                                │          │

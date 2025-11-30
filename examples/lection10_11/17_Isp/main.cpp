@@ -36,7 +36,8 @@ template <class A, class ... Tail>
 struct Menu<A, Tail...> :  Menu<Tail ...> {
     A value;
     
-    Menu(A a, Tail ... tail) : value(a), Menu<Tail...>(tail...) {
+    Menu(A a, Tail ... tail) : value(a), 
+        Menu<Tail...>(tail...) {
     }
 
     void print() {
