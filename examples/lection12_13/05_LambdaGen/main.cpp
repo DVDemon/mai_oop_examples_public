@@ -25,7 +25,9 @@ int main() {
 
   auto lll = lambda_gen(15);
 
-  std::transform(elements.begin(), elements.end(), elements.begin(), lll);
+  std::transform(elements.begin(),
+                  elements.end(), 
+                  elements.begin(), lll);
   for (auto &ee : elements)
     trace_lambda(ee);
 

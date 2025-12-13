@@ -17,6 +17,7 @@ void threadFunction(std::mutex *lock)
     }
     catch (...)
     {
+        std::cerr << "Oooopsss!" << std::endl;
     }
 }
 

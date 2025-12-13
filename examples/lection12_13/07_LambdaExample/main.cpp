@@ -18,7 +18,7 @@ template <class T, class FILTER>
 void transform(const std::vector<T> &input,
               std::vector<T> &output, FILTER filter)
 {
-    for (auto a : input)
+    for (auto & a : input)
         if (filter(a))
             output.push_back(a);
 };
@@ -26,7 +26,7 @@ void transform(const std::vector<T> &input,
 template <class T, class ACTION>
 void applay(const std::vector<T> &input, ACTION action)
 {
-    for (auto a : input)
+    for (auto & a : input)
         action(a);
 };
 
@@ -41,7 +41,7 @@ auto main() -> int
 
     std::vector<Person> females;
     transform(persons, females, [](const Person &person) {
-        if (person.sex == person_sex_t::Female)
+        if (person.sex != person_sex_t::Female)
             return true;
         else
             return false;

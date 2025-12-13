@@ -42,7 +42,7 @@ int main ()
     a.unlock();
   });
 
-    std::thread th2([&]()
+  std::thread th2([&]()
     {
       b.lock();
       a.lock();

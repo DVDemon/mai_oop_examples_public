@@ -26,9 +26,12 @@ int main()
     std::cout << "sizeof lambda:" << sizeof(lambda) << std::endl;
    // int a = lambda(7);
     for (int i : elements)
-        lambda(i);
-       //[](int a) { std::cout << a << " "; }(i); // сделали и вызвали лямбду
+        //lambda(i);
+        [](int a) { std::cout << a << " "; }(i); // сделали и вызвали лямбду
     std::cout << std::endl;
+
+
+  //  [](){}();
 
     // without lambda
     MyLambda functor;

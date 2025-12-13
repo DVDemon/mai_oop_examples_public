@@ -67,7 +67,7 @@ void threadFunction(std::mutex *lock)
         std::cout << "entered thread " << std::this_thread::get_id() << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(rand() % 3));
         std::cout << "leaving thread " << std::this_thread::get_id() << std::endl;
- //       throw 0;
+        //throw 0;
         lock->unlock();
     }
     catch (...)
